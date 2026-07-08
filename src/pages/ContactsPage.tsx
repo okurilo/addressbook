@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import type { RouteComponentProps } from '@reach/router';
-import { useLocation, useNavigate } from '@reach/router';
 import { styled } from 'styled-components';
 import { EmptyState } from '@pulse/ui/EmptyState';
 import { Spinner } from '@pulse/ui/Spinner';
@@ -11,6 +10,7 @@ import { EmployeeTable } from '../components/EmployeeTable';
 import { RetryState } from '../components/RetryState';
 import { useDebouncedValue } from '../components/useDebouncedValue';
 import { useFavoriteEmployees } from '../components/useFavoriteEmployees';
+import { useAppLocation, useAppNavigate } from '../routes/appRouter';
 import { ignorePromise } from '../utils/ignorePromise';
 
 const Section = styled('section')(({ theme }) => ({
@@ -42,8 +42,8 @@ const CenteredState = styled('div')(({ theme }) => ({
 type ViewState = 'idle' | 'loading' | 'success' | 'empty' | 'error';
 
 export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = useAppLocation();
+  const navigate = useAppNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const query = new URLSearchParams(location.search).get('q') ?? '';
   const debouncedQuery = useDebouncedValue(query, 280);

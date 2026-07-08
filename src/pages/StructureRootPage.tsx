@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import type { RouteComponentProps } from '@reach/router';
-import { useNavigate } from '@reach/router';
 import { styled } from 'styled-components';
 import { EmptyState } from '@pulse/ui/EmptyState';
 import { Spinner } from '@pulse/ui/Spinner';
@@ -8,6 +7,7 @@ import { Text } from '@pulse/ui/Text';
 import { fetchRootDepartments } from '../api/directory/departmentsClient';
 import type { DepartmentSummary } from '../api/directory/departments';
 import { RetryState } from '../components/RetryState';
+import { useAppNavigate } from '../routes/appRouter';
 import { ignorePromise } from '../utils/ignorePromise';
 
 const Page = styled('section')(({ theme }) => ({
@@ -62,7 +62,7 @@ const CenteredState = styled('div')(({ theme }) => ({
 type ViewState = 'loading' | 'success' | 'empty' | 'error';
 
 export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = useAppNavigate();
   const [items, setItems] = useState<DepartmentSummary[]>([]);
   const [totalEmployees, setTotalEmployees] = useState(0);
   const [viewState, setViewState] = useState<ViewState>('loading');

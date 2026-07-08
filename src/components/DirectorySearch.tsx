@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from '@reach/router';
 import { styled } from 'styled-components';
 import { Input } from '@pulse/ui/Input';
 import { Text } from '@pulse/ui/Text';
 import { SearchIcon, StarIcon } from './icons';
 import { routePaths } from '../routes/routePaths';
+import { useAppLocation, useAppNavigate } from '../routes/appRouter';
 import { ignorePromise } from '../utils/ignorePromise';
 
 const SearchRow = styled('div')(({ theme }) => ({
@@ -62,8 +62,8 @@ const FavoriteIcon = styled('span')<{ $active: boolean }>(({ theme, $active }) =
 }));
 
 export const DirectorySearch = (): JSX.Element => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = useAppLocation();
+  const navigate = useAppNavigate();
   const searchParams = new URLSearchParams(location.search);
   const queryFromUrl = searchParams.get('q') ?? '';
   const [value, setValue] = useState(queryFromUrl);

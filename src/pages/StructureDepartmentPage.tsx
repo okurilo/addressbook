@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import type { RouteComponentProps } from '@reach/router';
-import { useNavigate } from '@reach/router';
 import { styled } from 'styled-components';
 import { EmptyState } from '@pulse/ui/EmptyState';
 import { Spinner } from '@pulse/ui/Spinner';
@@ -20,6 +19,7 @@ import type { Employee } from '../api/directory/types';
 import { EmployeeTable } from '../components/EmployeeTable';
 import { RetryState } from '../components/RetryState';
 import { useFavoriteEmployees } from '../components/useFavoriteEmployees';
+import { useAppNavigate } from '../routes/appRouter';
 import { routePaths } from '../routes/routePaths';
 import { ignorePromise } from '../utils/ignorePromise';
 
@@ -103,7 +103,7 @@ type ViewState = 'loading' | 'success' | 'notFound' | 'error';
 export const StructureDepartmentPage = ({
   departmentId,
 }: StructureDepartmentPageProps): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = useAppNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const [detailsCache, setDetailsCache] = useState<Record<string, DepartmentDetails>>({});
   const [childrenCache, setChildrenCache] = useState<Record<string, DepartmentNode[]>>({});

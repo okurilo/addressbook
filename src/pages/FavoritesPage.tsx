@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import type { RouteComponentProps } from '@reach/router';
-import { useLocation, useNavigate } from '@reach/router';
 import { styled } from 'styled-components';
 import { EmptyState } from '@pulse/ui/EmptyState';
 import { Spinner } from '@pulse/ui/Spinner';
@@ -10,6 +9,7 @@ import type { Employee } from '../api/directory/types';
 import { EmployeeTable } from '../components/EmployeeTable';
 import { RetryState } from '../components/RetryState';
 import { useFavoriteEmployees } from '../components/useFavoriteEmployees';
+import { useAppLocation, useAppNavigate } from '../routes/appRouter';
 import { ignorePromise } from '../utils/ignorePromise';
 
 const Page = styled('section')(({ theme }) => ({
@@ -65,8 +65,8 @@ const EmptyIllustration = styled('div')(({ theme }) => ({
 type ViewState = 'loading' | 'success' | 'empty' | 'error';
 
 export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = useAppLocation();
+  const navigate = useAppNavigate();
   const { favoriteIds, toggleFavorite, isReady } = useFavoriteEmployees();
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [viewState, setViewState] = useState<ViewState>('loading');

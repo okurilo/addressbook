@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import type { RouteComponentProps } from '@reach/router';
-import { useLocation, useNavigate } from '@reach/router';
 import { styled } from 'styled-components';
 import { EmptyState } from '@pulse/ui/EmptyState';
 import { Spinner } from '@pulse/ui/Spinner';
@@ -14,6 +13,7 @@ import type {
   ReferencePhoneCategory,
 } from '../api/directory/referencePhones';
 import { RetryState } from '../components/RetryState';
+import { useAppLocation, useAppNavigate } from '../routes/appRouter';
 import { ignorePromise } from '../utils/ignorePromise';
 
 const Page = styled('section')(({ theme }) => ({
@@ -158,8 +158,8 @@ const copyValue = async (value: string): Promise<void> => {
 };
 
 export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = useAppNavigate();
+  const location = useAppLocation();
   const [categories, setCategories] = useState<ReferencePhoneCategory[]>([]);
   const [phones, setPhones] = useState<ReferencePhone[]>([]);
   const [categoriesState, setCategoriesState] = useState<CategoriesState>('loading');

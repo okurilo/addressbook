@@ -1,6 +1,5 @@
 import type { RouteComponentProps } from '@reach/router';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from '@reach/router';
 import { styled } from 'styled-components';
 import { Button } from '@pulse/ui/Button';
 import { EmptyState } from '@pulse/ui/EmptyState';
@@ -12,6 +11,7 @@ import { EmployeeActions } from '../components/EmployeeActions';
 import { EmployeeAvatar } from '../components/EmployeeAvatar';
 import { RetryState } from '../components/RetryState';
 import { useFavoriteEmployees } from '../components/useFavoriteEmployees';
+import { useAppLocation, useAppNavigate } from '../routes/appRouter';
 import { ignorePromise } from '../utils/ignorePromise';
 
 type EmployeePageProps = RouteComponentProps & {
@@ -99,8 +99,8 @@ const copyValue = async (value: string): Promise<void> => {
 };
 
 export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = useAppNavigate();
+  const location = useAppLocation();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [viewState, setViewState] = useState<ViewState>('loading');

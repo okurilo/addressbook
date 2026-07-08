@@ -1,6 +1,6 @@
-import { useLocation, useNavigate } from '@reach/router';
 import { styled } from 'styled-components';
 import { Text } from '@pulse/ui/Text';
+import { useAppLocation, useAppNavigate } from '../routes/appRouter';
 import { routePaths } from '../routes/routePaths';
 import { ignorePromise } from '../utils/ignorePromise';
 
@@ -50,8 +50,8 @@ const NavButton = styled('button')<{ $active: boolean }>(({ theme, $active }) =>
 }));
 
 export const DirectoryNavigation = (): JSX.Element => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = useAppLocation();
+  const navigate = useAppNavigate();
 
   return (
     <Nav aria-label="Навигация по разделам справочника">
