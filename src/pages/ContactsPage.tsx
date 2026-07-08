@@ -119,7 +119,9 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
           <EmployeeTable
             employees={employees}
             favoriteIds={favoriteIds}
-            onToggleFavorite={toggleFavorite}
+            onToggleFavorite={(employeeId) => {
+              void toggleFavorite(employeeId);
+            }}
             onOpenEmployee={(employee) => {
               void navigate(`/employee/${employee.id}${location.search}`);
             }}

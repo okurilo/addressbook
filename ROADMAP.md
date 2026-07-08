@@ -162,62 +162,62 @@
 
 ### Итерация 4. Избранное
 
-- [ ] Создать mock API:
-  - [ ] `GET /api/directory/favorites`
-  - [ ] `POST /api/directory/favorites/:employeeId`
-  - [ ] `DELETE /api/directory/favorites/:employeeId`
-- [ ] Оставить только одну системную группу `Избранное`.
-- [ ] Синхронизировать состояние звезды:
-  - [ ] в таблице
-  - [ ] в поиске
-  - [ ] в визитке
-  - [ ] на странице избранного
-- [ ] Сохранять mock-состояние в `localStorage`.
-- [ ] Не реализовывать папки и пользовательские группы.
-- [ ] Прогнать `npm run typecheck`.
-- [ ] Прогнать `npm run build`.
+- [x] Создать mock API:
+  - [x] `GET /api/directory/favorites`
+  - [x] `POST /api/directory/favorites/:employeeId`
+  - [x] `DELETE /api/directory/favorites/:employeeId`
+- [x] Оставить только одну системную группу `Избранное`.
+- [x] Синхронизировать состояние звезды:
+  - [x] в таблице
+  - [x] в поиске
+  - [x] в визитке
+  - [x] на странице избранного
+- [x] Сохранять mock-состояние в `localStorage`.
+- [x] Не реализовывать папки и пользовательские группы.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
 
 ### Итерация 5. Корневой экран кадровой структуры
 
-- [ ] Создать типы:
-  - [ ] `Department`
-  - [ ] `DepartmentSummary`
-  - [ ] `DepartmentRootResponse`
-- [ ] Создать mock API `GET /api/directory/departments/root`.
-- [ ] Реализовать сетку крупных подразделений.
-- [ ] Клик по карточке должен вести на `/structure/:departmentId`.
-- [ ] Реализовать состояния:
-  - [ ] loading
-  - [ ] empty
-  - [ ] error
-  - [ ] success
-- [ ] Не загружать полное дерево структуры.
-- [ ] Прогнать `npm run typecheck`.
-- [ ] Прогнать `npm run build`.
+- [x] Создать типы:
+  - [x] `Department`
+  - [x] `DepartmentSummary`
+  - [x] `DepartmentRootResponse`
+- [x] Создать mock API `GET /api/directory/departments/root`.
+- [x] Реализовать сетку крупных подразделений.
+- [x] Клик по карточке должен вести на `/structure/:departmentId`.
+- [x] Реализовать состояния:
+  - [x] loading
+  - [x] empty
+  - [x] error
+  - [x] success
+- [x] Не загружать полное дерево структуры.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
 
 ### Итерация 6. Вложенный экран кадровой структуры
 
-- [ ] Создать типы:
-  - [ ] `DepartmentNode`
-  - [ ] `DepartmentPath`
-  - [ ] `DepartmentDetails`
-- [ ] Создать mock API:
-  - [ ] `GET /api/directory/departments/:departmentId`
-  - [ ] `GET /api/directory/departments/:departmentId/children`
-  - [ ] `GET /api/directory/employees?departmentId={departmentId}`
-- [ ] Загружать дочерние подразделения лениво.
-- [ ] Не загружать всё дерево при старте.
-- [ ] Кэшировать уже загруженные узлы.
-- [ ] Реализовать хлебные крошки.
-- [ ] Реализовать переход:
-  - [ ] в дочернее подразделение
-  - [ ] на уровень выше
-  - [ ] по элементу хлебных крошек
-- [ ] Отображать сотрудников выбранного подразделения справа.
-- [ ] Сохранять выбранное подразделение в URL.
-- [ ] Кнопка `Показать в кадровой структуре` из визитки должна открывать нужное подразделение.
-- [ ] Прогнать `npm run typecheck`.
-- [ ] Прогнать `npm run build`.
+- [x] Создать типы:
+  - [x] `DepartmentNode`
+  - [x] `DepartmentPath`
+  - [x] `DepartmentDetails`
+- [x] Создать mock API:
+  - [x] `GET /api/directory/departments/:departmentId`
+  - [x] `GET /api/directory/departments/:departmentId/children`
+  - [x] `GET /api/directory/employees?departmentId={departmentId}`
+- [x] Загружать дочерние подразделения лениво.
+- [x] Не загружать всё дерево при старте.
+- [x] Кэшировать уже загруженные узлы.
+- [x] Реализовать хлебные крошки.
+- [x] Реализовать переход:
+  - [x] в дочернее подразделение
+  - [x] на уровень выше
+  - [x] по элементу хлебных крошек
+- [x] Отображать сотрудников выбранного подразделения справа.
+- [x] Сохранять выбранное подразделение в URL.
+- [x] Кнопка `Показать в кадровой структуре` из визитки должна открывать нужное подразделение.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
 
 ### Итерация 7. Справочные телефоны
 

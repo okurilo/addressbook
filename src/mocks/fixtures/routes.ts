@@ -3,5 +3,6 @@ export const mockRoutes = [
   '/api/directory/employees',
   '/api/directory/favorites',
   '/api/directory/departments/root',
+  '/api/directory/departments',
   '/api/directory/reference-phones',
 ] as const;

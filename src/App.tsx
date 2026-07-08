@@ -7,6 +7,7 @@ import { AppShell } from './components/AppShell';
 import { DirectoryLayout } from './components/DirectoryLayout';
 import { ProductViewport } from './components/ProductViewport';
 import { MockScenarioPanel } from './components/MockScenarioPanel';
+import { FavoriteEmployeesProvider } from './components/useFavoriteEmployees';
 import { ContactsPage } from './pages/ContactsPage';
 import { EmployeePage } from './pages/EmployeePage';
 import { FavoritesPage } from './pages/FavoritesPage';
@@ -22,23 +23,25 @@ export const App = (): JSX.Element => (
   <ThemeProvider theme={theme}>
     <GlobalStyles />
     <LocationProvider>
-      <AppShell>
-        <MockScenarioPanel />
-        <ProductViewport>
-          <DirectoryLayout>
-            <RouterContainer>
-              <Router primary={false}>
-                <ContactsPage path={routePaths.contacts} />
-                <EmployeePage path={routePaths.employee} />
-                <StructureRootPage path={routePaths.structure} />
-                <StructureDepartmentPage path={routePaths.structureDepartment} />
-                <ReferencePhonesPage path={routePaths.referencePhones} />
-                <FavoritesPage path={routePaths.favorites} />
-              </Router>
-            </RouterContainer>
-          </DirectoryLayout>
-        </ProductViewport>
-      </AppShell>
+      <FavoriteEmployeesProvider>
+        <AppShell>
+          <MockScenarioPanel />
+          <ProductViewport>
+            <DirectoryLayout>
+              <RouterContainer>
+                <Router primary={false}>
+                  <ContactsPage path={routePaths.contacts} />
+                  <EmployeePage path={routePaths.employee} />
+                  <StructureRootPage path={routePaths.structure} />
+                  <StructureDepartmentPage path={routePaths.structureDepartment} />
+                  <ReferencePhonesPage path={routePaths.referencePhones} />
+                  <FavoritesPage path={routePaths.favorites} />
+                </Router>
+              </RouterContainer>
+            </DirectoryLayout>
+          </ProductViewport>
+        </AppShell>
+      </FavoriteEmployeesProvider>
     </LocationProvider>
   </ThemeProvider>
 );

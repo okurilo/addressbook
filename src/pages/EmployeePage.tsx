@@ -246,7 +246,7 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
           emailLabel={employee.email}
           isFavorite={favoriteIds.includes(employee.id)}
           onToggleFavorite={() => {
-            toggleFavorite(employee.id);
+            void toggleFavorite(employee.id);
           }}
           extraActions={extraActions}
         />
