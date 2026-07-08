@@ -5,6 +5,7 @@ import { Input } from '@pulse/ui/Input';
 import { Text } from '@pulse/ui/Text';
 import { SearchIcon, StarIcon } from './icons';
 import { routePaths } from '../routes/routePaths';
+import { ignorePromise } from '../utils/ignorePromise';
 
 const SearchRow = styled('div')(({ theme }) => ({
   display: 'grid',
@@ -97,7 +98,7 @@ export const DirectorySearch = (): JSX.Element => {
                 ? `${routePaths.contacts}${nextSearch === '' ? '' : `?${nextSearch}`}`
                 : routePaths.contacts + (nextSearch === '' ? '' : `?${nextSearch}`);
 
-            void navigate(destination, { replace: true });
+            ignorePromise(navigate(destination, { replace: true }));
           }}
         />
         <SearchAdornment>
@@ -108,7 +109,7 @@ export const DirectorySearch = (): JSX.Element => {
         type="button"
         $active={isFavoritesRoute}
         onClick={() => {
-          void navigate(routePaths.favorites);
+          ignorePromise(navigate(routePaths.favorites));
         }}
       >
         <FavoriteIcon $active={isFavoritesRoute} aria-hidden="true">

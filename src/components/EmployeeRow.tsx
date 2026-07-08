@@ -41,8 +41,16 @@ export const EmployeeRow = ({
   onOpen,
 }: EmployeeRowProps): JSX.Element => (
   <Row
+    role="button"
+    tabIndex={0}
     onClick={() => {
       onOpen(employee);
+    }}
+    onKeyDown={(event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        onOpen(employee);
+      }
     }}
   >
     <Cell>

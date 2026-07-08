@@ -8,7 +8,9 @@ import { Text } from '@pulse/ui/Text';
 import { fetchFavoriteEmployees } from '../api/directory/client';
 import type { Employee } from '../api/directory/types';
 import { EmployeeTable } from '../components/EmployeeTable';
+import { RetryState } from '../components/RetryState';
 import { useFavoriteEmployees } from '../components/useFavoriteEmployees';
+import { ignorePromise } from '../utils/ignorePromise';
 
 const Page = styled('section')(({ theme }) => ({
   display: 'flex',
@@ -68,6 +70,7 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
   const { favoriteIds, toggleFavorite, isReady } = useFavoriteEmployees();
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [viewState, setViewState] = useState<ViewState>('loading');
+  const [retryToken, setRetryToken] = useState(0);
 
   useEffect(() => {
     let isActive = true;
@@ -104,7 +107,7 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
     return () => {
       isActive = false;
     };
-  }, [favoriteIds, isReady]);
+  }, [favoriteIds, isReady, retryToken]);
 
   return (
     <Page>
@@ -121,9 +124,12 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
           </CenteredState>
         ) : null}
         {viewState === 'error' ? (
-          <EmptyState
+          <RetryState
             title="Не удалось загрузить избранное"
             description="Попробуйте переключить mock-сценарий или открыть страницу позже."
+            onRetry={() => {
+              setRetryToken((currentValue) => currentValue + 1);
+            }}
           />
         ) : null}
         {viewState === 'empty' ? (
@@ -138,10 +144,10 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
             employees={employees}
             favoriteIds={favoriteIds}
             onToggleFavorite={(employeeId) => {
-              void toggleFavorite(employeeId);
+              ignorePromise(toggleFavorite(employeeId));
             }}
             onOpenEmployee={(employee) => {
-              void navigate(`/employee/${employee.id}${location.search}`);
+              ignorePromise(navigate(`/employee/${employee.id}${location.search}`));
             }}
           />
         ) : null}

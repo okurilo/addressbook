@@ -13,6 +13,8 @@ import type {
   ReferencePhone,
   ReferencePhoneCategory,
 } from '../api/directory/referencePhones';
+import { RetryState } from '../components/RetryState';
+import { ignorePromise } from '../utils/ignorePromise';
 
 const Page = styled('section')(({ theme }) => ({
   display: 'grid',
@@ -162,6 +164,8 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
   const [phones, setPhones] = useState<ReferencePhone[]>([]);
   const [categoriesState, setCategoriesState] = useState<CategoriesState>('loading');
   const [phonesState, setPhonesState] = useState<PhonesState>('loading');
+  const [categoriesRetryToken, setCategoriesRetryToken] = useState(0);
+  const [phonesRetryToken, setPhonesRetryToken] = useState(0);
   const categoryFromUrl = new URLSearchParams(location.search).get('categoryId') ?? '';
   const activeCategoryId = categoryFromUrl === '' ? categories[0]?.id ?? '' : categoryFromUrl;
   const activeCategory = categories.find((item) => item.id === activeCategoryId) ?? null;
@@ -183,9 +187,11 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
         setCategoriesState(nextCategories.length === 0 ? 'empty' : 'success');
 
         if (nextCategories.length > 0 && categoryFromUrl === '') {
-          void navigate(`/reference-phones?categoryId=${nextCategories[0].id}`, {
-            replace: true,
-          });
+          ignorePromise(
+            navigate(`/reference-phones?categoryId=${nextCategories[0].id}`, {
+              replace: true,
+            }),
+          );
         }
       } catch {
         if (!isActive) {
@@ -202,7 +208,7 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
     return () => {
       isActive = false;
     };
-  }, [categoryFromUrl, navigate]);
+  }, [categoriesRetryToken, categoryFromUrl, navigate]);
 
   useEffect(() => {
     let isActive = true;
@@ -240,10 +246,10 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
     return () => {
       isActive = false;
     };
-  }, [activeCategoryId, categoriesState]);
+  }, [activeCategoryId, categoriesState, phonesRetryToken]);
 
   const openCategory = (categoryId: string): void => {
-    void navigate(`/reference-phones?categoryId=${categoryId}`, { replace: true });
+    ignorePromise(navigate(`/reference-phones?categoryId=${categoryId}`, { replace: true }));
   };
 
   if (categoriesState === 'loading') {
@@ -256,9 +262,12 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
 
   if (categoriesState === 'error') {
     return (
-      <EmptyState
+      <RetryState
         title="Не удалось загрузить категории"
         description="Попробуйте переключить mock-сценарий или открыть экран позже."
+        onRetry={() => {
+          setCategoriesRetryToken((currentValue) => currentValue + 1);
+        }}
       />
     );
   }
@@ -301,9 +310,12 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
         ) : null}
 
         {phonesState === 'error' ? (
-          <EmptyState
+          <RetryState
             title="Не удалось загрузить службы"
             description="Попробуйте переключить mock-сценарий или открыть категорию позже."
+            onRetry={() => {
+              setPhonesRetryToken((currentValue) => currentValue + 1);
+            }}
           />
         ) : null}
 

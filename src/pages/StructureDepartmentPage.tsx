@@ -18,8 +18,10 @@ import type {
 } from '../api/directory/departments';
 import type { Employee } from '../api/directory/types';
 import { EmployeeTable } from '../components/EmployeeTable';
+import { RetryState } from '../components/RetryState';
 import { useFavoriteEmployees } from '../components/useFavoriteEmployees';
 import { routePaths } from '../routes/routePaths';
+import { ignorePromise } from '../utils/ignorePromise';
 
 type StructureDepartmentPageProps = RouteComponentProps & {
   departmentId?: string;
@@ -110,6 +112,7 @@ export const StructureDepartmentPage = ({
   const [navItems, setNavItems] = useState<DepartmentNode[]>([]);
   const [details, setDetails] = useState<DepartmentDetails | null>(null);
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [retryToken, setRetryToken] = useState(0);
 
   useEffect(() => {
     let isActive = true;
@@ -229,10 +232,10 @@ export const StructureDepartmentPage = ({
     return () => {
       isActive = false;
     };
-  }, [childrenCache, departmentId, detailsCache, employeesCache]);
+  }, [childrenCache, departmentId, detailsCache, employeesCache, retryToken]);
 
   const openDepartment = (targetDepartmentId: string): void => {
-    void navigate(`/structure/${targetDepartmentId}`);
+    ignorePromise(navigate(`/structure/${targetDepartmentId}`));
   };
 
   if (viewState === 'loading') {
@@ -254,9 +257,12 @@ export const StructureDepartmentPage = ({
 
   if (viewState === 'error' || details === null) {
     return (
-      <EmptyState
+      <RetryState
         title="Не удалось загрузить подразделение"
         description="Попробуйте переключить mock-сценарий или открыть подразделение позже."
+        onRetry={() => {
+          setRetryToken((currentValue) => currentValue + 1);
+        }}
       />
     );
   }
@@ -270,7 +276,7 @@ export const StructureDepartmentPage = ({
           type="button"
           onClick={() => {
             if (details.parentId === null) {
-              void navigate(routePaths.structure);
+              ignorePromise(navigate(routePaths.structure));
               return;
             }
 
@@ -305,7 +311,7 @@ export const StructureDepartmentPage = ({
           <BreadcrumbButton
             type="button"
             onClick={() => {
-              void navigate(routePaths.structure);
+              ignorePromise(navigate(routePaths.structure));
             }}
           >
             Структура
@@ -364,10 +370,10 @@ export const StructureDepartmentPage = ({
             employees={employees}
             favoriteIds={favoriteIds}
             onToggleFavorite={(employeeId) => {
-              void toggleFavorite(employeeId);
+              ignorePromise(toggleFavorite(employeeId));
             }}
             onOpenEmployee={(employee) => {
-              void navigate(`/employee/${employee.id}`);
+              ignorePromise(navigate(`/employee/${employee.id}`));
             }}
           />
         )}

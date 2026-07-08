@@ -7,6 +7,8 @@ import { Spinner } from '@pulse/ui/Spinner';
 import { Text } from '@pulse/ui/Text';
 import { fetchRootDepartments } from '../api/directory/departmentsClient';
 import type { DepartmentSummary } from '../api/directory/departments';
+import { RetryState } from '../components/RetryState';
+import { ignorePromise } from '../utils/ignorePromise';
 
 const Page = styled('section')(({ theme }) => ({
   display: 'flex',
@@ -64,6 +66,7 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
   const [items, setItems] = useState<DepartmentSummary[]>([]);
   const [totalEmployees, setTotalEmployees] = useState(0);
   const [viewState, setViewState] = useState<ViewState>('loading');
+  const [retryToken, setRetryToken] = useState(0);
 
   useEffect(() => {
     let isActive = true;
@@ -97,7 +100,7 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
     return () => {
       isActive = false;
     };
-  }, []);
+  }, [retryToken]);
 
   return (
     <Page>
@@ -122,9 +125,12 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
       ) : null}
 
       {viewState === 'error' ? (
-        <EmptyState
+        <RetryState
           title="Не удалось загрузить структуру"
           description="Попробуйте переключить mock-сценарий или открыть экран позже."
+          onRetry={() => {
+            setRetryToken((currentValue) => currentValue + 1);
+          }}
         />
       ) : null}
 
@@ -142,7 +148,7 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
               key={department.id}
               type="button"
               onClick={() => {
-                void navigate(`/structure/${department.id}`);
+                ignorePromise(navigate(`/structure/${department.id}`));
               }}
             >
               <Text size="lg" weight="semibold">
