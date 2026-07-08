@@ -27,4 +27,12 @@ export const GlobalStyles = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  [role='button']:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.accent};
+    outline-offset: 2px;
+  }
 `;

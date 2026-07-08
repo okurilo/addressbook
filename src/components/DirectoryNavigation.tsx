@@ -1,7 +1,8 @@
-import { useLocation, useNavigate } from '@reach/router';
 import { styled } from 'styled-components';
 import { Text } from '@pulse/ui/Text';
+import { useAppLocation, useAppNavigate } from '../routes/appRouter';
 import { routePaths } from '../routes/routePaths';
+import { ignorePromise } from '../utils/ignorePromise';
 
 type NavigationItem = {
   key: 'contacts' | 'structure' | 'referencePhones';
@@ -49,8 +50,8 @@ const NavButton = styled('button')<{ $active: boolean }>(({ theme, $active }) =>
 }));
 
 export const DirectoryNavigation = (): JSX.Element => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = useAppLocation();
+  const navigate = useAppNavigate();
 
   return (
     <Nav aria-label="Навигация по разделам справочника">
@@ -64,7 +65,7 @@ export const DirectoryNavigation = (): JSX.Element => {
             $active={isActive}
             aria-current={isActive ? 'page' : undefined}
             onClick={() => {
-              void navigate(item.href);
+              ignorePromise(navigate(item.href));
             }}
           >
             <Text weight={isActive ? 'semibold' : 'medium'} tone={isActive ? 'primary' : 'secondary'}>

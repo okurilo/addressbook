@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import type { RouteComponentProps } from '@reach/router';
-import { useLocation, useNavigate } from '@reach/router';
 import { styled } from 'styled-components';
 import { EmptyState } from '@pulse/ui/EmptyState';
 import { Spinner } from '@pulse/ui/Spinner';
@@ -8,8 +7,11 @@ import { Text } from '@pulse/ui/Text';
 import { fetchEmployees, fetchRecentEmployees } from '../api/directory/client';
 import type { Employee } from '../api/directory/types';
 import { EmployeeTable } from '../components/EmployeeTable';
+import { RetryState } from '../components/RetryState';
 import { useDebouncedValue } from '../components/useDebouncedValue';
 import { useFavoriteEmployees } from '../components/useFavoriteEmployees';
+import { useAppLocation, useAppNavigate } from '../routes/appRouter';
+import { ignorePromise } from '../utils/ignorePromise';
 
 const Section = styled('section')(({ theme }) => ({
   display: 'flex',
@@ -40,13 +42,14 @@ const CenteredState = styled('div')(({ theme }) => ({
 type ViewState = 'idle' | 'loading' | 'success' | 'empty' | 'error';
 
 export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = useAppLocation();
+  const navigate = useAppNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const query = new URLSearchParams(location.search).get('q') ?? '';
   const debouncedQuery = useDebouncedValue(query, 280);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [viewState, setViewState] = useState<ViewState>('idle');
+  const [retryToken, setRetryToken] = useState(0);
 
   useEffect(() => {
     let isActive = true;
@@ -81,7 +84,7 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
     return () => {
       isActive = false;
     };
-  }, [debouncedQuery]);
+  }, [debouncedQuery, retryToken]);
 
   const title = query.trim() === '' ? 'Недавние' : 'Результаты поиска';
 
@@ -100,9 +103,12 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
           </CenteredState>
         ) : null}
         {viewState === 'error' ? (
-          <EmptyState
+          <RetryState
             title="Не удалось загрузить сотрудников"
             description="Попробуйте изменить запрос или переключить mock-сценарий."
+            onRetry={() => {
+              setRetryToken((currentValue) => currentValue + 1);
+            }}
           />
         ) : null}
         {viewState === 'empty' ? (
@@ -119,9 +125,11 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
           <EmployeeTable
             employees={employees}
             favoriteIds={favoriteIds}
-            onToggleFavorite={toggleFavorite}
+            onToggleFavorite={(employeeId) => {
+              ignorePromise(toggleFavorite(employeeId));
+            }}
             onOpenEmployee={(employee) => {
-              void navigate(`/employee/${employee.id}${location.search}`);
+              ignorePromise(navigate(`/employee/${employee.id}${location.search}`));
             }}
           />
         ) : null}

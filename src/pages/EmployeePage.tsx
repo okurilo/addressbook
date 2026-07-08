@@ -1,6 +1,5 @@
 import type { RouteComponentProps } from '@reach/router';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from '@reach/router';
 import { styled } from 'styled-components';
 import { Button } from '@pulse/ui/Button';
 import { EmptyState } from '@pulse/ui/EmptyState';
@@ -10,7 +9,10 @@ import { DirectoryApiError, fetchEmployeeById } from '../api/directory/client';
 import type { Employee, EmployeeStatus } from '../api/directory/types';
 import { EmployeeActions } from '../components/EmployeeActions';
 import { EmployeeAvatar } from '../components/EmployeeAvatar';
+import { RetryState } from '../components/RetryState';
 import { useFavoriteEmployees } from '../components/useFavoriteEmployees';
+import { useAppLocation, useAppNavigate } from '../routes/appRouter';
+import { ignorePromise } from '../utils/ignorePromise';
 
 type EmployeePageProps = RouteComponentProps & {
   employeeId?: string;
@@ -97,11 +99,12 @@ const copyValue = async (value: string): Promise<void> => {
 };
 
 export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = useAppNavigate();
+  const location = useAppLocation();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [viewState, setViewState] = useState<ViewState>('loading');
+  const [retryToken, setRetryToken] = useState(0);
 
   useEffect(() => {
     let isActive = true;
@@ -145,15 +148,15 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
     return () => {
       isActive = false;
     };
-  }, [employeeId]);
+  }, [employeeId, retryToken]);
 
   const handleBack = (): void => {
     if (window.history.length > 1) {
-      void navigate(-1);
+      ignorePromise(navigate(-1));
       return;
     }
 
-    void navigate(`/${location.search}`);
+    ignorePromise(navigate(`/${location.search}`));
   };
 
   if (viewState === 'loading') {
@@ -175,9 +178,12 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
 
   if (viewState === 'error' || employee === null) {
     return (
-      <EmptyState
+      <RetryState
         title="Не удалось загрузить визитку"
         description="Переключите mock-сценарий или попробуйте открыть сотрудника позже."
+        onRetry={() => {
+          setRetryToken((currentValue) => currentValue + 1);
+        }}
       />
     );
   }
@@ -195,7 +201,7 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
           {
             label: 'Показать в структуре',
             onClick: () => {
-              void navigate(`/structure/${employee.departmentId}`);
+              ignorePromise(navigate(`/structure/${employee.departmentId}`));
             },
           },
         ]
@@ -215,7 +221,7 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
           {
             label: 'Показать в структуре',
             onClick: () => {
-              void navigate(`/structure/${employee.departmentId}`);
+              ignorePromise(navigate(`/structure/${employee.departmentId}`));
             },
           },
         ];
@@ -246,7 +252,7 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
           emailLabel={employee.email}
           isFavorite={favoriteIds.includes(employee.id)}
           onToggleFavorite={() => {
-            toggleFavorite(employee.id);
+            ignorePromise(toggleFavorite(employee.id));
           }}
           extraActions={extraActions}
         />
