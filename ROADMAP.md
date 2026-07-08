@@ -221,27 +221,27 @@
 
 ### Итерация 7. Справочные телефоны
 
-- [ ] Создать типы:
-  - [ ] `ReferencePhoneCategory`
-  - [ ] `ReferencePhone`
-  - [ ] `ReferencePhoneResponse`
-- [ ] Создать mock API:
-  - [ ] `GET /api/directory/reference-phone-categories`
-  - [ ] `GET /api/directory/reference-phones?categoryId={categoryId}`
-- [ ] Добавить минимум две категории.
-- [ ] Добавить минимум шесть вымышленных служб.
-- [ ] Не использовать реальные телефоны со скриншотов.
-- [ ] Реализовать переключение категорий.
-- [ ] Реализовать:
-  - [ ] звонок через `tel:`
-  - [ ] копирование номера
-- [ ] Обработать состояния:
-  - [ ] loading
-  - [ ] empty
-  - [ ] error
-  - [ ] success
-- [ ] Прогнать `npm run typecheck`.
-- [ ] Прогнать `npm run build`.
+- [x] Создать типы:
+  - [x] `ReferencePhoneCategory`
+  - [x] `ReferencePhone`
+  - [x] `ReferencePhoneResponse`
+- [x] Создать mock API:
+  - [x] `GET /api/directory/reference-phone-categories`
+  - [x] `GET /api/directory/reference-phones?categoryId={categoryId}`
+- [x] Добавить минимум две категории.
+- [x] Добавить минимум шесть вымышленных служб.
+- [x] Не использовать реальные телефоны со скриншотов.
+- [x] Реализовать переключение категорий.
+- [x] Реализовать:
+  - [x] звонок через `tel:`
+  - [x] копирование номера
+- [x] Обработать состояния:
+  - [x] loading
+  - [x] empty
+  - [x] error
+  - [x] success
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
 
 ### Итерация 8. Стабилизация PoC
 

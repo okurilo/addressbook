@@ -3,6 +3,11 @@ import type {
   DepartmentNode,
   DepartmentRootResponse,
 } from '../api/directory/departments';
+import type {
+  ReferencePhone,
+  ReferencePhoneCategory,
+  ReferencePhoneResponse,
+} from '../api/directory/referencePhones';
 import type { Employee, EmployeeSearchResponse } from '../api/directory/types';
 import {
   departmentDetailsFixture,
@@ -10,6 +15,10 @@ import {
 } from './fixtures/departmentTree';
 import { rootDepartmentsFixture } from './fixtures/departments';
 import { employeesFixture, recentEmployeeIds } from './fixtures/employees';
+import {
+  referencePhoneCategoriesFixture,
+  referencePhonesFixture,
+} from './fixtures/referencePhones';
 import { mockRoutes } from './fixtures/routes';
 import type { MockScenario } from './types';
 
@@ -174,7 +183,22 @@ const getSuccessPayload = (url: URL): unknown => {
   }
 
   if (url.pathname === '/api/directory/reference-phones') {
-    return { items: [] };
+    const categoryId = url.searchParams.get('categoryId');
+    const items: ReferencePhone[] =
+      categoryId === null
+        ? referencePhonesFixture
+        : referencePhonesFixture.filter((item) => item.categoryId === categoryId);
+    const response: ReferencePhoneResponse = {
+      items,
+    };
+
+    return response;
+  }
+
+  if (url.pathname === '/api/directory/reference-phone-categories') {
+    return {
+      items: referencePhoneCategoriesFixture as ReferencePhoneCategory[],
+    };
   }
 
   return { message: 'Mock route not found' };
@@ -222,6 +246,14 @@ export const installFetchMock = (): void => {
       }
 
       if (url.pathname === '/api/directory/favorites' && method === 'GET') {
+        return createJsonResponse(200, { items: [] });
+      }
+
+      if (url.pathname === '/api/directory/reference-phone-categories') {
+        return createJsonResponse(200, { items: [] });
+      }
+
+      if (url.pathname === '/api/directory/reference-phones') {
         return createJsonResponse(200, { items: [] });
       }
 
