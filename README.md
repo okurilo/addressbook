@@ -1,6 +1,6 @@
 # PoC Справочника
 
-Локальная frontend-песочница для разработки PoC интерфейса справочника без доступа к внутреннему окружению, реальной Pulse UI и backend.
+Локальная frontend-песочница для разработки PoC интерфейса справочника без реальной Pulse UI и собственного backend.
 
 ## Стек
 
@@ -24,35 +24,60 @@ npm run build
 
 - Используются только именованные импорты.
 - `any` запрещён.
-- Backend и реальные интеграции в PoC не добавляются.
+- Собственный backend не добавляется; реальные frontend API подключаются через общий `src/http-requests/http.ts`.
 - Изменения вносятся только в рамках активной итерации.
 - После каждой итерации обязательны `npm run typecheck` и `npm run build`.
+- Полный контракт host theme и доступные Pulse tokens описаны в [`docs/THEME.md`](docs/THEME.md).
+- Проверенные контракты компонентов Pulse UI, aliases и исключения описаны в [`docs/PULSE-UI.md`](docs/PULSE-UI.md).
+- Контракт общего запросника и поиск сотрудников описаны в [`docs/HTTP-REQUESTS.md`](docs/HTTP-REQUESTS.md).
 
 ## Доступные маршруты
 
-- `/`
-- `/employee/:employeeId`
-- `/structure`
-- `/structure/:departmentId`
-- `/reference-phones`
-- `/favorites`
+Локальная host-обвязка использует базовый путь `/platform/globalsearch`:
+
+- `/platform/globalsearch/addressbook`
+- `/platform/globalsearch/addressbook/employee/:employeeId`
+- `/platform/globalsearch/addressbook/structure`
+- `/platform/globalsearch/addressbook/structure/:departmentId`
+- `/platform/globalsearch/addressbook/reference-phones`
+- `/platform/globalsearch/addressbook/favorites`
+
+Маршруты объявлены через `@reach/router`: общий layout обёрнут в `LocationProvider`, экраны выбираются `Router`, а переходы выполняются через `useNavigate`/`Redirect`. Прямое управление `window.history` в приложении не используется.
+
+`@reach/router@1.3.4` является legacy-библиотекой и не публикует location-обновления в React 18 `StrictMode`, поэтому локальная точка входа работает без `StrictMode` до отдельной миграции роутера.
 
 ## Mock-сценарии
 
-Слева доступна служебная панель переключения сценариев:
+Доступны сценарии локального fetch-mock:
 
 - `success`
 - `loading`
 - `empty`
 - `error`
 
-Панель намеренно визуально отделена от продуктовой области.
+Активный сценарий хранится в `localStorage` под ключом `addressbook-mock-scenario`.
+
+Mock-сценарии продолжают обслуживать недавние контакты, избранное, структуру и справочные телефоны. Поиск сотрудников с непустым `q` направляется в реальный `multiSearch` и не зависит от mock-сценария.
+
+## API поиска
+
+Поиск использует общий `http = new HttpRequest('/api-web/', httpRequestOptions)` и вызывает `http.get`:
+
+```text
+/api-web/globalsearch/api/v3/multiSearch
+  ?query={query}
+  &page=0
+  &size=20
+  &category=PERSONADDRESSBOOK
+```
+
+Общий запросник добавляет заголовки `HRP-Device-Type` и `X-HRP-Device-Type`. Результаты читаются из `data.PERSONADDRESSBOOK.data.content`. Текущее значение выбранной структуры — `null`, поэтому `orgFilter` в запрос не добавляется.
 
 ## Реализованный scope
 
 - Общий layout справочника с поисковой строкой, избранным и верхней навигацией.
 - Экран `Все контакты` с недавними контактами, поиском, query-параметром `q` и таблицей сотрудников.
-- Визитка сотрудника с базовыми действиями и переходом в кадровую структуру.
+- Inline-карточка сотрудника, раскрывающаяся непосредственно под выбранной строкой таблицы без смены URL.
 - Единое избранное с сохранением mock-состояния в `localStorage`.
 - Корневой и вложенный экраны кадровой структуры.
 - Раздел справочных телефонов с категориями, звонком и копированием номера.
@@ -62,13 +87,14 @@ npm run build
 - SberAgile.
 - ФОС.
 - Рабочие группы и пользовательские папки.
-- Реальные backend-интеграции.
+- Реальные интеграции, кроме явно подключённого поиска сотрудников.
 - Мобильная версия.
 - Администрирование групп.
 
 ## Ограничения PoC
 
-- Все данные и состояния работают через локальные typed mocks.
-- `@pulse/ui/*` замещён локальными stub-компонентами.
-- Mock-сценарии `success/loading/empty/error` влияют на все `/api/*` запросы.
-- Сборка артефактов в `dist/` хранится в репозитории в рамках этой песочницы.
+- Все данные и состояния, кроме поиска сотрудников, работают через локальные typed mocks.
+- Исходный модуль находится в `src/apps/AddressBook`; изменения внутри него выполняются только по отдельному явному продуктовому запросу.
+- `@pulse/ui/components/*`, i18n, breadcrumbs, Settings и host theme замещены внешней обвязкой.
+- Pulse-stubs создаются только для реально используемых imports и проверяются compile-time контрактом.
+- Mock-сценарии `success/loading/empty/error` влияют только на локальные `/api/*` запросы; реальный поиск идёт через `/api-web/*`.

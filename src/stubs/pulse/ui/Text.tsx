@@ -1,50 +1,184 @@
 import type { HTMLAttributes, PropsWithChildren } from 'react';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
+import type { TypographyVariant } from '../../../host/theme';
 
-const sizeMap = {
-  sm: 13,
-  md: 15,
-  lg: 18,
-  xl: 28,
-} as const;
+type ResponsiveValue<T> =
+  | T
+  | readonly (T | null)[]
+  | Readonly<Record<string, T | null>>;
 
-const weightMap = {
-  regular: 400,
-  medium: 500,
-  semibold: 600,
-  bold: 700,
-} as const;
+type SpaceValue = number | string;
 
-const StyledText = styled('span')<{
-  $size: keyof typeof sizeMap;
-  $weight: keyof typeof weightMap;
-  $tone: 'primary' | 'secondary';
-}>(({ theme, $size, $weight, $tone }) => ({
-  display: 'block',
-  fontSize: sizeMap[$size],
-  lineHeight: 1.4,
-  fontWeight: weightMap[$weight],
-  color: $tone === 'primary' ? theme.colors.textPrimary : theme.colors.textSecondary,
-}));
+type SpaceProps = {
+  m?: ResponsiveValue<SpaceValue>;
+  margin?: ResponsiveValue<SpaceValue>;
+  mt?: ResponsiveValue<SpaceValue>;
+  marginTop?: ResponsiveValue<SpaceValue>;
+  mr?: ResponsiveValue<SpaceValue>;
+  marginRight?: ResponsiveValue<SpaceValue>;
+  mb?: ResponsiveValue<SpaceValue>;
+  marginBottom?: ResponsiveValue<SpaceValue>;
+  ml?: ResponsiveValue<SpaceValue>;
+  marginLeft?: ResponsiveValue<SpaceValue>;
+  mx?: ResponsiveValue<SpaceValue>;
+  my?: ResponsiveValue<SpaceValue>;
+  p?: ResponsiveValue<SpaceValue>;
+  padding?: ResponsiveValue<SpaceValue>;
+  pt?: ResponsiveValue<SpaceValue>;
+  paddingTop?: ResponsiveValue<SpaceValue>;
+  pr?: ResponsiveValue<SpaceValue>;
+  paddingRight?: ResponsiveValue<SpaceValue>;
+  pb?: ResponsiveValue<SpaceValue>;
+  paddingBottom?: ResponsiveValue<SpaceValue>;
+  pl?: ResponsiveValue<SpaceValue>;
+  paddingLeft?: ResponsiveValue<SpaceValue>;
+  px?: ResponsiveValue<SpaceValue>;
+  py?: ResponsiveValue<SpaceValue>;
+};
+
+type ColorProps = {
+  color?: ResponsiveValue<string>;
+  bg?: ResponsiveValue<string>;
+  backgroundColor?: ResponsiveValue<string>;
+  opacity?: ResponsiveValue<number>;
+};
+
+type TextStyleProps = SpaceProps & ColorProps;
+
+const firstResponsiveValue = <T extends string | number>(
+  value: ResponsiveValue<T> | undefined
+): T | undefined => {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  if (Array.isArray(value)) {
+    return value.find((item): item is T => item !== null);
+  }
+
+  if (typeof value === 'object') {
+    return Object.values(value).find((item): item is T => item !== null);
+  }
+
+  return value as T;
+};
+
+const StyledText = styled.span<{
+  $variant: TypographyVariant;
+  $textStyles: TextStyleProps;
+}>(({ theme, $variant, $textStyles }) => {
+  const resolveSpace = (value: ResponsiveValue<SpaceValue> | undefined): SpaceValue | undefined => {
+    const resolved = firstResponsiveValue(value);
+
+    if (typeof resolved !== 'number') {
+      return resolved;
+    }
+
+    return theme.space[resolved] ?? resolved;
+  };
+  const margin = resolveSpace($textStyles.margin ?? $textStyles.m);
+  const marginX = resolveSpace($textStyles.mx);
+  const marginY = resolveSpace($textStyles.my);
+  const padding = resolveSpace($textStyles.padding ?? $textStyles.p);
+  const paddingX = resolveSpace($textStyles.px);
+  const paddingY = resolveSpace($textStyles.py);
+
+  return {
+    display: 'block',
+    ...theme.typography[$variant],
+    color: firstResponsiveValue($textStyles.color) ?? theme.tokens.current.text.primary,
+    backgroundColor: firstResponsiveValue(
+      $textStyles.backgroundColor ?? $textStyles.bg
+    ),
+    opacity: firstResponsiveValue($textStyles.opacity),
+    margin,
+    marginTop: resolveSpace($textStyles.marginTop ?? $textStyles.mt) ?? marginY,
+    marginRight: resolveSpace($textStyles.marginRight ?? $textStyles.mr) ?? marginX,
+    marginBottom: resolveSpace($textStyles.marginBottom ?? $textStyles.mb) ?? marginY,
+    marginLeft: resolveSpace($textStyles.marginLeft ?? $textStyles.ml) ?? marginX,
+    padding,
+    paddingTop: resolveSpace($textStyles.paddingTop ?? $textStyles.pt) ?? paddingY,
+    paddingRight: resolveSpace($textStyles.paddingRight ?? $textStyles.pr) ?? paddingX,
+    paddingBottom: resolveSpace($textStyles.paddingBottom ?? $textStyles.pb) ?? paddingY,
+    paddingLeft: resolveSpace($textStyles.paddingLeft ?? $textStyles.pl) ?? paddingX,
+  };
+});
 
 export type TextProps = PropsWithChildren<
-  HTMLAttributes<HTMLElement> & {
-    as?: keyof JSX.IntrinsicElements;
-    size?: keyof typeof sizeMap;
-    weight?: keyof typeof weightMap;
-    tone?: 'primary' | 'secondary';
-  }
+  Omit<HTMLAttributes<HTMLElement>, 'color'> &
+    TextStyleProps & {
+      variant: ResponsiveValue<TypographyVariant>;
+    }
 >;
 
 export const Text = ({
-  as = 'span',
-  size = 'md',
-  weight = 'regular',
-  tone = 'primary',
+  variant,
+  color,
+  bg,
+  backgroundColor,
+  opacity,
+  m,
+  margin,
+  mt,
+  marginTop,
+  mr,
+  marginRight,
+  mb,
+  marginBottom,
+  ml,
+  marginLeft,
+  mx,
+  my,
+  p,
+  padding,
+  pt,
+  paddingTop,
+  pr,
+  paddingRight,
+  pb,
+  paddingBottom,
+  pl,
+  paddingLeft,
+  px,
+  py,
   children,
   ...props
-}: TextProps): JSX.Element => (
-  <StyledText as={as} $size={size} $weight={weight} $tone={tone} {...props}>
-    {children}
-  </StyledText>
-);
+}: TextProps): JSX.Element => {
+  const resolvedVariant = firstResponsiveValue(variant) ?? 'body1Regular';
+  const textStyles: TextStyleProps = {
+    color,
+    bg,
+    backgroundColor,
+    opacity,
+    m,
+    margin,
+    mt,
+    marginTop,
+    mr,
+    marginRight,
+    mb,
+    marginBottom,
+    ml,
+    marginLeft,
+    mx,
+    my,
+    p,
+    padding,
+    pt,
+    paddingTop,
+    pr,
+    paddingRight,
+    pb,
+    paddingBottom,
+    pl,
+    paddingLeft,
+    px,
+    py,
+  };
+
+  return (
+    <StyledText $variant={resolvedVariant} $textStyles={textStyles} {...props}>
+      {children}
+    </StyledText>
+  );
+};
