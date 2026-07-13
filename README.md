@@ -49,6 +49,17 @@ npm run build
 
 Маршруты объявлены через `@reach/router`: общий layout обёрнут в `LocationProvider`, экраны выбираются `Router`, а переходы выполняются через `useNavigate`/`Redirect`. Прямое управление `window.history` в приложении не используется.
 
+При встраивании в существующий Reach Router модуль подключается с wildcard, чтобы внешний `default`-маршрут не перехватывал дочерние URL:
+
+```tsx
+<Router primary={false}>
+  <Layout default />
+  <AddressBook path="/addressbook/*" />
+</Router>
+```
+
+Родительский router уже находится под `/platform/globalsearch`, поэтому этот route соответствует полному публичному префиксу `/platform/globalsearch/addressbook`. Внутренний Router AddressBook имеет `basepath="/"`: его `routePaths` уже абсолютные и не должны повторно получать внешний basepath.
+
 `@reach/router@1.3.4` является legacy-библиотекой и не публикует location-обновления в React 18 `StrictMode`, поэтому локальная точка входа работает без `StrictMode` до отдельной миграции роутера.
 
 ## Mock-сценарии

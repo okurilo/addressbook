@@ -103,6 +103,8 @@
 - Общий layout, который использует location, размещать внутри `LocationProvider`, но выше `Router`, чтобы он не перемонтировался между экранами.
 - Для чтения URL использовать `useLocation`, для программных переходов — `useNavigate`, для декларативного редиректа — `Redirect`.
 - Все публичные URL и builders динамических URL хранить в `routes/routePaths.ts`.
+- При встраивании AddressBook во внешний Reach Router родительский маршрут обязан захватывать дочерние URL через `path="/addressbook/*"`.
+- Внутренний Router AddressBook использует `basepath="/"`, потому что его routePaths уже содержат полный публичный host path; нельзя одновременно наследовать внешний basepath и повторно добавлять его к абсолютным путям.
 - Нельзя напрямую вызывать `window.history.pushState`, `replaceState`, подписываться на `popstate` или создавать собственный router context.
 - Нельзя вручную разбирать pathname регулярными выражениями для выбора React-экрана.
 - Query-параметры читать из `location.search`; router должен сам сохранять раздельные `pathname`, `search` и `hash`.

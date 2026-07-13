@@ -63,3 +63,4 @@
 - Обе полные выгрузки типизации Pulse UI добавлены без изменений в `docs/pulse-ui-types/raw`; их SHA-256 фиксируется генерируемым индексом.
 - Для экономии контекста LLM команда `npm run docs:pulse-types` разбивает 264 исходных секции на отдельные `generated/src/**` документы, строит индекс компонентов, обратный индекс экспортов и JSON-манифест зависимостей.
 - Обязательный маршрут работы с DS: краткая памятка `docs/PULSE-UI.md` → поиск в `docs/pulse-ui-types/INDEX.md`/`EXPORTS.md` → чтение только точных generated-файлов и необходимых импортов; полные raw-файлы не загружаются без необходимости.
+- Для встраивания в host Reach Router AddressBook подключается как `path="/addressbook/*"`; wildcard удерживает модуль на дочерних URL, а внутренний `Router basepath="/"` не допускает удвоения `/platform/globalsearch/addressbook` у абсолютных routePaths.

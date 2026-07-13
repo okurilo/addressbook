@@ -492,3 +492,11 @@
 - [x] Обновить `CODEX-RULES.MD`, `CODEX.md` и `docs/THEME.md`.
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.
+
+### Итерация 26. Встраивание AddressBook во внешний Reach Router
+
+- [x] Отключить наследование внешнего basepath внутренним Router AddressBook.
+- [x] Зафиксировать обязательный wildcard `path="/addressbook/*"` в host-маршруте.
+- [x] Документировать причину удвоения абсолютных routePaths во вложенном Router.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
