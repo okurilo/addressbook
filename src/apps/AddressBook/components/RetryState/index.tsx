@@ -1,6 +1,4 @@
-import { Button } from '@pulse/ui/components/Button';
-import { EmptyState } from '@pulse/ui/components/EmptyState';
-import { Actions } from './styled';
+import { Empty } from '@pulse/ui/components/Empty';
 
 type RetryStateProps = {
   title: string;
@@ -9,13 +7,11 @@ type RetryStateProps = {
 };
 
 export const RetryState = ({ title, description, onRetry }: RetryStateProps): JSX.Element => (
-  <EmptyState
+  <Empty
+    type="wait"
     title={title}
     description={description}
-    illustration={
-      <Actions>
-        <Button onClick={onRetry}>Повторить</Button>
-      </Actions>
-    }
+    buttonLabel="Повторить"
+    onClick={onRetry}
   />
 );

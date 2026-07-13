@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import type { RouteComponentProps } from '@reach/router';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
-import { EmptyState } from '@pulse/ui/components/EmptyState';
+import { Empty } from '@pulse/ui/components/Empty';
 import { fetchFavoriteEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
 import { EmployeeTable } from '../../components/EmployeeTable';
 import { RetryState } from '../../components/RetryState';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { ignorePromise } from '../../utils/ignorePromise';
-import { Page, Header, FilterChip, Surface, CenteredState, EmptyIllustration } from './styled';
+import { Page, Header, FilterChip, Surface, CenteredState } from './styled';
 
 type ViewState = 'loading' | 'success' | 'empty' | 'error';
 
@@ -78,8 +78,8 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
           />
         ) : null}
         {viewState === 'empty' ? (
-          <EmptyState
-            illustration={<EmptyIllustration>★</EmptyIllustration>}
+          <Empty
+            type="noData"
             title="Тут пока пусто"
             description="Добавляйте полезные контакты в избранное"
           />

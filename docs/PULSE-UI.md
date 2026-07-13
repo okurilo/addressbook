@@ -25,7 +25,7 @@
 | `components/Loader` | DS contract | `isOnColor`, `size`, `wrapped`, `children` |
 | `components/Input` | DS contract | native input props, suggestions API, `placeWhereUsed` |
 | `components/Layout` | используемый экспорт | используется только `Content`; отдельного `Layout/types.ts` в выгрузке нет |
-| `components/EmptyState` | host-adapter | отсутствует в выгрузке, сохранён по отдельному продуктовому требованию |
+| `components/Empty` | DS contract | обязательные `type`, `description`; встроенные действия через button props |
 
 ## Используемые компоненты
 
@@ -109,11 +109,51 @@ interface LoaderProps {
 
 В приложении используется только `Layout.Content` без дополнительных props. Явные типы выгрузки дополнительно описывают `Layout.Column.cols` и `Layout.Provider.offset`; не моделировать их локально до фактического использования.
 
-## Empty и исключение EmptyState
+## Empty
 
-В выгрузке присутствует `src/components/Empty/types.ts` с типами `start`, `noResults`, `wait`, `create`, `noData`. Компонента или типа `EmptyState` в выгрузке нет.
+Выгрузка содержит `src/components/Empty/types.ts`. Для пустых состояний используется только импорт:
 
-Импорт `@pulse/ui/components/EmptyState` сохранён по отдельному продуктовому требованию. В локальной среде это host-adapter, а не подтверждённая часть DS. Нельзя использовать его контракт как основание для других компонентов.
+```tsx
+import { Empty } from '@pulse/ui/components/Empty';
+```
+
+Подтверждённые базовые props:
+
+```ts
+type EmptyType = 'start' | 'noResults' | 'wait' | 'create' | 'noData';
+type Size = 'default' | 'small';
+
+interface BaseProps {
+  type: EmptyType;
+  description: string;
+  title?: string;
+  buttonLabel?: string;
+  onClick?: () => void;
+  buttonSecondaryLabel?: string;
+  onSecondaryBtnClick?: () => void;
+}
+```
+
+- `type` и `description` обязательны;
+- `start` используется для начального состояния;
+- `noResults` — когда фильтр или поиск не дал результатов;
+- `noData` — когда набор данных пуст сам по себе;
+- `wait` — для состояния, которое предлагает повторить действие;
+- `create` — когда пользователю предлагается создать сущность;
+- `illustration` отсутствует: иллюстрация определяется самим DS по `type`;
+- компонента `EmptyState` в DS нет, локальный alias для него запрещён.
+
+Пример retry:
+
+```tsx
+<Empty
+  type="wait"
+  title="Не удалось загрузить данные"
+  description="Попробуйте ещё раз"
+  buttonLabel="Повторить"
+  onClick={onRetry}
+/>
+```
 
 ## Неактивные компоненты
 
@@ -136,6 +176,6 @@ interface LoaderProps {
 - props `Loader` и `Input`;
 - обязательность `Text.variant` и отсутствие `tone/weight`;
 - наличие `Layout.Content`;
-- отдельный контракт host-adapter `EmptyState`.
+- union `Empty.type`, обязательность `description` и отсутствие prop `illustration`.
 
 Production build дополнительно подтверждает, что Vite разрешает те же import-path, что и TypeScript.

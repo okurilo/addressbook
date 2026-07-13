@@ -4,7 +4,7 @@ import { Button } from '@pulse/ui/components/Button';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
-import { EmptyState } from '@pulse/ui/components/EmptyState';
+import { Empty } from '@pulse/ui/components/Empty';
 import { DirectoryApiError, fetchEmployeeById } from '../../api/directory/client';
 import type { Employee, EmployeeStatus } from '../../api/directory/types';
 import { EmployeeAvatar } from '../../components/EmployeeAvatar';
@@ -94,7 +94,8 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
 
   if (viewState === 'notFound') {
     return (
-      <EmptyState
+      <Empty
+        type="noResults"
         title="Сотрудник не найден"
         description="Проверьте, что код сотрудника указан верно."
       />

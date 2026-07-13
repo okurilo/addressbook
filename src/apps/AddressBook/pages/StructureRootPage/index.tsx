@@ -3,7 +3,7 @@ import type { RouteComponentProps } from '@reach/router';
 import styled, { useTheme } from 'styled-components';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
-import { EmptyState } from '@pulse/ui/components/EmptyState';
+import { Empty } from '@pulse/ui/components/Empty';
 import { fetchRootDepartments } from '../../api/directory/departmentsClient';
 import type { DepartmentSummary } from '../../api/directory/departments';
 import { RetryState } from '../../components/RetryState';
@@ -139,7 +139,8 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
       ) : null}
 
       {viewState === 'empty' ? (
-        <EmptyState
+        <Empty
+          type="noData"
           title="Структура пока пуста"
           description="Для текущего mock-сценария крупные подразделения не найдены."
         />

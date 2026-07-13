@@ -37,15 +37,3 @@ export const CenteredState = styled.div(({ theme }) => ({
   padding: 32,
 }));
 
-export const EmptyIllustration = styled.div(({ theme }) => ({
-  width: 120,
-  height: 120,
-  borderRadius: 20,
-  background: 'linear-gradient(135deg, rgba(31,143,88,0.08) 0%, rgba(31,143,88,0.18) 100%)',
-  display: 'grid',
-  placeItems: 'center',
-  color: theme.tokens.current.accent.primary,
-  fontSize: 42,
-  fontWeight: 700,
-}));
-

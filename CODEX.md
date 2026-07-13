@@ -35,7 +35,7 @@
 - `HostTheme` повторяет Pulse-совместимый контракт `tokens.current`; промежуточный уровень `core` удалён из приложения и stubs.
 - Локальные Pulse-stubs повторяют подтверждённый публичный API оригинальных компонентов: `Avatar` использует `$type/$text/$size`, `Button` — `$type/$size/$state`, а `Loader` — `isOnColor/size/wrapped/children`.
 - Vite aliases и TypeScript paths поддерживаются синхронно; host-сервисы подключаются по исходным import-path через типизированные внешние адаптеры.
-- По явному продуктовому запросу активные экраны переведены с внутреннего `stubs/pulse/ui/EmptyState` на публичный импорт `@pulse/ui/components/EmptyState`; локальная среда предоставляет совместимый внешний stub через существующий Pulse alias.
+- Пустые состояния используют подтверждённый DS-компонент `@pulse/ui/components/Empty`; ошибочный `EmptyState`, его локальные stubs и prop `illustration` удалены.
 - Переход в сотрудника использует единый канонический путь `/platform/globalsearch/addressbook/employee/:employeeId` из контактов, избранного и кадровой структуры.
 - По выгрузке Pulse theme обвязка расширена полями `borderWidths`, `breakpoints`, `layout`, `mediaQueries`, `radii`, `screenSize`, deprecated `space`, полной typography и `zIndices`.
 - Typography в Pulse является набором style-объектов, поэтому stubs используют `theme.typography[variant]`, а глобальный font-family — `theme.typography.body1Regular.fontFamily`.
@@ -50,8 +50,8 @@
 - Клик по сотруднику в общей таблице не меняет маршрут: карточка раскрывается следующей строкой того же `tbody`; одновременно открыта одна карточка, повторный клик или крестик закрывают её.
 - Прямой маршрут `/employee/:employeeId` сохранён для deep-link, но таблицы контактов, избранного и подразделений его не используют для открытия карточки.
 - Полная выгрузка типов `@pulse/ui` является источником истины для DS-обвязки; вымышленные `Text.tone`, `Text.weight` и `Avatar.$initials` удалены.
-- В выгрузке `@pulse/ui` нет `EmptyState` (есть `Empty`), поэтому текущий import-path `@pulse/ui/components/EmptyState` поддерживается как явное исключение host-адаптером.
-- Повторный аудит оставил в `src/stubs/pulse/ui` только реально используемые `Avatar`, `Button`, `EmptyState`, `Input`, `Layout`, `Loader`, `Text`; неподтверждённые или несовместимые исторические stubs удалены.
+- Выгрузка `@pulse/ui` подтверждает `Empty` с обязательными `type/description`; `EmptyState` отсутствует и не поддерживается локальными aliases.
+- Повторный аудит оставил в `src/stubs/pulse/ui` только реально используемые `Avatar`, `Button`, `Empty`, `Input`, `Layout`, `Loader`, `Text`; неподтверждённые или несовместимые исторические stubs удалены.
 - `src/host/pulseUiContractAudit.ts` компиляционно проверяет DS unions, обязательные props, отсутствие вымышленных Text props и разрешение всех активных Pulse import-path.
 - Общий запросник восстановлен в исходном пути `src/http-requests/http.ts`: `HttpRequest('/api-web/', httpRequestOptions)` задаёт обработку ошибок и системные device headers.
 - Поиск сотрудников выполняется функцией `getSearchData` через `http.get`, без глобального перехвата `window.fetch`; прежний `src/host/directorySearchApi.ts` удалён.
