@@ -1,9 +1,7 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from './App';
-import { installFetchMock } from './mocks/installFetchMock';
-
-installFetchMock();
+import { ThemeProvider } from 'styled-components';
+import { AddressBook } from './apps/AddressBook';
+import { hostTheme } from './host/theme';
 
 const container = document.getElementById('root');
 
@@ -12,7 +10,7 @@ if (container === null) {
 }
 
 createRoot(container).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+  <ThemeProvider theme={hostTheme}>
+    <AddressBook />
+  </ThemeProvider>,
 );

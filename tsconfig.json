@@ -14,9 +14,27 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@pulse/*": ["src/stubs/pulse/*"]
+      "@pulse/ui/components/*": ["src/stubs/pulse/ui/*"],
+      "@pulse/ui/theme": ["src/host/pulseTheme.ts"],
+      "@pulse/*": ["src/stubs/pulse/*"],
+      "@hrplatform/utils": ["src/host/hrplatformUtils.ts"],
+      "@sber-hrp-core/api-breadcrumbs": ["src/host/breadcrumbs.ts"],
+      "i18next": ["src/host/i18next.ts"],
+      "react-i18next": ["src/host/reactI18next.ts"]
     }
   },
-  "include": ["src"],
+  "include": [
+    "src/main.tsx",
+    "src/constants.ts",
+    "src/Settings.tsx",
+    "src/http-requests",
+    "src/host",
+    "src/stubs/pulse/ui",
+    "src/apps/AddressBook"
+  ],
+  "exclude": [
+    "src/apps/AddressBook/pages/StuctureDepartmentPage",
+    "src/apps/AddressBook/styled.d.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

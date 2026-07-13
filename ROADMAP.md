@@ -280,3 +280,179 @@
   - [x] ограничения PoC
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.
+
+### Итерация 9. Встраивание актуального модуля AddressBook
+
+- [x] Перенести 69 файлов контекстного снимка в исходной структуре `src/apps/AddressBook`.
+- [x] Проверить побайтовое совпадение перенесённых файлов со снимком.
+- [x] Не изменять внутренний код модуля для адаптации к песочнице.
+- [x] Добавить внешнюю host-обвязку для:
+  - [x] Pulse UI.
+  - [x] Settings.
+  - [x] i18n.
+  - [x] breadcrumbs.
+  - [x] темы.
+  - [x] host-base маршрута.
+- [x] Настроить Vite и TypeScript aliases.
+- [x] Удалить прежнюю плоскую реализацию приложения.
+- [x] Проверить загрузку контактов и переход в кадровую структуру в браузере.
+- [x] Проверить отсутствие ошибок в консоли браузера.
+- [x] Зафиксировать правила неизменяемой границы `src/apps/AddressBook` и внешней host-обвязки.
+- [x] Зафиксировать контракт host theme, Pulse design tokens и типизацию `DefaultTheme`.
+- [x] Зафиксировать правила Pulse-stubs, transient-пропсов и синхронизации aliases.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 10. Pulse EmptyState
+
+- [x] Перевести активные экраны на `@pulse/ui/components/EmptyState`.
+- [x] Добавить совместимый типизированный stub для локальной среды.
+- [x] Использовать host design tokens в стилях stub-компонента.
+- [x] Сохранить прежний внутренний файл исходного снимка без удаления.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 11. Переход в карточку сотрудника
+
+- [x] Унифицировать URL сотрудника для контактов, избранного и кадровой структуры.
+- [x] Сохранить query-параметры отдельно от `pathname` после клиентской навигации.
+- [x] Сохранить активное состояние раздела контактов на странице сотрудника.
+- [x] Проверить прямой переход и переход из списка сотрудников.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 12. Актуализация Pulse theme
+
+- [x] Перенести структуру выгруженной Pulse theme в типизированную host-обвязку.
+- [x] Перевести design tokens с `tokens.current.core` на `tokens.current`.
+- [x] Добавить полный доступный контракт typography, layout, mediaQueries, radii и zIndices.
+- [x] Перевести Pulse-stubs на host typography, tokens и radii.
+- [x] Зафиксировать правила styled-components v5.
+- [x] Добавить справочник `docs/THEME.md`.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 13. Штатный Reach Router
+
+- [x] Прочитать установленную и официальную документацию `@reach/router`.
+- [x] Удалить самописный router context и ручное управление browser history.
+- [x] Объявить экраны через `Router` и route props.
+- [x] Подключить общий layout через `LocationProvider`.
+- [x] Перевести location и navigation на `useLocation` и `useNavigate`.
+- [x] Перевести root bootstrap на декларативный `Redirect`.
+- [x] Централизовать полные host URLs и builders динамических маршрутов.
+- [x] Зафиксировать ограничение React 18 StrictMode для `@reach/router@1.3.4`.
+- [x] Проверить root redirect, query, employee route, department route и browser back.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 14. Вкладки справочных телефонов
+
+- [x] Назвать первую категорию «Служба поддержки услуг и сервисов».
+- [x] Оформить левый список как вертикальный tablist.
+- [x] Добавить явное активное состояние вкладки через Pulse theme tokens.
+- [x] Связать вкладки и правую область через ARIA tab/tabpanel.
+- [x] Добавить клавиатурное переключение стрелками вверх и вниз.
+- [x] Синхронизировать активную вкладку с `categoryId` через Reach Router.
+- [x] Исключить повторную загрузку категорий при смене вкладки.
+- [x] Проверить обе вкладки, URL-состояние и клавиатурное переключение в браузере.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 15. Семантическая типографика Text
+
+- [x] Проверить все активные использования `@pulse/ui/components/Text`.
+- [x] Сделать варианты typography явными и соответствующими назначению текста.
+- [x] Назначить вторичным подписям `text.secondary`, малозначимым значениям `text.tertiary`.
+- [x] Назначить статусам сотрудников подходящие токены `support.*`.
+- [x] Заменить ручной `weight` существующим семантическим вариантом.
+- [x] Расширить локальный Text-stub полным `TypographyVariant` host theme.
+- [x] Зафиксировать правила Text в `docs/THEME.md` и `CODEX.md`.
+- [x] Проверить ключевые экраны в браузере.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 16. Выравнивание хлебных крошек
+
+- [x] Сгруппировать разделитель и название подразделения в `inline-flex`.
+- [x] Назначить кнопкам breadcrumbs вариант `caption1Regular` из theme.
+- [x] Проверить горизонтальное выравнивание breadcrumbs в браузере.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 17. Inline-карточка сотрудника
+
+- [x] Перевести общий `EmployeeTable` на раскрытие карточки следующей строкой таблицы.
+- [x] Оставлять открытой только одну карточку сотрудника.
+- [x] Добавить закрытие повторным кликом и отдельной кнопкой-крестиком.
+- [x] Добавить путь подразделения, профиль, статус, табы и доступные контактные данные.
+- [x] Сохранить текущий URL при раскрытии карточки.
+- [x] Удалить переходы на employee route из контактов, избранного и подразделений.
+- [x] Сохранить прямой employee route и убрать с него постоянный loader.
+- [x] Проверить раскрытие, переключение и закрытие в браузере.
+- [x] Проверить inline-карточку в таблице подразделения.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 18. Полная типизация Pulse UI
+
+- [x] Разобрать обе части полной выгрузки типов `@pulse/ui`.
+- [x] Выделить контракты компонентов, реально используемых AddressBook.
+- [x] Привести `Text` к обязательному `variant` и styled-system color/space props.
+- [x] Удалить вымышленные `Text.tone` и `Text.weight`.
+- [x] Перевести `Avatar` с `$initials` на `$type="initials"` и `$text`.
+- [x] Добавить полный набор типов и размеров `Avatar`.
+- [x] Привести `Button` к DS types, sizes, states и значениям по умолчанию.
+- [x] Привести `Loader` к контракту `isOnColor/size/wrapped/children`.
+- [x] Зафиксировать отсутствие `EmptyState` в выгрузке и статус host-adapter.
+- [x] Добавить справочник `docs/PULSE-UI.md` и правила расширения stubs.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 19. Повторный аудит подключения Pulse UI
+
+- [x] Сверить Vite aliases и TypeScript paths для `@pulse/ui/components/*`.
+- [x] Собрать все фактически используемые Pulse imports.
+- [x] Повторно сверить `Text`, `Avatar`, `Button`, `Loader`, `Input` с полной типизацией.
+- [x] Зафиксировать статус `Layout.Content` и host-adapter `EmptyState`.
+- [x] Удалить неподтверждённые и неиспользуемые `Spinner` и `LayoutGrid.Main`.
+- [x] Удалить несовместимые исторические `Tabs`, `IconButton`, `Skeleton` stubs.
+- [x] Добавить compile-time аудит активных named exports и prop-union.
+- [x] Обновить `docs/PULSE-UI.md`, `CODEX-RULES.MD`, `CODEX.md` и `README.md`.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 20. Реальный API поиска сотрудников
+
+- [x] Сохранить исходный локальный контракт `/api/directory/employees?q={query}`.
+- [x] Добавить внешний host-адаптер для `multiSearch`.
+- [x] Передавать `query`, `page=0`, `size=20` и `category=PERSONADDRESSBOOK`.
+- [x] Не передавать `orgFilter`, пока выбранная структура равна `null`.
+- [x] Разобрать `data.PERSONADDRESSBOOK.data.content` без `any`.
+- [x] Нормализовать данные API в текущий контракт `Employee`.
+- [x] Добавить локальный Vite proxy для `/api-web`.
+- [x] Заменить placeholder «корпоративный поиск» на «поиск».
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 21. Общий проектный HTTP-запросник
+
+- [x] Восстановить `src/http-requests/http.ts` с исходным `HttpRequest('/api-web/', httpRequestOptions)`.
+- [x] Сохранить системные заголовки `HRP-Device-Type` и `X-HRP-Device-Type`.
+- [x] Перевести `multiSearch` на `http.get`.
+- [x] Удалить глобальный fetch-перехват реального поиска.
+- [x] Передавать `AbortSignal` и отменять устаревший поисковый запрос.
+- [x] Добавить локальные host-stubs для `@hrplatform/utils` и `@pulse/ui/theme`.
+- [x] Синхронизировать Vite aliases и TypeScript paths.
+- [x] Обновить правила и документацию HTTP-слоя.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 22. Документирование HTTP-правил
+
+- [x] Зафиксировать единственную точку создания `HttpRequest`.
+- [x] Добавить обязательный шаблон вызова `http.get<TResponse>`.
+- [x] Зафиксировать запрет прямого `fetch`, второго клиента и глобального fetch-перехвата.
+- [x] Зафиксировать правила системных заголовков, относительного пути и `AbortSignal`.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.

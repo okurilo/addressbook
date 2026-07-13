@@ -1,0 +1,2 @@
+export { ProductViewport } from './styled';
+

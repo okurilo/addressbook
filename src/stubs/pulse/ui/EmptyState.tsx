@@ -1,20 +1,20 @@
 import type { ReactNode } from 'react';
-import { styled } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { Text } from './Text';
 
-const Wrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing.xl,
-  borderRadius: theme.radius.lg,
-  border: `1px solid ${theme.colors.border}`,
-  background: theme.colors.surface,
+const Wrapper = styled.div(({ theme }) => ({
+  padding: 32,
+  borderRadius: theme.radii.lg,
+  border: `1px solid ${theme.tokens.current.border.gentle}`,
+  background: theme.tokens.current.background.default,
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.spacing.sm,
+  gap: 8,
   alignItems: 'center',
   textAlign: 'center',
 }));
 
-type EmptyStateProps = {
+export type EmptyStateProps = {
   title: string;
   description: string;
   illustration?: ReactNode;
@@ -24,12 +24,16 @@ export const EmptyState = ({
   title,
   description,
   illustration,
-}: EmptyStateProps): JSX.Element => (
-  <Wrapper>
-    {illustration ?? null}
-    <Text size="lg" weight="semibold">
-      {title}
-    </Text>
-    <Text tone="secondary">{description}</Text>
-  </Wrapper>
-);
+}: EmptyStateProps): JSX.Element => {
+  const theme = useTheme();
+
+  return (
+    <Wrapper>
+      {illustration ?? null}
+      <Text variant="body1Semibold">{title}</Text>
+      <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+        {description}
+      </Text>
+    </Wrapper>
+  );
+};
