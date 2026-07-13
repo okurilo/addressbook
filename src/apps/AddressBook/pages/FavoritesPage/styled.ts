@@ -17,15 +17,15 @@ export const FilterChip = styled.div(({ theme }) => ({
   width: 'fit-content',
   padding: `0 ${16}px`,
   borderRadius: 999,
-  background: theme.tokens.current.accent.secondary,
-  color: theme.tokens.current.accent.primary,
+  background: theme.tokens.current.core.accent.secondary,
+  color: theme.tokens.current.core.accent.primary,
   display: 'inline-flex',
   alignItems: 'center',
   fontWeight: 600,
 }));
 
 export const Surface = styled.div(({ theme }) => ({
-  background: theme.tokens.current.layer['01'],
+  background: theme.tokens.current.core.layer['01'],
   borderRadius: 20,
 }));
 

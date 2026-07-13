@@ -8,7 +8,7 @@ export const Page = styled.section(({ theme }) => ({
 }));
 
 export const Sidebar = styled.aside(({ theme }) => ({
-  background: theme.tokens.current.layer['01'],
+  background: theme.tokens.current.core.layer['01'],
   borderRadius: 20,
   padding: 24,
   display: 'flex',
@@ -23,14 +23,14 @@ export const SidebarButton = styled.button<{ $active?: boolean }>(({ theme, $act
   textAlign: 'left',
   cursor: 'pointer',
   color: $active
-    ? theme.tokens.current.text.primary
-    : theme.tokens.current.text.secondary,
+    ? theme.tokens.current.core.text.primary
+    : theme.tokens.current.core.text.secondary,
   fontWeight: $active ? 600 : 400,
   lineHeight: 1.45,
 }));
 
 export const Content = styled.section(({ theme }) => ({
-  background: theme.tokens.current.layer['01'],
+  background: theme.tokens.current.core.layer['01'],
   borderRadius: 20,
   padding: 32,
   display: 'flex',
@@ -49,7 +49,7 @@ export const BreadcrumbButton = styled.button(({ theme }) => ({
   border: 'none',
   background: 'transparent',
   padding: 0,
-  color: theme.tokens.current.text.secondary,
+  color: theme.tokens.current.core.text.secondary,
   cursor: 'pointer',
 }));
 
@@ -60,7 +60,7 @@ export const SummaryLine = styled.div(({ theme }) => ({
 }));
 
 export const Divider = styled.div(({ theme }) => ({
-  borderTop: `1px solid ${theme.tokens.current.border.gentle}`,
+  borderTop: `1px solid ${theme.tokens.current.core.border.gentle}`,
 }));
 
 export const CenteredState = styled.div(({ theme }) => ({
@@ -68,7 +68,7 @@ export const CenteredState = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: theme.tokens.current.layer['01'],
+  background: theme.tokens.current.core.layer['01'],
   borderRadius: 20,
   padding: 32,
 }));

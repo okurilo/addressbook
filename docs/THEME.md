@@ -10,24 +10,24 @@
 
 ## Design tokens
 
-Токены находятся непосредственно в `theme.tokens.current.*`. Уровней `core` и `colors` нет.
+Токены находятся в `theme.tokens.current.core.*`. Уровень `core` обязателен; сплющённых групп непосредственно в `current` нет.
 
-- `background.default`, `background.field`
-- `accent.primary`, `accent.secondary`, `accent.tertiary`, `accent.base`
-- `text.primary`, `text.secondary`, `text.tertiary`, `text.onColor`, `text.placeholder`, `text.error`
-- `icon.primary`, `icon.secondary`, `icon.tertiary`, `icon.onColor`
-- `layer['01']`, `layer['02']`, `layer['03']`
-- `border.gentle`, `border.strong`, `border.interactive`
-- `danger['01']`, `danger['02']`
-- `support.success`, `support.attention`, `support.warning`, `support.info`
+- `core.background.default`, `core.background.field`
+- `core.accent.primary`, `core.accent.secondary`, `core.accent.tertiary`, `core.accent.base`
+- `core.text.primary`, `core.text.secondary`, `core.text.tertiary`, `core.text.onColor`, `core.text.placeholder`, `core.text.error`
+- `core.icon.primary`, `core.icon.secondary`, `core.icon.tertiary`, `core.icon.onColor`
+- `core.layer['01']`, `core.layer['02']`, `core.layer['03']`
+- `core.border.gentle`, `core.border.strong`, `core.border.interactive`
+- `core.danger['01']`, `core.danger['02']`
+- `core.support.success`, `core.support.attention`, `core.support.warning`, `core.support.info`
 
 Пример:
 
 ```ts
 const Surface = styled.div(({ theme }) => ({
-  color: theme.tokens.current.text.primary,
-  background: theme.tokens.current.layer['01'],
-  border: `1px solid ${theme.tokens.current.border.gentle}`,
+  color: theme.tokens.current.core.text.primary,
+  background: theme.tokens.current.core.layer['01'],
+  border: `1px solid ${theme.tokens.current.core.border.gentle}`,
 }));
 ```
 
@@ -75,14 +75,14 @@ const Title = styled.h1(({ theme }) => ({
 - многострочные описания — `body2ParagraphRegular`;
 - хлебные крошки и компактные служебные подписи — варианты `caption*`.
 
-Основной текст использует `text.primary`, вспомогательный — `text.secondary`, малозначимые значения и заглушки — `text.tertiary`, ошибки — `text.error`. Цвета статусных подписей могут использовать `support.*`. Если цвет зависит от состояния, токен передаётся через `color`:
+Основной текст использует `core.text.primary`, вспомогательный — `core.text.secondary`, малозначимые значения и заглушки — `core.text.tertiary`, ошибки — `core.text.error`. Цвета статусных подписей могут использовать `core.support.*`. Если цвет зависит от состояния, токен передаётся через `color`:
 
 ```tsx
 const theme = useTheme();
 
 <Text
   variant="body2Regular"
-  color={theme.tokens.current.text.secondary}
+  color={theme.tokens.current.core.text.secondary}
 >
   Дополнительная информация
 </Text>
@@ -132,4 +132,4 @@ import styled, { css, keyframes } from 'styled-components';
 4. Использовать исходный token-path без адаптации внутри компонента.
 5. Прогнать `npm run typecheck` и `npm run build`.
 
-Запрещено добавлять параллельные `theme.colors`, `theme.spacing`, `theme.radius` или `theme.tokens.current.core`.
+Запрещено добавлять сплющённые пути `theme.tokens.current.text` и аналоги либо параллельные `theme.colors`, `theme.spacing`, `theme.radius`.

@@ -32,7 +32,7 @@
 - Корневой URL декларативно перенаправляется на `/platform/globalsearch/addressbook` через Reach `Redirect`.
 - `src/apps/AddressBook/**` остаётся защищённой границей baseline: интеграционные несовместимости исправляются в host-обвязке, а изменения внутри модуля допускаются только по явному продуктовому запросу.
 - `ThemeProvider` подключается на host-уровне в `src/main.tsx`, а `DefaultTheme` типизируется внешней декларацией `src/host/styled.d.ts` через `HostTheme`.
-- `HostTheme` повторяет Pulse-совместимый контракт `tokens.current`; промежуточный уровень `core` удалён из приложения и stubs.
+- `HostTheme` повторяет Pulse-совместимый контракт `tokens.current.core`; уровень `core` обязателен в приложении и stubs, сплющённые пути признаны ошибочными.
 - Локальные Pulse-stubs повторяют подтверждённый публичный API оригинальных компонентов: `Avatar` использует `$type/$text/$size`, `Button` — `$type/$size/$state`, а `Loader` — `isOnColor/size/wrapped/children`.
 - Vite aliases и TypeScript paths поддерживаются синхронно; host-сервисы подключаются по исходным import-path через типизированные внешние адаптеры.
 - Пустые состояния используют подтверждённый DS-компонент `@pulse/ui/components/Empty`; ошибочный `EmptyState`, его локальные stubs и prop `illustration` удалены.
@@ -60,3 +60,6 @@
 - В локальной среде `@hrplatform/utils` и `@pulse/ui/theme` эмулируются host-stubs через одинаковые Vite/TypeScript aliases; в целевом окружении используются реальные пакеты.
 - Локальный Vite dev-server проксирует `/api-web` на `https://hr-dev.sberbank.ru`; в host-окружении используется тот же относительный API path.
 - Правило общего запросника закреплено в `CODEX-RULES.MD`, `README.md` и `docs/HTTP-REQUESTS.md`: feature-код импортирует готовый `http`, не создаёт собственный `HttpRequest`, не дублирует device headers и не использует прямой `fetch` для продуктовых API.
+- Обе полные выгрузки типизации Pulse UI добавлены без изменений в `docs/pulse-ui-types/raw`; их SHA-256 фиксируется генерируемым индексом.
+- Для экономии контекста LLM команда `npm run docs:pulse-types` разбивает 264 исходных секции на отдельные `generated/src/**` документы, строит индекс компонентов, обратный индекс экспортов и JSON-манифест зависимостей.
+- Обязательный маршрут работы с DS: краткая памятка `docs/PULSE-UI.md` → поиск в `docs/pulse-ui-types/INDEX.md`/`EXPORTS.md` → чтение только точных generated-файлов и необходимых импортов; полные raw-файлы не загружаются без необходимости.

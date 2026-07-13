@@ -34,7 +34,7 @@ export const EmployeeActions = ({
     }}
   >
     {phone === null ? (
-      <Text variant="body2Regular" color={theme.tokens.current.text.tertiary}>
+      <Text variant="body2Regular" color={theme.tokens.current.core.text.tertiary}>
         не указан
       </Text>
     ) : (

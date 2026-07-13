@@ -61,7 +61,7 @@ type MediaQueryName =
   | 'only1600'
   | 'only1920';
 
-type CurrentTokens = {
+type CoreTokens = {
   background: {
     default: string;
     field: string;
@@ -106,6 +106,10 @@ type CurrentTokens = {
     warning: string;
     info: string;
   };
+};
+
+type CurrentTokens = {
+  core: CoreTokens;
 };
 
 export type HostTheme = {
@@ -237,49 +241,51 @@ export const hostTheme: HostTheme = {
   },
   tokens: {
     current: {
-      background: {
-        default: '#f4f6f2',
-        field: '#ffffff',
-      },
-      accent: {
-        primary: '#1f8f58',
-        secondary: '#e6f4ec',
-        tertiary: '#cce8d8',
-        base: '#167647',
-      },
-      text: {
-        primary: '#1f2521',
-        secondary: '#657068',
-        tertiary: '#89918b',
-        onColor: '#ffffff',
-        placeholder: '#89918b',
-        error: '#c83636',
-      },
-      icon: {
-        primary: '#1f2521',
-        secondary: '#657068',
-        tertiary: '#89918b',
-        onColor: '#ffffff',
-      },
-      layer: {
-        '01': '#ffffff',
-        '02': '#eff3ee',
-        '03': '#e4eae4',
-      },
-      border: {
-        gentle: '#d6ddd4',
-        strong: '#9ca69e',
-        interactive: '#1f8f58',
-      },
-      danger: {
-        '01': '#c83636',
-        '02': '#fdeaea',
-      },
-      support: {
-        success: '#1f8f58',
-        attention: '#d48318',
-        warning: '#e3a51b',
-        info: '#2476d3',
+      core: {
+        background: {
+          default: '#f4f6f2',
+          field: '#ffffff',
+        },
+        accent: {
+          primary: '#1f8f58',
+          secondary: '#e6f4ec',
+          tertiary: '#cce8d8',
+          base: '#167647',
+        },
+        text: {
+          primary: '#1f2521',
+          secondary: '#657068',
+          tertiary: '#89918b',
+          onColor: '#ffffff',
+          placeholder: '#89918b',
+          error: '#c83636',
+        },
+        icon: {
+          primary: '#1f2521',
+          secondary: '#657068',
+          tertiary: '#89918b',
+          onColor: '#ffffff',
+        },
+        layer: {
+          '01': '#ffffff',
+          '02': '#eff3ee',
+          '03': '#e4eae4',
+        },
+        border: {
+          gentle: '#d6ddd4',
+          strong: '#9ca69e',
+          interactive: '#1f8f58',
+        },
+        danger: {
+          '01': '#c83636',
+          '02': '#fdeaea',
+        },
+        support: {
+          success: '#1f8f58',
+          attention: '#d48318',
+          warning: '#e3a51b',
+          info: '#2476d3',
+        },
       },
     },
   },

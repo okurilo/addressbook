@@ -11,7 +11,7 @@ import { Input } from '@pulse/ui/components/Input';
 import { Content as LayoutContent } from '@pulse/ui/components/Layout';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
-import type { TypographyVariant } from './theme';
+import type { HostTheme, TypographyVariant } from './theme';
 
 type Equal<Left, Right> =
   (<Value>() => Value extends Left ? 1 : 2) extends
@@ -23,6 +23,12 @@ type Assert<Condition extends true> = Condition;
 type IsOptional<Props, Key extends keyof Props> = object extends Pick<Props, Key>
   ? true
   : false;
+
+type CurrentTokens = HostTheme['tokens']['current'];
+type _ThemeHasCoreTokens = Assert<Equal<'core' extends keyof CurrentTokens ? true : false, true>>;
+type _ThemeHasNoFlattenedTextTokens = Assert<
+  Equal<'text' extends keyof CurrentTokens ? true : false, false>
+>;
 
 type AvatarProps = ComponentProps<typeof Avatar>;
 type _AvatarSize = Assert<

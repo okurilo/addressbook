@@ -14,9 +14,9 @@ const LoaderCircle = styled.span<{ $isOnColor: boolean; $size: LoaderSize }>(
     height: $size === 'l' ? 40 : 28,
     borderRadius: theme.radii.pill,
     border: `3px solid ${
-      $isOnColor ? theme.tokens.current.icon.onColor : theme.tokens.current.border.gentle
+      $isOnColor ? theme.tokens.current.core.icon.onColor : theme.tokens.current.core.border.gentle
     }`,
-    borderTopColor: $isOnColor ? 'transparent' : theme.tokens.current.accent.primary,
+    borderTopColor: $isOnColor ? 'transparent' : theme.tokens.current.core.accent.primary,
   }),
   css`
     animation: ${rotate} 0.8s linear infinite;

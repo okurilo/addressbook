@@ -86,7 +86,7 @@ const StyledText = styled.span<{
   return {
     display: 'block',
     ...theme.typography[$variant],
-    color: firstResponsiveValue($textStyles.color) ?? theme.tokens.current.text.primary,
+    color: firstResponsiveValue($textStyles.color) ?? theme.tokens.current.core.text.primary,
     backgroundColor: firstResponsiveValue(
       $textStyles.backgroundColor ?? $textStyles.bg
     ),

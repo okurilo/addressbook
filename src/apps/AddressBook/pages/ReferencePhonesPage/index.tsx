@@ -294,7 +294,7 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
                     <Cell>
                       <Text
                         variant="body2ParagraphRegular"
-                        color={theme.tokens.current.text.secondary}
+                        color={theme.tokens.current.core.text.secondary}
                       >
                         {phone.responsibility}
                       </Text>
@@ -304,7 +304,7 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
                         {directPhone === null ? (
                           <Text
                             variant="body2Regular"
-                            color={theme.tokens.current.text.tertiary}
+                            color={theme.tokens.current.core.text.tertiary}
                           >
                             не указан
                           </Text>

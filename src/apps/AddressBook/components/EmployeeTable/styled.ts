@@ -9,14 +9,14 @@ export const Table = styled.table({
 export const HeadCell = styled.th(({ theme }) => ({
   padding: `${8}px 0 ${16}px`,
   textAlign: 'left',
-  color: theme.tokens.current.text.secondary,
+  color: theme.tokens.current.core.text.secondary,
   fontWeight: 500,
-  borderBottom: `1px solid ${theme.tokens.current.border.gentle}`,
+  borderBottom: `1px solid ${theme.tokens.current.core.border.gentle}`,
 }));
 
 export const DetailsRow = styled.tr(({ theme }) => ({
-  background: theme.tokens.current.layer['02'],
-  borderBottom: `1px solid ${theme.tokens.current.border.gentle}`,
+  background: theme.tokens.current.core.layer['02'],
+  borderBottom: `1px solid ${theme.tokens.current.core.border.gentle}`,
 }));
 
 export const DetailsCell = styled.td({
@@ -26,14 +26,14 @@ export const DetailsCell = styled.td({
 export const DetailsPanel = styled.section(({ theme }) => ({
   position: 'relative',
   padding: '24px 32px 32px',
-  borderTop: `1px solid ${theme.tokens.current.border.gentle}`,
+  borderTop: `1px solid ${theme.tokens.current.core.border.gentle}`,
 }));
 
 export const DetailsBreadcrumbs = styled.div(({ theme }) => ({
   maxWidth: 'calc(100% - 48px)',
   marginBottom: 24,
   ...theme.typography.caption1Regular,
-  color: theme.tokens.current.text.secondary,
+  color: theme.tokens.current.core.text.secondary,
 }));
 
 export const CloseButton = styled.button(({ theme }) => ({
@@ -45,7 +45,7 @@ export const CloseButton = styled.button(({ theme }) => ({
   border: 'none',
   borderRadius: theme.radii.pill,
   background: 'transparent',
-  color: theme.tokens.current.icon.secondary,
+  color: theme.tokens.current.core.icon.secondary,
   ...theme.typography.h4Semibold,
   lineHeight: '32px',
   cursor: 'pointer',
@@ -90,10 +90,10 @@ export const Tab = styled.button<{ $active?: boolean }>(({ theme, $active = fals
   padding: '0 16px',
   borderRadius: theme.radii.pill,
   border: `1px solid ${
-    $active ? theme.tokens.current.text.primary : theme.tokens.current.border.gentle
+    $active ? theme.tokens.current.core.text.primary : theme.tokens.current.core.border.gentle
   }`,
-  background: $active ? theme.tokens.current.text.primary : theme.tokens.current.layer['01'],
-  color: $active ? theme.tokens.current.text.onColor : theme.tokens.current.text.primary,
+  background: $active ? theme.tokens.current.core.text.primary : theme.tokens.current.core.layer['01'],
+  color: $active ? theme.tokens.current.core.text.onColor : theme.tokens.current.core.text.primary,
   ...theme.typography.body2Semibold,
   cursor: 'default',
 }));
@@ -120,16 +120,16 @@ export const DefinitionList = styled.dl({
 
 export const DefinitionTerm = styled.dt(({ theme }) => ({
   ...theme.typography.body2Regular,
-  color: theme.tokens.current.text.secondary,
+  color: theme.tokens.current.core.text.secondary,
 }));
 
 export const DefinitionDescription = styled.dd(({ theme }) => ({
   margin: 0,
   ...theme.typography.body2Semibold,
-  color: theme.tokens.current.text.primary,
+  color: theme.tokens.current.core.text.primary,
 }));
 
 export const ContactLink = styled.a(({ theme }) => ({
-  color: theme.tokens.current.text.primary,
+  color: theme.tokens.current.core.text.primary,
   textDecoration: 'none',
 }));

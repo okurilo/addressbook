@@ -115,10 +115,10 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
   }
 
   const statusColorMap: Record<EmployeeStatus, string> = {
-    available: theme.tokens.current.support.success,
-    busy: theme.tokens.current.support.attention,
-    offline: theme.tokens.current.text.tertiary,
-    vacation: theme.tokens.current.support.info,
+    available: theme.tokens.current.core.support.success,
+    busy: theme.tokens.current.core.support.attention,
+    offline: theme.tokens.current.core.text.tertiary,
+    vacation: theme.tokens.current.core.support.info,
   };
 
   return (
@@ -129,10 +129,10 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
           <div>
             <Text variant="h4Semibold">{employee.fullName}</Text>
             <StatusLine>
-              <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+              <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
                 {employee.position}
               </Text>
-              <Text variant="body2Regular" color={theme.tokens.current.text.tertiary}>
+              <Text variant="body2Regular" color={theme.tokens.current.core.text.tertiary}>
                 ·
               </Text>
               <Text variant="body2Semibold" color={statusColorMap[employee.status]}>
@@ -145,7 +145,7 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
           <DefinitionTerm>Телефон</DefinitionTerm>
           <DefinitionDescription>
             {employee.phone === null ? (
-              <Text variant="body2Regular" color={theme.tokens.current.text.tertiary}>
+              <Text variant="body2Regular" color={theme.tokens.current.core.text.tertiary}>
                 не указан
               </Text>
             ) : (

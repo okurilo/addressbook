@@ -43,7 +43,7 @@ const Wrapper = styled.div<{ $size: Size }>(({ theme, $size }) => ({
   minHeight: $size === 'small' ? 160 : 220,
   padding: $size === 'small' ? 24 : 32,
   borderRadius: theme.radii.lg,
-  background: theme.tokens.current.background.default,
+  background: theme.tokens.current.core.background.default,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -57,8 +57,8 @@ const Marker = styled.div(({ theme }) => ({
   height: 56,
   marginBottom: 8,
   borderRadius: theme.radii.pill,
-  background: theme.tokens.current.layer['02'],
-  color: theme.tokens.current.icon.secondary,
+  background: theme.tokens.current.core.layer['02'],
+  color: theme.tokens.current.core.icon.secondary,
   display: 'grid',
   placeItems: 'center',
   ...theme.typography.h4Semibold,
@@ -94,7 +94,7 @@ export const Empty = ({
     <Wrapper $size={size}>
       <Marker aria-hidden="true">{markerByType[type]}</Marker>
       {title === undefined ? null : <Text variant="body1Semibold">{title}</Text>}
-      <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+      <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
         {description}
       </Text>
       {buttonLabel === undefined && buttonSecondaryLabel === undefined ? null : (

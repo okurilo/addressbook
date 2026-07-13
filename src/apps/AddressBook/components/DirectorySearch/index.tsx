@@ -73,8 +73,8 @@ export const DirectorySearch = (): JSX.Element => {
           variant={isFavoritesRoute ? 'body1Semibold' : 'body1Regular'}
           color={
             isFavoritesRoute
-              ? theme.tokens.current.accent.primary
-              : theme.tokens.current.text.primary
+              ? theme.tokens.current.core.accent.primary
+              : theme.tokens.current.core.text.primary
           }
         >
           избранное

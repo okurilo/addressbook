@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Row = styled.tr<{ $expanded: boolean }>(({ theme, $expanded }) => ({
-  borderBottom: `1px solid ${theme.tokens.current.border.gentle}`,
-  background: $expanded ? theme.tokens.current.layer['02'] : 'transparent',
+  borderBottom: `1px solid ${theme.tokens.current.core.border.gentle}`,
+  background: $expanded ? theme.tokens.current.core.layer['02'] : 'transparent',
   cursor: 'pointer',
 }));
 

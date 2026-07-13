@@ -29,9 +29,12 @@ npm run build
 - После каждой итерации обязательны `npm run typecheck` и `npm run build`.
 - Полный контракт host theme и доступные Pulse tokens описаны в [`docs/THEME.md`](docs/THEME.md).
 - Проверенные контракты компонентов Pulse UI, aliases и исключения описаны в [`docs/PULSE-UI.md`](docs/PULSE-UI.md).
+- Полная типизация Pulse UI, файловый индекс и инструкция для точечного чтения LLM находятся в [`docs/pulse-ui-types/README.md`](docs/pulse-ui-types/README.md).
 - Контракт общего запросника и поиск сотрудников описаны в [`docs/HTTP-REQUESTS.md`](docs/HTTP-REQUESTS.md).
 
 Пустые состояния реализуются компонентом `@pulse/ui/components/Empty`. `EmptyState` в используемой версии DS отсутствует и локально не эмулируется.
+
+Перед изменением любого Pulse-компонента используйте `docs/pulse-ui-types/INDEX.md` или `EXPORTS.md` и открывайте только нужные generated-файлы. Обе raw-части целиком по умолчанию не читаются. Каталог обновляется командой `npm run docs:pulse-types`.
 
 ## Доступные маршруты
 

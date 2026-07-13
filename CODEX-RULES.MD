@@ -44,22 +44,22 @@
 - Единственный источник темы локальной песочницы — host theme, переданный через `ThemeProvider` в `src/main.tsx`.
 - Тип `styled-components/DefaultTheme` расширять только во внешней декларации `src/host/styled.d.ts`; декларации внутри импортированного модуля не редактировать.
 - Структура host theme должна повторять фактически используемый контракт Pulse, а не заставлять модуль переходить на локальную схему темы.
-- Все design tokens находятся непосредственно в `theme.tokens.current.*`; промежуточного уровня `core` нет.
-- Фоны: `background.default`, `background.field`.
-- Акценты: `accent.primary`, `accent.secondary`, `accent.tertiary`, `accent.base`.
-- Текст: `text.primary`, `text.secondary`, `text.tertiary`, `text.onColor`, `text.placeholder`, `text.error`.
-- Иконки: `icon.primary`, `icon.secondary`, `icon.tertiary`, `icon.onColor`.
-- Слои: `layer['01']`, `layer['02']`, `layer['03']`.
-- Границы: `border.gentle`, `border.strong`, `border.interactive`.
-- Опасные состояния: `danger['01']`, `danger['02']`.
-- Служебные состояния: `support.success`, `support.attention`, `support.warning`, `support.info`.
+- Все design tokens находятся в `theme.tokens.current.core.*`; уровень `core` обязателен.
+- Фоны: `core.background.default`, `core.background.field`.
+- Акценты: `core.accent.primary`, `core.accent.secondary`, `core.accent.tertiary`, `core.accent.base`.
+- Текст: `core.text.primary`, `core.text.secondary`, `core.text.tertiary`, `core.text.onColor`, `core.text.placeholder`, `core.text.error`.
+- Иконки: `core.icon.primary`, `core.icon.secondary`, `core.icon.tertiary`, `core.icon.onColor`.
+- Слои: `core.layer['01']`, `core.layer['02']`, `core.layer['03']`.
+- Границы: `core.border.gentle`, `core.border.strong`, `core.border.interactive`.
+- Опасные состояния: `core.danger['01']`, `core.danger['02']`.
+- Служебные состояния: `core.support.success`, `core.support.attention`, `core.support.warning`, `core.support.info`.
 - Если исходный модуль обращается к дополнительному token-path, нужно расширить тип и значение host theme; нельзя заменять обращение внутри модуля или добавлять там hardcode.
 - Каждый `theme.typography.*` — объект с `fontFamily`, `fontWeight`, `fontSize`, `lineHeight`, `letterSpacing`; его можно передавать через spread в styled-объект.
 - Доступные варианты типографики перечислены в `docs/THEME.md`; нельзя моделировать typography как строку или локальную таблицу размеров.
 - Скругления находятся в `theme.radii`, не в `theme.radius`; локальная обвязка предоставляет `sm`, `md`, `lg`, `pill`.
 - В theme также доступны `borderWidths`, `breakpoints`, `layout`, `layoutColumnWidth`, `mediaQueries`, `screenSize`, `space` и `zIndices`.
 - `theme.space` помечен в Pulse как deprecated и не должен становиться основой нового layout-кода.
-- Pulse-stubs должны использовать host tokens, typography и radii. Нельзя возвращать старую параллельную схему `theme.colors`, `theme.spacing`, `theme.radius` или `theme.tokens.current.core`.
+- Pulse-stubs должны использовать host tokens, typography и radii. Нельзя использовать сплющённые пути `theme.tokens.current.text` и аналоги либо возвращать параллельные схемы `theme.colors`, `theme.spacing`, `theme.radius`.
 - Полный локальный контракт и порядок его расширения описаны в `docs/THEME.md`.
 
 ## Правила aliases
@@ -80,7 +80,11 @@
 
 ## Правила Pulse UI
 
-- Источник публичных контрактов компонентов — полная выгрузка типизации `@pulse/ui`, зафиксированная в `docs/PULSE-UI.md`.
+- Источник истины публичных контрактов — неизменённые выгрузки `docs/pulse-ui-types/raw/types-context.part-1.md` и `types-context.part-2.md`.
+- `docs/PULSE-UI.md` — краткая памятка, а не замена полной типизации. При расхождении приоритет имеют raw-файлы и сгенерированная из них точная секция.
+- Перед добавлением или изменением Pulse-компонента/stub обязательно прочитать `docs/pulse-ui-types/README.md`, найти компонент через `INDEX.md` или экспорт через `EXPORTS.md`, затем прочитать только соответствующие файлы `generated/src/**` и их необходимые зависимости.
+- Нельзя читать обе raw-выгрузки целиком по умолчанию, восстанавливать props по памяти или полагаться только на краткую памятку.
+- `INDEX.md`, `EXPORTS.md`, `manifest.json` и `generated/**` обновлять командой `npm run docs:pulse-types`; вручную их не редактировать.
 - Нельзя придумывать отсутствующие props для удобства локального stub: например, у `Text` нет `tone` и `weight`, у `Avatar` нет `$initials`.
 - `Text.variant` обязателен; цвет и отступы передаются через styled-system `ColorProps` и `SpaceProps`.
 - Инициалы `Avatar` передаются через `$type="initials"` и `$text`; доступны размеры `xs`, `s`, `m`, `l`, `xl`, `xxl`.
@@ -88,7 +92,7 @@
 - `Loader` использует props `isOnColor`, `size`, `wrapped`, `children` без transient-префикса.
 - Для пустых состояний использовать только `@pulse/ui/components/Empty`; компонента `EmptyState` в DS нет, создавать для него alias или host-adapter запрещено.
 - `Empty` требует `type` и `description`; допустимые `type`: `start`, `noResults`, `wait`, `create`, `noData`. Props `illustration` в контракте нет.
-- Stub расширяется только после сверки соответствующего `types.ts`; несовместимость нельзя скрывать добавлением произвольного prop.
+- Stub расширяется только после сверки соответствующего сгенерированного `types.ts.md` и импортируемых им DS-типов; несовместимость нельзя скрывать добавлением произвольного prop.
 - Не создавать stubs для неиспользуемых компонентов заранее. Если import-path не подтверждён выгрузкой (например, плоский `IconButton` или `Spinner`), такой файл не должен оставаться доступным через alias.
 - Ключевые контракты и само разрешение imports проверяются compile-time файлом `src/host/pulseUiContractAudit.ts`.
 

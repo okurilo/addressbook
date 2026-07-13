@@ -1,0 +1,5442 @@
+{
+  "schemaVersion": 1,
+  "sourceGeneratedAt": [
+    "2026-07-13T16:51:15.757Z"
+  ],
+  "totalFiles": 264,
+  "totalRawLines": 9260,
+  "rawParts": [
+    {
+      "id": "part-1",
+      "fileName": "types-context.part-1.md",
+      "generatedAt": "2026-07-13T16:51:15.757Z",
+      "sha256": "e5daf40d4bdd146509dff67448529db6cb45c39a6d75b21c6c496949b49436ab",
+      "lineCount": 4771,
+      "sectionCount": 149
+    },
+    {
+      "id": "part-2",
+      "fileName": "types-context.part-2.md",
+      "generatedAt": "2026-07-13T16:51:15.757Z",
+      "sha256": "3bf21c20ba9c92f64e2f36588af7283fc990b9662f7a7c1474454c24397180f6",
+      "lineCount": 4489,
+      "sectionCount": 115
+    }
+  ],
+  "files": [
+    {
+      "sourcePath": "src/blocks/AvatarStack/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "AvatarStack",
+      "lineCount": 26,
+      "exports": [
+        "AvatarStackProps"
+      ],
+      "imports": [
+        "../../components/Avatar",
+        "../../components/AvatarStack",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/blocks/types.ts",
+        "src/components/Avatar/types.ts",
+        "src/components/AvatarStack/types.ts"
+      ],
+      "document": "generated/src/blocks/AvatarStack/types.ts.md",
+      "sha256": "0e1914b6740a881bbb9196f863fc4be7098ae7803ac6019e1696b6c911735e01"
+    },
+    {
+      "sourcePath": "src/blocks/Background/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Background",
+      "lineCount": 12,
+      "exports": [
+        "BackgroundProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Background/types.ts.md",
+      "sha256": "7f63ffa5e5b26f7e9959e167f085f5684823d0ab5e0fb2821bb746bd94a9c47a"
+    },
+    {
+      "sourcePath": "src/blocks/Bar/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Bar",
+      "lineCount": 27,
+      "exports": [
+        "BarData",
+        "BarProps"
+      ],
+      "imports": [
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Bar/types.ts.md",
+      "sha256": "bf2418709855b9185da2e7bc4d2e7594cddbc94c89be19c425f42afc01e3bed7"
+    },
+    {
+      "sourcePath": "src/blocks/Cell/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Cell",
+      "lineCount": 24,
+      "exports": [
+        "CellProps"
+      ],
+      "imports": [
+        "../../components/Cell/types"
+      ],
+      "resolvedImports": [
+        "src/components/Cell/types.ts"
+      ],
+      "document": "generated/src/blocks/Cell/types.ts.md",
+      "sha256": "203915d7f6db17b7676e6515a6e6816535032f5f86452910d0cda05723fbe56d"
+    },
+    {
+      "sourcePath": "src/blocks/CellButton/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "CellButton",
+      "lineCount": 19,
+      "exports": [
+        "CellButtonProps"
+      ],
+      "imports": [
+        "../../components/CellButton",
+        "../Icon/icons",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/blocks/types.ts",
+        "src/components/CellButton/types.ts"
+      ],
+      "document": "generated/src/blocks/CellButton/types.ts.md",
+      "sha256": "1c3d2c7a7f495f19f158b111e943867ff9849df5bbfc653713fa446c7e102aab"
+    },
+    {
+      "sourcePath": "src/blocks/Chart/Column/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Chart",
+      "lineCount": 7,
+      "exports": [
+        "ColumnProps"
+      ],
+      "imports": [
+        "@pulse/charts/components/LineChart",
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Chart/Column/types.ts.md",
+      "sha256": "981d755caa8ef122ca499320593d621e1caa71b76ead48635fc955289f3c8c9d"
+    },
+    {
+      "sourcePath": "src/blocks/Chart/Line/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Chart",
+      "lineCount": 21,
+      "exports": [
+        "LineProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Chart/Line/types.ts.md",
+      "sha256": "4b0622798e21d4d06d7e04631caaf0a8e9d7ee9f33dd40ea364a1a335de0dbd5"
+    },
+    {
+      "sourcePath": "src/blocks/Chart/Micro/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Chart",
+      "lineCount": 8,
+      "exports": [
+        "MicroProps"
+      ],
+      "imports": [
+        "@pulse/charts/components/MicroChart"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Chart/Micro/types.ts.md",
+      "sha256": "a4c7bee6a3ae611545ee58983536c1e4788ec982efcbc0c53a21e2469108beb2"
+    },
+    {
+      "sourcePath": "src/blocks/Chart/Pie/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Chart",
+      "lineCount": 37,
+      "exports": [
+        "PieProps",
+        "TextSize",
+        "TypographyVariant"
+      ],
+      "imports": [
+        "@pulse/charts/components/PieChart",
+        "react",
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Chart/Pie/types.ts.md",
+      "sha256": "bc75e623c761122b3c8d93d1780c3a7a22650b80f2f43483ba36a2dc6c7ad55d"
+    },
+    {
+      "sourcePath": "src/blocks/Counter/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Counter",
+      "lineCount": 14,
+      "exports": [
+        "BaseCounterProps",
+        "RoundCounterProps"
+      ],
+      "imports": [
+        "../../components/Grade/RoundGrade",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/blocks/types.ts",
+        "src/components/Grade/RoundGrade/types.ts"
+      ],
+      "document": "generated/src/blocks/Counter/types.ts.md",
+      "sha256": "93850a6217be4255ea05b99bd13042e662bb6af220265aee71218b74985d5dfc"
+    },
+    {
+      "sourcePath": "src/blocks/Delta/ArrowIcon/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Delta",
+      "lineCount": 5,
+      "exports": [
+        "ArrowIconProps"
+      ],
+      "imports": [
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Delta/ArrowIcon/types.ts.md",
+      "sha256": "2495e4449ce9ead50ddfcc7076eb9e8517c2439d4cfda58fe5f57ff638d57309"
+    },
+    {
+      "sourcePath": "src/blocks/Delta/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Delta",
+      "lineCount": 28,
+      "exports": [
+        "DeltaProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Delta/types.ts.md",
+      "sha256": "11948a03c5b08e2f818c1f39b5bbf3168f1afdd190ac79104daca5e630166225"
+    },
+    {
+      "sourcePath": "src/blocks/FallbackContainer/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "FallbackContainer",
+      "lineCount": 6,
+      "exports": [
+        "FallbackContainerProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/FallbackContainer/types.ts.md",
+      "sha256": "aa2713d9fd692e02c2502c944f13d2d8002e730631d500ce4fff51b13f5b8b36"
+    },
+    {
+      "sourcePath": "src/blocks/File/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "File",
+      "lineCount": 10,
+      "exports": [
+        "FileProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/File/types.ts.md",
+      "sha256": "c032623f9113ca373332d87d2906cf1547564730c00dee6f310ed60d2a942773"
+    },
+    {
+      "sourcePath": "src/blocks/Form/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Form",
+      "lineCount": 29,
+      "exports": [
+        "FieldProps",
+        "FormDataRecord",
+        "FormProps"
+      ],
+      "imports": [
+        "../../components/deprecated/FormField",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/blocks/types.ts",
+        "src/components/deprecated/FormField/types.ts"
+      ],
+      "document": "generated/src/blocks/Form/types.ts.md",
+      "sha256": "b119b9d01ed6b0a098eac5998789fff8789e59cf961fb166de4aa53354088690"
+    },
+    {
+      "sourcePath": "src/blocks/Gigabox/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Gigabox",
+      "lineCount": 24,
+      "exports": [
+        "GigaBoxProps",
+        "GigaBoxState",
+        "GroupedContent"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Gigabox/types.ts.md",
+      "sha256": "eaa22f55b146f5d68221edcf7c6b8e97b9ff4b9ce6a397db4eae3496e18c0966"
+    },
+    {
+      "sourcePath": "src/blocks/Grade/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Grade",
+      "lineCount": 12,
+      "exports": [
+        "BaseGradeProps",
+        "RoundGradeProps"
+      ],
+      "imports": [
+        "../../components/Grade/RoundGrade",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/blocks/types.ts",
+        "src/components/Grade/RoundGrade/types.ts"
+      ],
+      "document": "generated/src/blocks/Grade/types.ts.md",
+      "sha256": "774df1140e35062c8cf6f5611d6de30cf52330b8e58054bbcb136b8c7472a251"
+    },
+    {
+      "sourcePath": "src/blocks/Grid/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Grid",
+      "lineCount": 12,
+      "exports": [
+        "GridProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Grid/types.ts.md",
+      "sha256": "3222b245edb3d7dfb48d5781d0d4f930f57f95fd42e2d7285c747823fa09cc21"
+    },
+    {
+      "sourcePath": "src/blocks/Icon/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Icon",
+      "lineCount": 23,
+      "exports": [
+        "IconProps"
+      ],
+      "imports": [
+        "./icons",
+        "react",
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Icon/types.ts.md",
+      "sha256": "2deef40127f0a03751cc7273c9dc12275aa133418581ee2aa8f14e694b5bee0e"
+    },
+    {
+      "sourcePath": "src/blocks/Image/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Image",
+      "lineCount": 26,
+      "exports": [
+        "ImageProps"
+      ],
+      "imports": [
+        "./constants",
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Image/types.ts.md",
+      "sha256": "6759611e4d91d4ed2dc302efd5c624c521b0e158e2e9a21363d4c2a2481545ad"
+    },
+    {
+      "sourcePath": "src/blocks/Info/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Info",
+      "lineCount": 3,
+      "exports": [
+        "InfoProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Info/types.ts.md",
+      "sha256": "38451481ce8b0559707eed09954a374404156026222cc2882ed8e2b649f5dbe6"
+    },
+    {
+      "sourcePath": "src/blocks/Input/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Input",
+      "lineCount": 29,
+      "exports": [
+        "DiscreteProps",
+        "TextProps"
+      ],
+      "imports": [
+        "../../components/Input",
+        "../../components/TimeCounter",
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/blocks/types.ts",
+        "src/components/Input/types.ts",
+        "src/components/TimeCounter/types.ts"
+      ],
+      "document": "generated/src/blocks/Input/types.ts.md",
+      "sha256": "5e5e2ef3f590bda4fec16bdd4a609231836641c76ade5d7b159f2b46792d4316"
+    },
+    {
+      "sourcePath": "src/blocks/Link/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Link",
+      "lineCount": 20,
+      "exports": [
+        "LinkProps"
+      ],
+      "imports": [
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Link/types.ts.md",
+      "sha256": "ca4d8b0d1573bd4f22572f1b4b4ece610e635790537d0fc2044e0924122e34ca"
+    },
+    {
+      "sourcePath": "src/blocks/Progress/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Progress",
+      "lineCount": 3,
+      "exports": [
+        "ProgressProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Progress/types.ts.md",
+      "sha256": "2ca2477f086d81b96f464ac4dfc1d616023d4e84347db0f879efef2842caeda2"
+    },
+    {
+      "sourcePath": "src/blocks/Select/Checkboxes/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Select",
+      "lineCount": 36,
+      "exports": [
+        "CheckboxesProps"
+      ],
+      "imports": [
+        "../../../components/Checkbox",
+        "../../../types"
+      ],
+      "resolvedImports": [
+        "src/components/Checkbox/types.ts"
+      ],
+      "document": "generated/src/blocks/Select/Checkboxes/types.ts.md",
+      "sha256": "e6016e7d87564ef9bcc591af72e7114ea8e311f19830061c1f8199245c6cf500"
+    },
+    {
+      "sourcePath": "src/blocks/Select/Multi/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Select",
+      "lineCount": 53,
+      "exports": [
+        "MultiProps"
+      ],
+      "imports": [
+        "../../../components/Multiselect/types",
+        "../../../types"
+      ],
+      "resolvedImports": [
+        "src/components/Multiselect/types.ts"
+      ],
+      "document": "generated/src/blocks/Select/Multi/types.ts.md",
+      "sha256": "1d4abf72711d1c40015bb50dc459190505b175f5ced0f6e07f382776da72d8d5"
+    },
+    {
+      "sourcePath": "src/blocks/Select/Radio/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Select",
+      "lineCount": 31,
+      "exports": [
+        "RadioProps"
+      ],
+      "imports": [
+        "../../../types"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Select/Radio/types.ts.md",
+      "sha256": "9ce8f13460281fd2a4e2c1be36a9ed1d1d9c52d3b448b0fb253fd7608d3478ba"
+    },
+    {
+      "sourcePath": "src/blocks/Select/Single/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Select",
+      "lineCount": 53,
+      "exports": [
+        "SingleProps"
+      ],
+      "imports": [
+        "../../../components/Select/types",
+        "../../../types"
+      ],
+      "resolvedImports": [
+        "src/components/Select/types.ts"
+      ],
+      "document": "generated/src/blocks/Select/Single/types.ts.md",
+      "sha256": "d15e6b861b274570a51e33e3dd9391d17ffd4cebd57cbbabfc90bf044a665c5b"
+    },
+    {
+      "sourcePath": "src/blocks/Stack/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Stack",
+      "lineCount": 28,
+      "exports": [
+        "StackMode",
+        "StackProps"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/blocks/types.ts"
+      ],
+      "document": "generated/src/blocks/Stack/types.ts.md",
+      "sha256": "f20582e45e50704ec6a1a650b34e539bc2c2a45776dd41c61b5dc8e09ded69ba"
+    },
+    {
+      "sourcePath": "src/blocks/Table/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Table",
+      "lineCount": 15,
+      "exports": [
+        "TableProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Table/types.ts.md",
+      "sha256": "f92905c00a20f06ca9eb4346dec71d32137d506672ba3ae73933bd5896f90b25"
+    },
+    {
+      "sourcePath": "src/blocks/Tags/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Tags",
+      "lineCount": 5,
+      "exports": [
+        "TagsProps"
+      ],
+      "imports": [
+        "../Tag"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Tags/types.ts.md",
+      "sha256": "23fe544b336d5dc14068bcaaa89571710fe2068b0765ed5565328005552b24cf"
+    },
+    {
+      "sourcePath": "src/blocks/Text/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Text",
+      "lineCount": 44,
+      "exports": [
+        "TextProps"
+      ],
+      "imports": [
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/Text/types.ts.md",
+      "sha256": "9710040d1077e5f3a2b969c0d494dc025ec770fe8d0dc93bcb664eb08adb498e"
+    },
+    {
+      "sourcePath": "src/blocks/Title/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "Title",
+      "lineCount": 14,
+      "exports": [
+        "TitleProps"
+      ],
+      "imports": [
+        "../../components/Title",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/blocks/types.ts",
+        "src/components/Title/types.ts"
+      ],
+      "document": "generated/src/blocks/Title/types.ts.md",
+      "sha256": "15d264b7ab416541a468796a2e4a7ce0649d586351e32a8289411a35c1c8a4ef"
+    },
+    {
+      "sourcePath": "src/blocks/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "types.ts",
+      "lineCount": 23,
+      "exports": [
+        "ClickableProps",
+        "InferStyledProps",
+        "Unwrap",
+        "Wrap"
+      ],
+      "imports": [
+        "react",
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/types.ts.md",
+      "sha256": "00f5435f716a9479331f4c9be5c84f6f2b8c14c52f3add9cb793184e45aefc65"
+    },
+    {
+      "sourcePath": "src/blocks/User/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "User",
+      "lineCount": 49,
+      "exports": [
+        "BaseProps",
+        "ClickableUserProps",
+        "NonClickableUserProps",
+        "UserProps"
+      ],
+      "imports": [
+        "../Avatar/badges",
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/blocks/User/types.ts.md",
+      "sha256": "0f7ea4befaa2ee0ebae889fea68755382451f6ccdeeb2398c1d97bdf1ca607c6"
+    },
+    {
+      "sourcePath": "src/blocks/UserList/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "blocks",
+      "entity": "UserList",
+      "lineCount": 17,
+      "exports": [
+        "UserListProps"
+      ],
+      "imports": [
+        "../../types",
+        "../User/types"
+      ],
+      "resolvedImports": [
+        "src/blocks/User/types.ts"
+      ],
+      "document": "generated/src/blocks/UserList/types.ts.md",
+      "sha256": "c4f96e05f68ea47b3acde429891f398e5b8fceffe0b8ede355a132e34c3ca3c6"
+    },
+    {
+      "sourcePath": "src/components/Accordion/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Accordion",
+      "lineCount": 18,
+      "exports": [
+        "AccordionProps",
+        "Size"
+      ],
+      "imports": [
+        "../Checkbox",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Checkbox/types.ts"
+      ],
+      "document": "generated/src/components/Accordion/types.ts.md",
+      "sha256": "05514b2551f641f0a6baec6c12747a3a127cd3a2d0798feed9fb9019cfc2d775"
+    },
+    {
+      "sourcePath": "src/components/ActionBar/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "ActionBar",
+      "lineCount": 29,
+      "exports": [
+        "ActionBarProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/ActionBar/types.ts.md",
+      "sha256": "df6b25caaa46f3b209ebdccca6adec76c7e872355367b2257f461129bf8c47ce"
+    },
+    {
+      "sourcePath": "src/components/ActionBarNew/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "ActionBarNew",
+      "lineCount": 32,
+      "exports": [
+        "ActionBarNewAlignmentType",
+        "ActionBarNewItem",
+        "ActionBarNewProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/ActionBarNew/types.ts.md",
+      "sha256": "99c6045327b85247bb4e97b6e58f2e87d2bc11963133c1c7d84097a28feee02d"
+    },
+    {
+      "sourcePath": "src/components/Actions/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Actions",
+      "lineCount": 31,
+      "exports": [
+        "ActionsProps",
+        "ActionsSize",
+        "Item"
+      ],
+      "imports": [
+        "../ActionSheet",
+        "../Button/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/ActionSheet/types.ts",
+        "src/components/Button/types.ts"
+      ],
+      "document": "generated/src/components/Actions/types.ts.md",
+      "sha256": "d31fd2f4c1cdd7f1b17dbe581bde19da627ed4dce4bd490e35eb3c36154414bf"
+    },
+    {
+      "sourcePath": "src/components/ActionSheet/Menu/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "ActionSheet",
+      "lineCount": 12,
+      "exports": [
+        "MenuItemProps",
+        "MenuProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/ActionSheet/Menu/types.ts.md",
+      "sha256": "d8845f7a0fb51589bd9f36a6b43298d847ffff2fabb0bae4faa110ba550b63a7"
+    },
+    {
+      "sourcePath": "src/components/ActionSheet/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "ActionSheet",
+      "lineCount": 46,
+      "exports": [
+        "ActionSheetProps"
+      ],
+      "imports": [
+        "@floating-ui/react",
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/ActionSheet/types.ts.md",
+      "sha256": "5e6699e1b28361e2ce6aa65866a5cdc355c6cfaf19095e494f5f576b547b9a94"
+    },
+    {
+      "sourcePath": "src/components/Avatar/Content/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Avatar",
+      "lineCount": 18,
+      "exports": [
+        "ContentProps",
+        "TextSizes",
+        "WrapperProps"
+      ],
+      "imports": [
+        "../../../types",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Avatar/types.ts"
+      ],
+      "document": "generated/src/components/Avatar/Content/types.ts.md",
+      "sha256": "24ff321f8b4cc9f5a1d32e2757232646c01cb826850b06e364338a1ecfc8a829"
+    },
+    {
+      "sourcePath": "src/components/Avatar/MoreButton/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Avatar",
+      "lineCount": 6,
+      "exports": [
+        "MoreButtonProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Avatar/types.ts"
+      ],
+      "document": "generated/src/components/Avatar/MoreButton/types.ts.md",
+      "sha256": "fd165b4e059db3dc5694e03b23d0ee301082aad2d628a2e5084080ab2abff65d"
+    },
+    {
+      "sourcePath": "src/components/Avatar/Progress/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Avatar",
+      "lineCount": 5,
+      "exports": [
+        "Progress",
+        "ProgressProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Avatar/Progress/types.ts.md",
+      "sha256": "686ee9ad2095703da23f00ed275f59f1d373b96fe6dcee077ebc04bc47b4f117"
+    },
+    {
+      "sourcePath": "src/components/Avatar/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Avatar",
+      "lineCount": 74,
+      "exports": [
+        "AvatarProps",
+        "AvatarSizesConst",
+        "MapToCounterSize",
+        "Shape",
+        "Size",
+        "VerificationStatus"
+      ],
+      "imports": [
+        "../Grade/RoundGrade",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Grade/RoundGrade/types.ts"
+      ],
+      "document": "generated/src/components/Avatar/types.ts.md",
+      "sha256": "51e17c93b80159fd7fed03966d3ebf40b0bdc0dd1f8c270c0178567da5fbbe0c"
+    },
+    {
+      "sourcePath": "src/components/Avatar/Verification/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Avatar",
+      "lineCount": 5,
+      "exports": [
+        "VerificationProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Avatar/types.ts"
+      ],
+      "document": "generated/src/components/Avatar/Verification/types.ts.md",
+      "sha256": "c50f67752cb64163144ee4ab81f26d05981ac1252b9cd5cb9a02b50acae7235f"
+    },
+    {
+      "sourcePath": "src/components/AvatarStack/Button/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "AvatarStack",
+      "lineCount": 9,
+      "exports": [
+        "ButtonProps",
+        "Sizes"
+      ],
+      "imports": [
+        "../types",
+        "@styled-system/css"
+      ],
+      "resolvedImports": [
+        "src/components/AvatarStack/types.ts"
+      ],
+      "document": "generated/src/components/AvatarStack/Button/types.ts.md",
+      "sha256": "8b4adc03ba7f2cda6a3f29e03f6b60a20f2bcbf6d58e8da82329837d6f4a2c47"
+    },
+    {
+      "sourcePath": "src/components/AvatarStack/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "AvatarStack",
+      "lineCount": 22,
+      "exports": [
+        "AvatarStackProps",
+        "ButtonSize",
+        "Size",
+        "StackType"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/AvatarStack/types.ts.md",
+      "sha256": "6e250d141ed7f992508ff135451f87cb81b76f3fca97dcdaecdd1d569105e489"
+    },
+    {
+      "sourcePath": "src/components/Backdrop/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Backdrop",
+      "lineCount": 17,
+      "exports": [
+        "BackdropProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Backdrop/types.ts.md",
+      "sha256": "66e99fc4acf2a4a2a41f9acaceeb3c35579aa02ebc66015a8743e85edf7c9c99"
+    },
+    {
+      "sourcePath": "src/components/BottomSheet/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "BottomSheet",
+      "lineCount": 27,
+      "exports": [
+        "BottomSheetHeaderProps",
+        "BottomSheetProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/BottomSheet/types.ts.md",
+      "sha256": "0e939b0002833b59e0b5c9fbb7678bfd5b8cc7424e778c9a1ecc498d5d0bab1f"
+    },
+    {
+      "sourcePath": "src/components/Box/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Box",
+      "lineCount": 29,
+      "exports": [
+        "BoxProps"
+      ],
+      "imports": [
+        "styled-components",
+        "styled-system"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Box/types.ts.md",
+      "sha256": "3773ecdc2f8adee099bc0d246da61eb6cb986e477e0a4eac6a2506f3f04b3731"
+    },
+    {
+      "sourcePath": "src/components/BreadcrumbsDynamic/DropDown/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "BreadcrumbsDynamic",
+      "lineCount": 8,
+      "exports": [
+        "DropDownProps"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/BreadcrumbsDynamic/types.ts"
+      ],
+      "document": "generated/src/components/BreadcrumbsDynamic/DropDown/types.ts.md",
+      "sha256": "879ab800b9e4353ad41f94240626a2cab930b6bc317bc0039b7aaf768180c5a4"
+    },
+    {
+      "sourcePath": "src/components/BreadcrumbsDynamic/MobileContainer/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "BreadcrumbsDynamic",
+      "lineCount": 6,
+      "exports": [
+        "MobileContainerProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/BreadcrumbsDynamic/types.ts"
+      ],
+      "document": "generated/src/components/BreadcrumbsDynamic/MobileContainer/types.ts.md",
+      "sha256": "38d5d22a2f0aeac4f09db7f78193bbd40445520828cf648c49509bde5c84495d"
+    },
+    {
+      "sourcePath": "src/components/BreadcrumbsDynamic/StandardContainer/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "BreadcrumbsDynamic",
+      "lineCount": 6,
+      "exports": [
+        "StandardContainerProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/BreadcrumbsDynamic/types.ts"
+      ],
+      "document": "generated/src/components/BreadcrumbsDynamic/StandardContainer/types.ts.md",
+      "sha256": "300ecab4b0b3086842324b6c1e77f828eef279a70377ed92af5e568bb5c9ac2e"
+    },
+    {
+      "sourcePath": "src/components/BreadcrumbsDynamic/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "BreadcrumbsDynamic",
+      "lineCount": 82,
+      "exports": [
+        "BreadcrumbItem",
+        "BreadcrumbsProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/BreadcrumbsDynamic/types.ts.md",
+      "sha256": "2ef11a998fe0768790940396da95f8846c77a833f61f961d71def2a4958b4a57"
+    },
+    {
+      "sourcePath": "src/components/Button/Icon/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Button",
+      "lineCount": 15,
+      "exports": [
+        "IconProps",
+        "IconSize",
+        "IconType"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts"
+      ],
+      "document": "generated/src/components/Button/Icon/types.ts.md",
+      "sha256": "99ed10038aadc1e6fbc945398db7d6d4fe65ab4f746021b7ff8545582ec397e9"
+    },
+    {
+      "sourcePath": "src/components/Button/IconButton/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Button",
+      "lineCount": 16,
+      "exports": [
+        "IconButtonProps",
+        "IconButtonSize",
+        "IconType"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts"
+      ],
+      "document": "generated/src/components/Button/IconButton/types.ts.md",
+      "sha256": "21cc13cb65c7c5ab4cf00e1a6bec662bb97c6ad26c8f36cfef203bc94ed472a6"
+    },
+    {
+      "sourcePath": "src/components/Button/More/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Button",
+      "lineCount": 6,
+      "exports": [
+        "MoreProps",
+        "MoreSize"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts"
+      ],
+      "document": "generated/src/components/Button/More/types.ts.md",
+      "sha256": "bfa1a7993bee8e9578546261df9efc57df2d65371c4d8ebf3534bbf156e36b55"
+    },
+    {
+      "sourcePath": "src/components/Button/Selection/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Button",
+      "lineCount": 39,
+      "exports": [
+        "ContainerProps",
+        "IconProps",
+        "SelectionProps",
+        "Size"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts"
+      ],
+      "document": "generated/src/components/Button/Selection/types.ts.md",
+      "sha256": "23fecfa2440e0713c512d6b47895c27760f432fabaf26802df007e00bdecfdd9"
+    },
+    {
+      "sourcePath": "src/components/Button/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Button",
+      "lineCount": 44,
+      "exports": [
+        "ButtonProps",
+        "LoaderProps",
+        "Size",
+        "State",
+        "Type"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Button/types.ts.md",
+      "sha256": "cdcd265435577fa6d812e64cbed2f0a9171d746f8b96213d3110f8a997ec0bfa"
+    },
+    {
+      "sourcePath": "src/components/Card/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Card",
+      "lineCount": 88,
+      "exports": [
+        "CardProps",
+        "Paddings",
+        "StackProps",
+        "Type",
+        "Variant"
+      ],
+      "imports": [
+        "../../utils/floating-ui/types",
+        "@dnd-kit/core",
+        "@dnd-kit/core/dist/hooks/utilities",
+        "react",
+        "styled-components"
+      ],
+      "resolvedImports": [
+        "src/utils/floating-ui/types.ts"
+      ],
+      "document": "generated/src/components/Card/types.ts.md",
+      "sha256": "461b7e6fb85aaaf458999e9fbe60a257a50e1e69f12ae6b3faf8ad0e311ce031"
+    },
+    {
+      "sourcePath": "src/components/Carousel/Arrow/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Carousel",
+      "lineCount": 7,
+      "exports": [
+        "ArrowDirection",
+        "ArrowProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Carousel/Arrow/types.ts.md",
+      "sha256": "2828b81702797d673510c8939ef9d51ce2eadbe02519c3920bfdcd8db7525233"
+    },
+    {
+      "sourcePath": "src/components/Carousel/Dot/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Carousel",
+      "lineCount": 34,
+      "exports": [
+        "ContainerStyledProps",
+        "DotProps",
+        "DotsActiveVariants",
+        "DotsSizeVariants",
+        "DotStyledProps",
+        "Size"
+      ],
+      "imports": [
+        "../../../types",
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Carousel/Dot/types.ts.md",
+      "sha256": "65b9726ee41c6899ab1eb90e59acadf26d18a75cac3b4ffbe01661384a5528c6"
+    },
+    {
+      "sourcePath": "src/components/Carousel/DotsContainer/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Carousel",
+      "lineCount": 16,
+      "exports": [
+        "ContainerProps",
+        "DotsContainerProps"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Carousel/types.ts"
+      ],
+      "document": "generated/src/components/Carousel/DotsContainer/types.ts.md",
+      "sha256": "aefca5c226f4520e8ddefa1cbfe5362ceb63fc25f9b05760111cf2eeb6d192d9"
+    },
+    {
+      "sourcePath": "src/components/Carousel/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Carousel",
+      "lineCount": 207,
+      "exports": [
+        "ActiveSlideActionType",
+        "ActiveSlideStateType",
+        "AdaptiveOptions",
+        "CarouselContextType",
+        "CarouselPeekSide",
+        "CarouselProps",
+        "CarouselSlotProps",
+        "ContentProps",
+        "DotsDynamicConfig",
+        "RenderArrowsProps",
+        "RenderDotsProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Carousel/types.ts.md",
+      "sha256": "8db7ca6467723888c79004e821e1ea51f362cae4392be1dcf4266619ff5e85ff"
+    },
+    {
+      "sourcePath": "src/components/Cell/__stories__/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Cell",
+      "lineCount": 41,
+      "exports": [
+        "ActionKeys",
+        "ActionsMap",
+        "ExtraSubtitleKeys",
+        "ExtraSubtitleMap",
+        "SubtitleMap",
+        "SubtitlesKeys",
+        "SubtitlesVariants",
+        "TitleKeys",
+        "TitleMap",
+        "TitleVariant"
+      ],
+      "imports": [
+        "../types",
+        "./const",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Cell/types.ts"
+      ],
+      "document": "generated/src/components/Cell/__stories__/types.ts.md",
+      "sha256": "0ab9ca8ca7e036efb33d9f80fa3118a3972ceabecd3182b575b34c84987848e5"
+    },
+    {
+      "sourcePath": "src/components/Cell/Heading/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Cell",
+      "lineCount": 35,
+      "exports": [
+        "HeadingProps"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Cell/types.ts"
+      ],
+      "document": "generated/src/components/Cell/Heading/types.ts.md",
+      "sha256": "b7250c5df52ec697ac1ba5c3b2881c94f09e8376f4d1db2996084d04cdbe6160"
+    },
+    {
+      "sourcePath": "src/components/Cell/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Cell",
+      "lineCount": 96,
+      "exports": [
+        "AboutProps",
+        "CellProps",
+        "CellWrapperProps",
+        "Size",
+        "Variant"
+      ],
+      "imports": [
+        "react",
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Cell/types.ts.md",
+      "sha256": "b750b3aaddef1c230a280cdbd471211e84b7b2d60c60a07d28db6ecb062a07e2"
+    },
+    {
+      "sourcePath": "src/components/CellButton/Icon/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "CellButton",
+      "lineCount": 16,
+      "exports": [
+        "IconProps",
+        "IconSizes",
+        "IconTypes"
+      ],
+      "imports": [
+        "../../../types",
+        "../types",
+        "@styled-system/css"
+      ],
+      "resolvedImports": [
+        "src/components/CellButton/types.ts"
+      ],
+      "document": "generated/src/components/CellButton/Icon/types.ts.md",
+      "sha256": "85e37c4a0defe9ef29837cfa8520994f05d2ab6751e885e6b6a1673b5c54861d"
+    },
+    {
+      "sourcePath": "src/components/CellButton/Text/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "CellButton",
+      "lineCount": 14,
+      "exports": [
+        "TextProps",
+        "TextTypes"
+      ],
+      "imports": [
+        "../../../types",
+        "../types",
+        "styled-components"
+      ],
+      "resolvedImports": [
+        "src/components/CellButton/types.ts"
+      ],
+      "document": "generated/src/components/CellButton/Text/types.ts.md",
+      "sha256": "21d6fde44cb488ffe841e53b5b14587d9f87036e7e83b8979eafa5682f5c99b3"
+    },
+    {
+      "sourcePath": "src/components/CellButton/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "CellButton",
+      "lineCount": 81,
+      "exports": [
+        "CellButtonContextArgs",
+        "CellButtonProps",
+        "Size",
+        "Types"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/CellButton/types.ts.md",
+      "sha256": "84ff5f2783405d58334504a98c1c6394bd9c04d6b3b1cc520c599811f9fb72a7"
+    },
+    {
+      "sourcePath": "src/components/CellMini/Contacts/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "CellMini",
+      "lineCount": 4,
+      "exports": [
+        "ContactsProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/CellMini/Contacts/types.ts.md",
+      "sha256": "4aa0e54db4de5e9ff1b3c6e8b1dabd1dabee4a92e0f00e9d80b4b8246ab0edcf"
+    },
+    {
+      "sourcePath": "src/components/CellMini/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "CellMini",
+      "lineCount": 12,
+      "exports": [
+        "CellMiniProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/CellMini/types.ts.md",
+      "sha256": "c4bcd7d731bb3edf36578da4daebdb1b5d1cbb070cd5bac033a8fc37ee544879"
+    },
+    {
+      "sourcePath": "src/components/CellRich/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "CellRich",
+      "lineCount": 8,
+      "exports": [
+        "CellRichProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/CellRich/types.ts.md",
+      "sha256": "3fd38f55cdecfd2a7aff3100e3dc89a334e8aab621cc1bacf99ed17b54b18df6"
+    },
+    {
+      "sourcePath": "src/components/CellTimeline/Comment/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "CellTimeline",
+      "lineCount": 8,
+      "exports": [
+        "CommentProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/CellTimeline/Comment/types.ts.md",
+      "sha256": "6f48cc2d5da7f43b48a12dc9af8a80940fd7c9ccf3424a7e6f2889eb62a2a64a"
+    },
+    {
+      "sourcePath": "src/components/CellTimeline/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "CellTimeline",
+      "lineCount": 18,
+      "exports": [
+        "CellTimelineContextArgs",
+        "CellTimelineProps",
+        "Size"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/CellTimeline/types.ts.md",
+      "sha256": "18ea84ae178627f23162b0015f12aac3a507263257f158016bfc2b5e6ed75255"
+    },
+    {
+      "sourcePath": "src/components/ChangeUser/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "ChangeUser",
+      "lineCount": 22,
+      "exports": [
+        "ChangeUserProps"
+      ],
+      "imports": [
+        "../Avatar",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Avatar/types.ts"
+      ],
+      "document": "generated/src/components/ChangeUser/types.ts.md",
+      "sha256": "7f25936ac73d721321c64a01548812dfabc2857d6b4f593b22f6feadd9a4d667"
+    },
+    {
+      "sourcePath": "src/components/Checkbox/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Checkbox",
+      "lineCount": 46,
+      "exports": [
+        "CheckboxProps",
+        "Size",
+        "State",
+        "VerticalAlign"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Checkbox/types.ts.md",
+      "sha256": "e34d0a9b6b9bfd439bf3c71a4011ab9c085aa8e41b0485531313c65a84fb2cd5"
+    },
+    {
+      "sourcePath": "src/components/Checkmark/Icon/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Checkmark",
+      "lineCount": 4,
+      "exports": [
+        "IconProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Checkmark/Icon/types.ts.md",
+      "sha256": "27f9d365ffde0a65ffa792ccaac19dfdf1e4130aa127c6560e0468d5c246f7c7"
+    },
+    {
+      "sourcePath": "src/components/Checkmark/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Checkmark",
+      "lineCount": 25,
+      "exports": [
+        "CheckmarkContentProps",
+        "CheckmarkProps",
+        "CheckmarkSizeProps",
+        "Size",
+        "State"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Checkmark/types.ts.md",
+      "sha256": "06ead52f450ab10024aa315c5abe61652ebdb118346d00bef122904da83df43b"
+    },
+    {
+      "sourcePath": "src/components/Counter/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Counter",
+      "lineCount": 21,
+      "exports": [
+        "CounterProps",
+        "Variant"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Counter/types.ts.md",
+      "sha256": "4a7e47b4cec393402579f5a24e1f54d704c27c08f3a09056334baec8cd79dfc9"
+    },
+    {
+      "sourcePath": "src/components/DatePicker/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "DatePicker",
+      "lineCount": 79,
+      "exports": [
+        "BottomSheetButtonProps",
+        "DatePickerProps",
+        "DateRange"
+      ],
+      "imports": [
+        "../Button/types",
+        "../Checkbox",
+        "react",
+        "react-datepicker"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts",
+        "src/components/Checkbox/types.ts"
+      ],
+      "document": "generated/src/components/DatePicker/types.ts.md",
+      "sha256": "ebbe8b3835fff17ddfc73b7bf6005049272e837297d3ecfbee98f2a40b4fc789"
+    },
+    {
+      "sourcePath": "src/components/DateTimePicker/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "DateTimePicker",
+      "lineCount": 20,
+      "exports": [
+        "DateTimePickerProps"
+      ],
+      "imports": [
+        "../DatePicker/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/DatePicker/types.ts"
+      ],
+      "document": "generated/src/components/DateTimePicker/types.ts.md",
+      "sha256": "163b0a8a77d4f5a78f02edca826b3bfb64d45957023aaf9dc96502ff7b1e05e9"
+    },
+    {
+      "sourcePath": "src/components/deprecated/CellTimeline/Line/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "deprecated",
+      "lineCount": 5,
+      "exports": [
+        "LineTypes"
+      ],
+      "imports": [
+        "../types",
+        "@styled-system/css"
+      ],
+      "resolvedImports": [
+        "src/components/deprecated/CellTimeline/types.ts"
+      ],
+      "document": "generated/src/components/deprecated/CellTimeline/Line/types.ts.md",
+      "sha256": "5ba49113948ed154ba5f09100bcd50f5f7ffed96a2a0d6c5704958707cf4bb05"
+    },
+    {
+      "sourcePath": "src/components/deprecated/CellTimeline/Point/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "deprecated",
+      "lineCount": 15,
+      "exports": [
+        "PointTypes",
+        "PointTypeSize",
+        "PointTypeSizes"
+      ],
+      "imports": [
+        "../../../../types",
+        "../types",
+        "@styled-system/css"
+      ],
+      "resolvedImports": [
+        "src/components/deprecated/CellTimeline/types.ts"
+      ],
+      "document": "generated/src/components/deprecated/CellTimeline/Point/types.ts.md",
+      "sha256": "241e2ad86b3a0ba772c0dbae298cde18dfb6686cd76a5276b3ec050d625751b7"
+    },
+    {
+      "sourcePath": "src/components/deprecated/CellTimeline/PointSet/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "deprecated",
+      "lineCount": 7,
+      "exports": [
+        "PointSetTypeSizes"
+      ],
+      "imports": [
+        "../types",
+        "@styled-system/css"
+      ],
+      "resolvedImports": [
+        "src/components/deprecated/CellTimeline/types.ts"
+      ],
+      "document": "generated/src/components/deprecated/CellTimeline/PointSet/types.ts.md",
+      "sha256": "b3fa1964317142dd36b01e12756f34ae2b6242cb4327a1fdd0ba3f4aa4c8e752"
+    },
+    {
+      "sourcePath": "src/components/deprecated/CellTimeline/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "deprecated",
+      "lineCount": 20,
+      "exports": [
+        "CellTimelineContextArgs",
+        "CellTimelineProps",
+        "Size",
+        "Types"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/deprecated/CellTimeline/types.ts.md",
+      "sha256": "4528c628346f7168dda99e5ac775d7f5a9eac049bc744aa967268b86a8904f5e"
+    },
+    {
+      "sourcePath": "src/components/deprecated/FormField/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "deprecated",
+      "lineCount": 31,
+      "exports": [
+        "FormFieldProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/deprecated/FormField/types.ts.md",
+      "sha256": "48c847eea9068eea443aefddbcd3377c9f7e9cacb9c3262df3d32fe6d6b5ea3f"
+    },
+    {
+      "sourcePath": "src/components/deprecated/Plain/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "deprecated",
+      "lineCount": 24,
+      "exports": [
+        "ButtonProps",
+        "PlainSize"
+      ],
+      "imports": [
+        "../../Button/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts"
+      ],
+      "document": "generated/src/components/deprecated/Plain/types.ts.md",
+      "sha256": "a9402e81e00a24aa495b04754dd9c29cbf10492097061c9ab76d0171b1b89e66"
+    },
+    {
+      "sourcePath": "src/components/Drawer/Content/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Drawer",
+      "lineCount": 17,
+      "exports": [
+        "ContentProps"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Drawer/types.ts"
+      ],
+      "document": "generated/src/components/Drawer/Content/types.ts.md",
+      "sha256": "ce04e71b49ed151ee279a38e059e187ea9e27f78bed652101d8f3d19f1a9f8c9"
+    },
+    {
+      "sourcePath": "src/components/Drawer/Footer/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Drawer",
+      "lineCount": 20,
+      "exports": [
+        "FooterProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Drawer/types.ts"
+      ],
+      "document": "generated/src/components/Drawer/Footer/types.ts.md",
+      "sha256": "9daa93d295d87181de234debd0be36a9fbaf37f97f917e6a119be038d66278e9"
+    },
+    {
+      "sourcePath": "src/components/Drawer/Header/MoreMenu/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Drawer",
+      "lineCount": 6,
+      "exports": [
+        "MoreMenuProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Drawer/Header/types.ts"
+      ],
+      "document": "generated/src/components/Drawer/Header/MoreMenu/types.ts.md",
+      "sha256": "05f9b1646bfe6916f07c60716d3b5e8837727c148c5b8d414e245cc8c0a1ce3d"
+    },
+    {
+      "sourcePath": "src/components/Drawer/Header/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Drawer",
+      "lineCount": 44,
+      "exports": [
+        "HeaderProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Drawer/types.ts"
+      ],
+      "document": "generated/src/components/Drawer/Header/types.ts.md",
+      "sha256": "9caa406153534e93b50f7773402a30a178e02caa553910a5d5b701a0337d1a91"
+    },
+    {
+      "sourcePath": "src/components/Drawer/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Drawer",
+      "lineCount": 169,
+      "exports": [
+        "DrawerButtonProps",
+        "DrawerProps",
+        "SelectItemsAndClickHandlerResult",
+        "SubItem",
+        "Tab"
+      ],
+      "imports": [
+        "../Button/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts"
+      ],
+      "document": "generated/src/components/Drawer/types.ts.md",
+      "sha256": "50ac7f700a0ac8d4dda089c34d9afdca95ebd8fabc6950c952ccd1f082a509f7"
+    },
+    {
+      "sourcePath": "src/components/Dropdown/Items/ActionSheetItem/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Dropdown",
+      "lineCount": 11,
+      "exports": [
+        "ActionSheetItemProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Dropdown/Items/ActionSheetItem/types.ts.md",
+      "sha256": "b00fbe5c4672b01b6275c8730530a61efcba7145dd6038bacec5edfc5f9cbfa5"
+    },
+    {
+      "sourcePath": "src/components/Dropdown/Items/PopupSelectionItem/CheckmarkItem/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Dropdown",
+      "lineCount": 4,
+      "exports": [
+        "CheckmarkItemProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Dropdown/Items/PopupSelectionItem/CheckmarkItem/types.ts.md",
+      "sha256": "4c3bd3ff5f2d873d9c0ed3eea5fd73724869a6131a84c2c116e2a3138641d6b9"
+    },
+    {
+      "sourcePath": "src/components/Dropdown/Items/PopupSelectionItem/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Dropdown",
+      "lineCount": 46,
+      "exports": [
+        "DefaultProps",
+        "PopupSelectionItemProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Dropdown/Items/PopupSelectionItem/types.ts.md",
+      "sha256": "09bc732b91a902d37be7abf69da9c8b9aaab95cf7691b60207b23da02a406910"
+    },
+    {
+      "sourcePath": "src/components/Dropdown/Items/SelectionSheetItem/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Dropdown",
+      "lineCount": 20,
+      "exports": [
+        "SelectionSheetItemProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Dropdown/Items/SelectionSheetItem/types.ts.md",
+      "sha256": "09d19f787be1481ec82364472ef33d4696f1f9db4fbb6d7d4afe538ff54cb1da"
+    },
+    {
+      "sourcePath": "src/components/Dropdown/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Dropdown",
+      "lineCount": 165,
+      "exports": [
+        "ActionButtonProps",
+        "BaseDropdownProps",
+        "DefaultDropdownProps",
+        "DropdownProps",
+        "DropdownWithPaddingAndSearchProps",
+        "DropdownWithPaddingProps",
+        "DropdownWithSearchProps",
+        "VirtualListOptions"
+      ],
+      "imports": [
+        "../../utils/floating-ui/types",
+        "../Button",
+        "../CellButton",
+        "../Search",
+        "@floating-ui/react",
+        "react",
+        "react-window"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts",
+        "src/components/CellButton/types.ts",
+        "src/components/Search/types.ts",
+        "src/utils/floating-ui/types.ts"
+      ],
+      "document": "generated/src/components/Dropdown/types.ts.md",
+      "sha256": "b83703e9067f38f351b1fd697de6189fb0ee080ab1c5323bd714d48ed55a6a8b"
+    },
+    {
+      "sourcePath": "src/components/Empty/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Empty",
+      "lineCount": 72,
+      "exports": [
+        "EmptyProps",
+        "EmptyType",
+        "Orientation",
+        "Size"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Empty/types.ts.md",
+      "sha256": "1f8e92b192d5edad47e55dc8082b6f78a335e6d0d85fa6dbec709e1c1a45c205"
+    },
+    {
+      "sourcePath": "src/components/Error/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Error",
+      "lineCount": 65,
+      "exports": [
+        "BaseProps",
+        "ErrorProps",
+        "ErrorType",
+        "Orientation",
+        "Size"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Error/types.ts.md",
+      "sha256": "93c12064a9696ee7e02f9c1c6da737ff8ae64c78a94f8b4525ecfe3d9bb3b27f"
+    },
+    {
+      "sourcePath": "src/components/errors/ErrorBoundary/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "errors",
+      "lineCount": 16,
+      "exports": [
+        "ErrorBoundaryProps",
+        "ErrorBoundaryState",
+        "FallbackProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/errors/ErrorBoundary/types.ts.md",
+      "sha256": "155ae29d149886c4e45840a844a8c19b3a4b39a677fa2e4b55a94791174e48ad"
+    },
+    {
+      "sourcePath": "src/components/Fade/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Fade",
+      "lineCount": 22,
+      "exports": [
+        "FadeDirection",
+        "FadeProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Fade/types.ts.md",
+      "sha256": "f4a8c230541875823c48555412a516c1b40a7dda091e3d38a428f41855a925e7"
+    },
+    {
+      "sourcePath": "src/components/Feedback/TextField/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Feedback",
+      "lineCount": 7,
+      "exports": [
+        "TextFieldProps"
+      ],
+      "imports": [
+        "../../FormField",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/FormField/types.ts"
+      ],
+      "document": "generated/src/components/Feedback/TextField/types.ts.md",
+      "sha256": "bba546f19f17e72b032f42f92459c43e8b083a8c198b5d0c3715f9835f2c5599"
+    },
+    {
+      "sourcePath": "src/components/Feedback/Title/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Feedback",
+      "lineCount": 5,
+      "exports": [
+        "TitleProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Feedback/Title/types.ts.md",
+      "sha256": "e883284b0ba4dc0f1f2f6effa10e06bb6518edcc498dbc8d3eab7bba1a0d76a5"
+    },
+    {
+      "sourcePath": "src/components/Feedback/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Feedback",
+      "lineCount": 11,
+      "exports": [
+        "FeedbackProps"
+      ],
+      "imports": [
+        "../Rating",
+        "./TextField",
+        "./Title",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Feedback/TextField/types.ts",
+        "src/components/Feedback/Title/types.ts",
+        "src/components/Rating/types.ts"
+      ],
+      "document": "generated/src/components/Feedback/types.ts.md",
+      "sha256": "77875256e64a668993a767a00549120ad1c36df071456aa954703fb9ede631b5"
+    },
+    {
+      "sourcePath": "src/components/Filters/Button/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Filters",
+      "lineCount": 24,
+      "exports": [
+        "ButtonsContainerProps",
+        "ButtonsContainerStyledProps",
+        "FilterButtonProps",
+        "MoreButtonProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Filters/Button/types.ts.md",
+      "sha256": "cad2c4980d9e7c5696333b165e5c547ad81b7a4249e8ecff04a71053a61a7623"
+    },
+    {
+      "sourcePath": "src/components/Filters/PopupSelection/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Filters",
+      "lineCount": 23,
+      "exports": [
+        "ArrowSVGProps",
+        "ContainerProps",
+        "PopupSelectionProps",
+        "PopupSelectionStyledProps",
+        "TriggerProps"
+      ],
+      "imports": [
+        "csstype"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Filters/PopupSelection/types.ts.md",
+      "sha256": "b60ddc56e8b3f4d38b006a2005c429c5e0a3c46e9e7b55dcf67dc491f3036b9a"
+    },
+    {
+      "sourcePath": "src/components/Filters/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Filters",
+      "lineCount": 6,
+      "exports": [
+        "FilterContentProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Filters/types.ts.md",
+      "sha256": "82cd74799abbce76332927d98c0f33bb56fd28e6b8297a7d4d7cd5b8c7bd9cdd"
+    },
+    {
+      "sourcePath": "src/components/FloatingModal/MoreActions/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "FloatingModal",
+      "lineCount": 5,
+      "exports": [
+        "MoreActionsProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/FloatingModal/types.ts"
+      ],
+      "document": "generated/src/components/FloatingModal/MoreActions/types.ts.md",
+      "sha256": "da86636bb42aef4af9672b320c0760ea4cc8b3c2ccb10164d7186475afd95395"
+    },
+    {
+      "sourcePath": "src/components/FloatingModal/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "FloatingModal",
+      "lineCount": 84,
+      "exports": [
+        "FloatingModalProps",
+        "ModalPosition"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/FloatingModal/types.ts.md",
+      "sha256": "b6bcb7677a8ecd218834384f1a9995b5891d4c646f618e52e77c224b4e79fd76"
+    },
+    {
+      "sourcePath": "src/components/FormField/Title/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "FormField",
+      "lineCount": 39,
+      "exports": [
+        "TitleProps"
+      ],
+      "imports": [
+        "../../../utils/floating-ui/types",
+        "../../Popover/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Popover/types.ts",
+        "src/utils/floating-ui/types.ts"
+      ],
+      "document": "generated/src/components/FormField/Title/types.ts.md",
+      "sha256": "6274397ab28cb6133f12b19e29a3107f3a920ee6e3e6a47319c09c4a1a1bce88"
+    },
+    {
+      "sourcePath": "src/components/FormField/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "FormField",
+      "lineCount": 21,
+      "exports": [
+        "FormFieldProps"
+      ],
+      "imports": [
+        "./Title/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/FormField/Title/types.ts"
+      ],
+      "document": "generated/src/components/FormField/types.ts.md",
+      "sha256": "99eb3e610dc308fcc44fd461348bc8c38e4cb99be7e6dc9654eb233867bec35c"
+    },
+    {
+      "sourcePath": "src/components/Grade/Badge/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Grade",
+      "lineCount": 18,
+      "exports": [
+        "BadgeProps",
+        "Size",
+        "Style"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Grade/types.ts"
+      ],
+      "document": "generated/src/components/Grade/Badge/types.ts.md",
+      "sha256": "fb9dfc8144885a059d96c58a70f705192366bbbbbaab446e01b67a925e329e1b"
+    },
+    {
+      "sourcePath": "src/components/Grade/RoundGrade/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Grade",
+      "lineCount": 18,
+      "exports": [
+        "GradeProps",
+        "Size",
+        "Style"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Grade/types.ts"
+      ],
+      "document": "generated/src/components/Grade/RoundGrade/types.ts.md",
+      "sha256": "1fcbaf5f19a71be733fb142e566cf674631a6fe5195caa174984a2d882edb665"
+    },
+    {
+      "sourcePath": "src/components/Grade/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Grade",
+      "lineCount": 11,
+      "exports": [
+        "BaseProps",
+        "Bordered"
+      ],
+      "imports": [
+        "../../types"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Grade/types.ts.md",
+      "sha256": "d457bfa68a011287b0e9aaff29eadf1b574d582d888f41d2df67b93f4bd5e790"
+    },
+    {
+      "sourcePath": "src/components/GradientButton/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "GradientButton",
+      "lineCount": 22,
+      "exports": [
+        "GradientButtonProps",
+        "GradientButtonSizes",
+        "GradientButtonStates",
+        "GradientButtonStyledProps"
+      ],
+      "imports": [
+        "../../types",
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/GradientButton/types.ts.md",
+      "sha256": "2cacacb819477c1bf70d24e88988f545c7bd358f2042812c52e478040a823955"
+    },
+    {
+      "sourcePath": "src/components/Group/MoreButton/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Group",
+      "lineCount": 9,
+      "exports": [
+        "MoreButtonProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Group/MoreButton/types.ts.md",
+      "sha256": "c019959fd0f51b1b51f049a33a1f53dcaf9b05517ecc0bf47e53a01f5fa8fe71"
+    },
+    {
+      "sourcePath": "src/components/Group/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Group",
+      "lineCount": 9,
+      "exports": [
+        "GroupColumns",
+        "GroupProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Group/types.ts.md",
+      "sha256": "eba6245d7ff0c4ba5c4f6bd98dde20c92680f9a1a5bd5e4807725fcd06ad0238"
+    },
+    {
+      "sourcePath": "src/components/ImageViewer/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "ImageViewer",
+      "lineCount": 51,
+      "exports": [
+        "ImageViewerProps",
+        "LayoutResult",
+        "NaturalSize",
+        "Rotation",
+        "ViewportSize",
+        "ZoomPercentVariant",
+        "ZoomTextVariant",
+        "ZoomVariant"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/ImageViewer/types.ts.md",
+      "sha256": "147af6047afe60b414014de58fff130a744f1b884dbd20cb7346e3a971a6fe77"
+    },
+    {
+      "sourcePath": "src/components/Input/TextArea/Chat/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Input",
+      "lineCount": 28,
+      "exports": [
+        "ActionProps",
+        "ButtonAttributes",
+        "ChatWrapperProps",
+        "WritebarProps"
+      ],
+      "imports": [
+        "../Line/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Input/TextArea/Line/types.ts"
+      ],
+      "document": "generated/src/components/Input/TextArea/Chat/types.ts.md",
+      "sha256": "7e50fc7b9f20fb52f104bd0890f6f77ef7deec3a679191ab710122a7e7dfe331"
+    },
+    {
+      "sourcePath": "src/components/Input/TextArea/Line/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Input",
+      "lineCount": 18,
+      "exports": [
+        "LineProps",
+        "LineWrapperProps"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Input/TextArea/types.ts"
+      ],
+      "document": "generated/src/components/Input/TextArea/Line/types.ts.md",
+      "sha256": "d6cf87911c889455943a739847dfec86e3b3ef5393b6d13e76c5f0914c85d319"
+    },
+    {
+      "sourcePath": "src/components/Input/TextArea/TextAreaToolbar/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Input",
+      "lineCount": 9,
+      "exports": [
+        "TextAreaToolbarPlacement",
+        "TextAreaToolbarProps"
+      ],
+      "imports": [
+        "../../../ToolSelector",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/ToolSelector/types.ts"
+      ],
+      "document": "generated/src/components/Input/TextArea/TextAreaToolbar/types.ts.md",
+      "sha256": "d5fbd73686bbb06abf6220e16f92514e764d06097c721c5c085188963cbdd2f2"
+    },
+    {
+      "sourcePath": "src/components/Input/TextArea/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Input",
+      "lineCount": 16,
+      "exports": [
+        "TextAreaProps",
+        "ToolbarPlacement"
+      ],
+      "imports": [
+        "../../ToolSelector",
+        "react",
+        "styled-components"
+      ],
+      "resolvedImports": [
+        "src/components/ToolSelector/types.ts"
+      ],
+      "document": "generated/src/components/Input/TextArea/types.ts.md",
+      "sha256": "6369b8b1ef39fdb0e87c7a148c91390cbe1c49f6814dcdc3fa4dfe1799935831"
+    },
+    {
+      "sourcePath": "src/components/Input/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Input",
+      "lineCount": 28,
+      "exports": [
+        "InputProps",
+        "Suggestion",
+        "SuggestionOptionProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Input/types.ts.md",
+      "sha256": "eb3d494e1cb8a82be88e99d818d5d492acfa1a9e8710ccb5177305a0061646fa"
+    },
+    {
+      "sourcePath": "src/components/Input/variants/ChipsInput/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Input",
+      "lineCount": 20,
+      "exports": [
+        "ChipsInputProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Input/variants/ChipsInput/types.ts.md",
+      "sha256": "e3582716855fc5d858febba83f9340708b963b978934801edbcbcf2dee885b3b"
+    },
+    {
+      "sourcePath": "src/components/Input/variants/PrefixPostfix/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Input",
+      "lineCount": 28,
+      "exports": [
+        "ForwardRef",
+        "PrefixLengthType",
+        "PrefixPostfixProps",
+        "PrefixStringType"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Input/variants/PrefixPostfix/types.ts.md",
+      "sha256": "bd4a82f506c631672b23c45b37af6c96d6a642e2ff992c8afbc99e974d4089e2"
+    },
+    {
+      "sourcePath": "src/components/Layout/Column/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Layout",
+      "lineCount": 10,
+      "exports": [
+        "ColumnProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Layout/Column/types.ts.md",
+      "sha256": "311d3d1d252f81d065094845dbdfeb73f652c39eaddabb5b1e7e4da990883c95"
+    },
+    {
+      "sourcePath": "src/components/Layout/Provider/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Layout",
+      "lineCount": 7,
+      "exports": [
+        "ProviderProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Layout/Provider/types.ts.md",
+      "sha256": "bee69bab9586b6b9c7815a4cc8fb629cd1ccb93c28045d30b76a8c1b6f63d3a7"
+    },
+    {
+      "sourcePath": "src/components/LayoutGrid/Grid/Item/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "LayoutGrid",
+      "lineCount": 91,
+      "exports": [
+        "BreakpointValue",
+        "ItemProps"
+      ],
+      "imports": [
+        "@dnd-kit/core"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/LayoutGrid/Grid/Item/types.ts.md",
+      "sha256": "c5bc03439a8dc9fbeb22b6963e8308881a90102440ed3b8f45f66e9af73fae16"
+    },
+    {
+      "sourcePath": "src/components/LayoutGrid/Grid/SortableItem/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "LayoutGrid",
+      "lineCount": 16,
+      "exports": [
+        "SortableItemProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/LayoutGrid/Grid/SortableItem/types.ts.md",
+      "sha256": "b5c26014d21b1c80ca7a0a3da84392ff2f587ee596ed0e34c68909eb57b997b6"
+    },
+    {
+      "sourcePath": "src/components/LayoutGrid/Grid/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "LayoutGrid",
+      "lineCount": 77,
+      "exports": [
+        "BreakpointValue",
+        "ItemProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/LayoutGrid/Grid/types.ts.md",
+      "sha256": "c533a56d2d030292a7e17aa90489662f60653649d6c7eccc7122b911cb55dbd8"
+    },
+    {
+      "sourcePath": "src/components/LayoutGrid/Layout/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "LayoutGrid",
+      "lineCount": 11,
+      "exports": [
+        "AsideProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/LayoutGrid/Layout/types.ts.md",
+      "sha256": "b1c91aba2d2a5ed8451a383fc2f538322bcf98c545a4c895d348d3a473a4924a"
+    },
+    {
+      "sourcePath": "src/components/Loader/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Loader",
+      "lineCount": 25,
+      "exports": [
+        "LoaderProps",
+        "Size"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Loader/types.ts.md",
+      "sha256": "f5d7ba85644df5dd467b56809d19d1191a3825fc099dfe9dac76d69cba78c18b"
+    },
+    {
+      "sourcePath": "src/components/Modal/ActionBar/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Modal",
+      "lineCount": 34,
+      "exports": [
+        "ActionBarProps",
+        "ActionBarStickyVariants",
+        "ActionBarStyledProps"
+      ],
+      "imports": [
+        "../Base",
+        "../types",
+        "@styled-system/css",
+        "styled-components"
+      ],
+      "resolvedImports": [
+        "src/components/Modal/Base/types.ts",
+        "src/components/Modal/types.ts"
+      ],
+      "document": "generated/src/components/Modal/ActionBar/types.ts.md",
+      "sha256": "ad07df5dfd3a47512fd75f9385bf753d22f12d15bd44557b4f5d92c6ac200993"
+    },
+    {
+      "sourcePath": "src/components/Modal/ActionButton/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Modal",
+      "lineCount": 14,
+      "exports": [
+        "ActionButtonIconVariants",
+        "ActionButtonProps"
+      ],
+      "imports": [
+        "@styled-system/css"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Modal/ActionButton/types.ts.md",
+      "sha256": "ee7a6f6d28cfe9e4b79f14eb19e5c232919bb5011f3089945a0eeb06957b4c78"
+    },
+    {
+      "sourcePath": "src/components/Modal/Alert/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Modal",
+      "lineCount": 13,
+      "exports": [
+        "ModalAlertProps"
+      ],
+      "imports": [
+        "../Base",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Modal/Base/types.ts"
+      ],
+      "document": "generated/src/components/Modal/Alert/types.ts.md",
+      "sha256": "8aacd11b3f3a759b5eb5fbc0bd6a1f8d80e50b7f7f521261c8763570f94af422"
+    },
+    {
+      "sourcePath": "src/components/Modal/Base/Body/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Modal",
+      "lineCount": 5,
+      "exports": [
+        "BodyStyledProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Modal/Base/types.ts"
+      ],
+      "document": "generated/src/components/Modal/Base/Body/types.ts.md",
+      "sha256": "84a65b61653a44dff1bc84fe8c37163dd1495d2cbe34fcd969fd2938166e866a"
+    },
+    {
+      "sourcePath": "src/components/Modal/Base/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Modal",
+      "lineCount": 25,
+      "exports": [
+        "ColumnStyledProps",
+        "ModalBaseProps",
+        "Size"
+      ],
+      "imports": [
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Modal/Base/types.ts.md",
+      "sha256": "12913e2e05903e98e86d0930b4d6ca2a6ddf094d6dbf8db83e560b1d01f9e901"
+    },
+    {
+      "sourcePath": "src/components/Modal/Body/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Modal",
+      "lineCount": 3,
+      "exports": [
+        "BodyProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Modal/Body/types.ts.md",
+      "sha256": "fc2c535ea78d4b9c50f98e89654145c6da3c54887e54e9c55bf4c93ceddb0df5"
+    },
+    {
+      "sourcePath": "src/components/Modal/Header/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Modal",
+      "lineCount": 28,
+      "exports": [
+        "HeaderProps",
+        "HeaderStickyVariants",
+        "HeaderStyledProps"
+      ],
+      "imports": [
+        "../types",
+        "@styled-system/css",
+        "react",
+        "styled-components"
+      ],
+      "resolvedImports": [
+        "src/components/Modal/types.ts"
+      ],
+      "document": "generated/src/components/Modal/Header/types.ts.md",
+      "sha256": "6d58f427a1b14bdbfc2c021f895c5582c11a8201369746c14b987c51c07577a0"
+    },
+    {
+      "sourcePath": "src/components/Modal/ModalCard/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Modal",
+      "lineCount": 3,
+      "exports": [
+        "ModalCardProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Modal/ModalCard/types.ts.md",
+      "sha256": "88db16c325f9039ec7d7fe0acffacc877fd3275f4b034a1a17df0a55ac3fc747"
+    },
+    {
+      "sourcePath": "src/components/Modal/StubStickyElement/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Modal",
+      "lineCount": 6,
+      "exports": [
+        "StubStickyElementProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Modal/StubStickyElement/types.ts.md",
+      "sha256": "2c7958ee3809d59715d0be2483804c5bc7fb65baf06e8a81f34d2d34a15bf592"
+    },
+    {
+      "sourcePath": "src/components/Modal/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "Modal",
+      "lineCount": 48,
+      "exports": [
+        "ContentColumns",
+        "ModalContextArgs",
+        "ModalProps",
+        "PaddingSizes",
+        "Placement",
+        "PlacementStyles"
+      ],
+      "imports": [
+        "./Base/types",
+        "@styled-system/css",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Modal/Base/types.ts"
+      ],
+      "document": "generated/src/components/Modal/types.ts.md",
+      "sha256": "a4896f3ab354b324dbfca87ae7598ec20c9b10e3662dc3a30b54119f898d4579"
+    },
+    {
+      "sourcePath": "src/components/ModalNew/Body/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "ModalNew",
+      "lineCount": 3,
+      "exports": [
+        "BodyProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/ModalNew/Body/types.ts.md",
+      "sha256": "e7ff039046d86bc2683493454daf60f56c751147aff95dfb3c7a7d3cfc1252bc"
+    },
+    {
+      "sourcePath": "src/components/ModalNew/Footer/ActionButton/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "ModalNew",
+      "lineCount": 10,
+      "exports": [
+        "ActionButtonProps"
+      ],
+      "imports": [
+        "../../../Button/types",
+        "../../types"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts",
+        "src/components/ModalNew/types.ts"
+      ],
+      "document": "generated/src/components/ModalNew/Footer/ActionButton/types.ts.md",
+      "sha256": "7f16feeaf85242c344b606f77b44f3251fd1c5f20502335f15610bbc84b77c29"
+    },
+    {
+      "sourcePath": "src/components/ModalNew/Header/Actions/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "ModalNew",
+      "lineCount": 3,
+      "exports": [
+        "ActionsProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/ModalNew/Header/Actions/types.ts.md",
+      "sha256": "a1def00c2c8efb1da50fa5377e2f2bdb38ba93f891f999bdd2641e14336b1391"
+    },
+    {
+      "sourcePath": "src/components/ModalNew/Header/types.ts",
+      "language": "typescript",
+      "part": "part-1",
+      "rawFile": "types-context.part-1.md",
+      "area": "components",
+      "entity": "ModalNew",
+      "lineCount": 3,
+      "exports": [
+        "HeaderProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/ModalNew/Header/types.ts.md",
+      "sha256": "f7dd6f77c6b4084965cdd1a3fedc99cd2236955f749a3214de05099b56ecd643"
+    },
+    {
+      "sourcePath": "src/components/ModalNew/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "ModalNew",
+      "lineCount": 231,
+      "exports": [
+        "ActionsItem",
+        "Button",
+        "ButtonAttributes",
+        "DeviceType",
+        "ModalProps",
+        "ModalSize",
+        "ModalTagProps",
+        "ModalType"
+      ],
+      "imports": [
+        "../BreadcrumbsDynamic/types",
+        "../Button/types",
+        "../Tags/Tag/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/BreadcrumbsDynamic/types.ts",
+        "src/components/Button/types.ts",
+        "src/components/Tags/Tag/types.ts"
+      ],
+      "document": "generated/src/components/ModalNew/types.ts.md",
+      "sha256": "ebf5faba75c15a2b26eac7d676cd23498d45c9e8983f75393fbb223e7baa8195"
+    },
+    {
+      "sourcePath": "src/components/Multiselect/ChipsList/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Multiselect",
+      "lineCount": 7,
+      "exports": [
+        "ChipsListProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Multiselect/types.ts"
+      ],
+      "document": "generated/src/components/Multiselect/ChipsList/types.ts.md",
+      "sha256": "fa26a50a495c559be6d4748b1ee2a4c2d9b7a2a6c8bc3ff7423c1ab75f5d0256"
+    },
+    {
+      "sourcePath": "src/components/Multiselect/Option/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Multiselect",
+      "lineCount": 21,
+      "exports": [
+        "InternalOptionProps",
+        "OptionProps",
+        "OptionPropsGeneric"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Multiselect/types.ts"
+      ],
+      "document": "generated/src/components/Multiselect/Option/types.ts.md",
+      "sha256": "200a98efc70205cf818ca8fc435c14c346a0424db9b0d869f2560bb1f997e6b4"
+    },
+    {
+      "sourcePath": "src/components/Multiselect/OptionsList/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Multiselect",
+      "lineCount": 33,
+      "exports": [
+        "OptionsListProps"
+      ],
+      "imports": [
+        "../Option",
+        "../Option/types",
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Multiselect/Option/types.ts",
+        "src/components/Multiselect/types.ts"
+      ],
+      "document": "generated/src/components/Multiselect/OptionsList/types.ts.md",
+      "sha256": "f64c13df773b959269526069f1c0317b809384bcde5041a5dc47e116a8bfb547"
+    },
+    {
+      "sourcePath": "src/components/Multiselect/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Multiselect",
+      "lineCount": 195,
+      "exports": [
+        "ButtonTextProps",
+        "ChipData",
+        "SelectProps",
+        "Value"
+      ],
+      "imports": [
+        "../Dropdown/types",
+        "csstype",
+        "react",
+        "react-window"
+      ],
+      "resolvedImports": [
+        "src/components/Dropdown/types.ts"
+      ],
+      "document": "generated/src/components/Multiselect/types.ts.md",
+      "sha256": "2f72f620b74f03a74b6fe05fad3246b1e4af2b82988ac6457e3461306cec47ce"
+    },
+    {
+      "sourcePath": "src/components/Notification/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Notification",
+      "lineCount": 40,
+      "exports": [
+        "Internationalization",
+        "NotificationProps",
+        "Type"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Notification/types.ts.md",
+      "sha256": "ec034d1b53ace7c243d037e58b91aed7577dba2680934d8ee659616511c72adc"
+    },
+    {
+      "sourcePath": "src/components/Pagination/Navigation/Item/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Pagination",
+      "lineCount": 13,
+      "exports": [
+        "ItemProps",
+        "ItemStyledProps"
+      ],
+      "imports": [
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Pagination/Navigation/Item/types.ts.md",
+      "sha256": "a650aea8c0ad89e17c8d4b812bbf6290338a990cf6207ac63d625c11c537b90f"
+    },
+    {
+      "sourcePath": "src/components/Pagination/Navigation/List/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Pagination",
+      "lineCount": 22,
+      "exports": [
+        "ListCountProps",
+        "ListItemsProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Pagination/Navigation/types.ts"
+      ],
+      "document": "generated/src/components/Pagination/Navigation/List/types.ts.md",
+      "sha256": "51aadb12da8ed368d5349a285b7edad619ddf765db279eaeee6c760fd068ddb4"
+    },
+    {
+      "sourcePath": "src/components/Pagination/Navigation/Select/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Pagination",
+      "lineCount": 8,
+      "exports": [
+        "SelectProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Pagination/Navigation/types.ts"
+      ],
+      "document": "generated/src/components/Pagination/Navigation/Select/types.ts.md",
+      "sha256": "d4ee50fe5c2802507a7023bb0b76676a05915e922d1d76ae7c289aeaec091e7d"
+    },
+    {
+      "sourcePath": "src/components/Pagination/Navigation/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Pagination",
+      "lineCount": 90,
+      "exports": [
+        "NavigationCountProps",
+        "NavigationProps",
+        "Option"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Pagination/Navigation/types.ts.md",
+      "sha256": "56be19533cffda4c0393e4eb5f68459b13d2ed04a89f7c90373c6347dd5ebc5c"
+    },
+    {
+      "sourcePath": "src/components/PDFViewer/Toc/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "PDFViewer",
+      "lineCount": 10,
+      "exports": [
+        "OutlineItem",
+        "TocProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/PDFViewer/Toc/types.ts.md",
+      "sha256": "1891760ac5b92620fa2a34ae1860384686f2ad71d529ce279843c52789a2c789"
+    },
+    {
+      "sourcePath": "src/components/PDFViewer/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "PDFViewer",
+      "lineCount": 128,
+      "exports": [
+        "InternalisationProps",
+        "Outline",
+        "PDFViewerProps",
+        "SidebarProps",
+        "ToolbarProps",
+        "UsePDFViewerOptions",
+        "UsePDFViewerReturn",
+        "ZoomPreset",
+        "ZoomValue"
+      ],
+      "imports": [
+        "pdfjs-dist",
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/PDFViewer/types.ts.md",
+      "sha256": "22ff4cad7fb966702850d9971315faedeb89bf38115b3d30b6296451a71db4da"
+    },
+    {
+      "sourcePath": "src/components/Popover/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Popover",
+      "lineCount": 83,
+      "exports": [
+        "PopoverContentProps",
+        "PopoverContextProps",
+        "PopoverOutsideClickProps",
+        "PopoverProps"
+      ],
+      "imports": [
+        "../../utils/floating-ui/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/utils/floating-ui/types.ts"
+      ],
+      "document": "generated/src/components/Popover/types.ts.md",
+      "sha256": "251d967116164d9cc9495f4a821c0d0a9bd4c074d1203c17e9ba64cb66a2a5a6"
+    },
+    {
+      "sourcePath": "src/components/PushNotifications/Item/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "PushNotifications",
+      "lineCount": 6,
+      "exports": [
+        "ItemProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/PushNotifications/Item/types.ts.md",
+      "sha256": "b8b8f51c8b1feca7c77ce250ce0668cba375abf8f9ae0d487f636d607b4e5ac5"
+    },
+    {
+      "sourcePath": "src/components/PushNotifications/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "PushNotifications",
+      "lineCount": 14,
+      "exports": [
+        "ContainerProps",
+        "PushNotificationsProps"
+      ],
+      "imports": [
+        "react-transition-group"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/PushNotifications/types.ts.md",
+      "sha256": "1c5434def36149ba7d8a1fd82a92f6ebf809f4d941f38ca054264a8ebbcbd34a"
+    },
+    {
+      "sourcePath": "src/components/Radio/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Radio",
+      "lineCount": 24,
+      "exports": [
+        "RadioProps",
+        "State",
+        "VerticalAlign"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Radio/types.ts.md",
+      "sha256": "a72a488d51b0065cf324ef88f65a37a8463521ab9e8396729012f1cdfb80fd1d"
+    },
+    {
+      "sourcePath": "src/components/RadioGroup/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "RadioGroup",
+      "lineCount": 12,
+      "exports": [
+        "RadioGroupProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/RadioGroup/types.ts.md",
+      "sha256": "6fae725bd224cb79924a9addb0b7ccf7149eb2f0582a87eb12158b61896f6006"
+    },
+    {
+      "sourcePath": "src/components/Range/Marks/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Range",
+      "lineCount": 10,
+      "exports": [
+        "Mark",
+        "MarksComponentProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Range/Marks/types.ts.md",
+      "sha256": "1c61e666031891ad0955bc5c00cb897d022f6776dc164fce4a8fa0acb2807604"
+    },
+    {
+      "sourcePath": "src/components/Range/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Range",
+      "lineCount": 80,
+      "exports": [
+        "ColorVars",
+        "GetRangeZIndexesArgs",
+        "MultiRangeSlideProps",
+        "ProgressProps",
+        "RangeSliderProps",
+        "RangeZIndexes",
+        "SingleRangeSliderProps",
+        "Thumb",
+        "Tuple"
+      ],
+      "imports": [
+        "./constants",
+        "./Marks/types",
+        "react",
+        "styled-components"
+      ],
+      "resolvedImports": [
+        "src/components/Range/Marks/types.ts"
+      ],
+      "document": "generated/src/components/Range/types.ts.md",
+      "sha256": "1d3c6539ea9d3be940cdc0de144783579d6af4b92aea050aaeeb94dcad326681"
+    },
+    {
+      "sourcePath": "src/components/Rating/Star/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Rating",
+      "lineCount": 8,
+      "exports": [
+        "StarProps",
+        "StarStyledProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Rating/Star/types.ts.md",
+      "sha256": "ccfd6a15e122ba67a6c96e6314c217bcae9fce16d3c5e2563b0726a136d4e2ad"
+    },
+    {
+      "sourcePath": "src/components/Rating/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Rating",
+      "lineCount": 8,
+      "exports": [
+        "RatingProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Rating/types.ts.md",
+      "sha256": "862df12a1a128ac6dcd7170bd5c777d298fa6c8611e17396a9e93ce5c7eb33b1"
+    },
+    {
+      "sourcePath": "src/components/Scrollbar/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Scrollbar",
+      "lineCount": 9,
+      "exports": [
+        "ScrollbarProps"
+      ],
+      "imports": [
+        "styled-components"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Scrollbar/types.ts.md",
+      "sha256": "cd7e22b20efc210395a305bd598a9a4f99804ab5d1690c2907cda56349d695d1"
+    },
+    {
+      "sourcePath": "src/components/Search/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Search",
+      "lineCount": 16,
+      "exports": [
+        "SearchProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Search/types.ts.md",
+      "sha256": "7c98dca74582d5aaa44e909aaf11a6c1b6cfc66c5082b622568c284ed14c64df"
+    },
+    {
+      "sourcePath": "src/components/SearchFullscreen/ChipsInput/ChipsList/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "SearchFullscreen",
+      "lineCount": 20,
+      "exports": [
+        "ChipsListProps"
+      ],
+      "imports": [
+        "../../types"
+      ],
+      "resolvedImports": [
+        "src/components/SearchFullscreen/types.ts"
+      ],
+      "document": "generated/src/components/SearchFullscreen/ChipsInput/ChipsList/types.ts.md",
+      "sha256": "445b0cedcd53834d8b687041eebe2a7417828a6095c868c5145e6c5cb31eea53"
+    },
+    {
+      "sourcePath": "src/components/SearchFullscreen/ChipsInput/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "SearchFullscreen",
+      "lineCount": 25,
+      "exports": [
+        "ChipsInputProps"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/SearchFullscreen/types.ts"
+      ],
+      "document": "generated/src/components/SearchFullscreen/ChipsInput/types.ts.md",
+      "sha256": "d36f79605fbf1b9e14e23689e79ce0baee65379d6003c70db3ecf9057350720f"
+    },
+    {
+      "sourcePath": "src/components/SearchFullscreen/SearchButtonDropdown/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "SearchFullscreen",
+      "lineCount": 12,
+      "exports": [
+        "ActionsSize",
+        "SearchButtonDropdownProps"
+      ],
+      "imports": [
+        "../../Button/types",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts",
+        "src/components/SearchFullscreen/types.ts"
+      ],
+      "document": "generated/src/components/SearchFullscreen/SearchButtonDropdown/types.ts.md",
+      "sha256": "dc83d981dd180f8317c991c997b47d9ceff5999786c1e2ec1d4a495536f6087b"
+    },
+    {
+      "sourcePath": "src/components/SearchFullscreen/SearchButtonPopover/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "SearchFullscreen",
+      "lineCount": 23,
+      "exports": [
+        "ActionsProps",
+        "ActionsSize"
+      ],
+      "imports": [
+        "../../Button/types",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts",
+        "src/components/SearchFullscreen/types.ts"
+      ],
+      "document": "generated/src/components/SearchFullscreen/SearchButtonPopover/types.ts.md",
+      "sha256": "684be3f5dc22295d11978517181a606c03e53b4592348d03ea372a507fc49908"
+    },
+    {
+      "sourcePath": "src/components/SearchFullscreen/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "SearchFullscreen",
+      "lineCount": 205,
+      "exports": [
+        "ChipData",
+        "DropdownItem",
+        "ForwardRef",
+        "Item",
+        "PrefixLengthType",
+        "SearchProps"
+      ],
+      "imports": [
+        "../Dropdown/Items/SelectionSheetItem/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Dropdown/Items/SelectionSheetItem/types.ts"
+      ],
+      "document": "generated/src/components/SearchFullscreen/types.ts.md",
+      "sha256": "4970414e451cb3c2082a4a4a88aae8e4d5fa2a9e0b98298e6dd15ad813f490f0"
+    },
+    {
+      "sourcePath": "src/components/Section/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Section",
+      "lineCount": 59,
+      "exports": [
+        "SectionProps",
+        "Size"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Section/types.ts.md",
+      "sha256": "ed1ef410505e881cd71dee33d300950d83bcdc16bcd4fd2f4d754dc67a17f3f9"
+    },
+    {
+      "sourcePath": "src/components/Select/Option/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Select",
+      "lineCount": 26,
+      "exports": [
+        "InternalOptionProps",
+        "OptionProps",
+        "OptionPropsGeneric"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Select/types.ts"
+      ],
+      "document": "generated/src/components/Select/Option/types.ts.md",
+      "sha256": "6ce2bfd96928dc5c05fd88b88c966f87daf19975faf930fbaa8f2b5c8df1f495"
+    },
+    {
+      "sourcePath": "src/components/Select/OptionsList/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Select",
+      "lineCount": 42,
+      "exports": [
+        "OptionsListProps"
+      ],
+      "imports": [
+        "../Option",
+        "../Option/types",
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Select/Option/types.ts",
+        "src/components/Select/types.ts"
+      ],
+      "document": "generated/src/components/Select/OptionsList/types.ts.md",
+      "sha256": "eaca1947e25aa2abd7757a2d4be5b36196c44978674a80ac01a1bb632c955e06"
+    },
+    {
+      "sourcePath": "src/components/Select/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Select",
+      "lineCount": 156,
+      "exports": [
+        "ButtonTextProps",
+        "SelectProps",
+        "Value",
+        "ValueO"
+      ],
+      "imports": [
+        "csstype",
+        "react",
+        "react-window"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Select/types.ts.md",
+      "sha256": "2ef0e143d278a22924526c99344d585abae71752f23963a4dc3db88c6680ab54"
+    },
+    {
+      "sourcePath": "src/components/Skeleton/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Skeleton",
+      "lineCount": 24,
+      "exports": [
+        "SkeletonCircleProps",
+        "SkeletonProps",
+        "SkeletonRectProps",
+        "SkeletonTextProps"
+      ],
+      "imports": [
+        "styled-components",
+        "styled-system"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Skeleton/types.ts.md",
+      "sha256": "fda4c7b3bbe0bd3598546e29ec79035dff5c6b5aa82de9edf5a01f657af2ca90"
+    },
+    {
+      "sourcePath": "src/components/Snackbar/Content/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Snackbar",
+      "lineCount": 8,
+      "exports": [
+        "ContentProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Snackbar/Content/types.ts.md",
+      "sha256": "9e43709a01024aea6016f128816deab9a202ee277ab70e700da0dad29128dcc8"
+    },
+    {
+      "sourcePath": "src/components/SplitView/InternalUnit/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "SplitView",
+      "lineCount": 12,
+      "exports": [
+        "InternalUnitProps"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/SplitView/types.ts"
+      ],
+      "document": "generated/src/components/SplitView/InternalUnit/types.ts.md",
+      "sha256": "f9a39cd6a7c8a2ffd509585586b234a09e107804b394d3a0e4bf7443650d0e1b"
+    },
+    {
+      "sourcePath": "src/components/SplitView/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "SplitView",
+      "lineCount": 47,
+      "exports": [
+        "MoreMenuItem",
+        "SplitViewProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/SplitView/types.ts.md",
+      "sha256": "5163064eb7229837b5eb3253c77809c85fdf209fd687ab143a5536c4ccb9a9e0"
+    },
+    {
+      "sourcePath": "src/components/Stories/Container/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Stories",
+      "lineCount": 4,
+      "exports": [
+        "UseSwipeStackSwitch"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Stories/Container/types.ts.md",
+      "sha256": "53965a85e57a86d550db9e8b66caa3a6dd24ab68fac66ccfd13430c3e44c4ae8"
+    },
+    {
+      "sourcePath": "src/components/Stories/context/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Stories",
+      "lineCount": 20,
+      "exports": [
+        "GlobalContextProps",
+        "StoriesContextProps",
+        "StorySlideContextProps"
+      ],
+      "imports": [
+        "../renderers/types",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Stories/renderers/types.ts",
+        "src/components/Stories/types.ts"
+      ],
+      "document": "generated/src/components/Stories/context/types.ts.md",
+      "sha256": "9d72338698138ee2d29b0e2a8939ebbf840f1b564b3ef8a845438dd48317f95d"
+    },
+    {
+      "sourcePath": "src/components/Stories/Header/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Stories",
+      "lineCount": 11,
+      "exports": [
+        "HeaderProps"
+      ],
+      "imports": [
+        "../renderers/types"
+      ],
+      "resolvedImports": [
+        "src/components/Stories/renderers/types.ts"
+      ],
+      "document": "generated/src/components/Stories/Header/types.ts.md",
+      "sha256": "d8dda43ee7acbc2527fd4742a69555b9279c5ec794757e6f96882e735c1eecb8"
+    },
+    {
+      "sourcePath": "src/components/Stories/Modal/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Stories",
+      "lineCount": 5,
+      "exports": [
+        "ModalProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Stories/types.ts"
+      ],
+      "document": "generated/src/components/Stories/Modal/types.ts.md",
+      "sha256": "464a00d99d8a6a937514105c9e1953135927410ecd1a7569f93e4b98a4611f62"
+    },
+    {
+      "sourcePath": "src/components/Stories/NavigationButtons/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Stories",
+      "lineCount": 4,
+      "exports": [
+        "NavigationButtonProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Stories/NavigationButtons/types.ts.md",
+      "sha256": "66c97fd0933484e04a89e69aea59bd06c2c24db3f0cd165ad68a5318bdadb44b"
+    },
+    {
+      "sourcePath": "src/components/Stories/Progress/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Stories",
+      "lineCount": 7,
+      "exports": [
+        "ProgressProps"
+      ],
+      "imports": [
+        "../renderers/types"
+      ],
+      "resolvedImports": [
+        "src/components/Stories/renderers/types.ts"
+      ],
+      "document": "generated/src/components/Stories/Progress/types.ts.md",
+      "sha256": "d75d54dc28c1efe68095995897e760f308f0d1e214c4a98f6c7f0337fe7da153"
+    },
+    {
+      "sourcePath": "src/components/Stories/Provider/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Stories",
+      "lineCount": 3,
+      "exports": [
+        "ProviderProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Stories/types.ts"
+      ],
+      "document": "generated/src/components/Stories/Provider/types.ts.md",
+      "sha256": "3d4bbab0b77281722025f9bb24b30e0cae3d98e6737ae900e83394bb0400a0e9"
+    },
+    {
+      "sourcePath": "src/components/Stories/renderers/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Stories",
+      "lineCount": 40,
+      "exports": [
+        "RendererProps",
+        "StoriesStacksList",
+        "StoryObject",
+        "StoryStack",
+        "TesterFunc",
+        "TogglePauseStateFunc"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Stories/renderers/types.ts.md",
+      "sha256": "4bb5c0db876a8e6d03993d6ecbd856cc415a759ea28e3f03bda3525256611612"
+    },
+    {
+      "sourcePath": "src/components/Stories/Story/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Stories",
+      "lineCount": 7,
+      "exports": [
+        "StoryProps"
+      ],
+      "imports": [
+        "../renderers/types"
+      ],
+      "resolvedImports": [
+        "src/components/Stories/renderers/types.ts"
+      ],
+      "document": "generated/src/components/Stories/Story/types.ts.md",
+      "sha256": "471423353a1f1c924a4dfea74c38f87b5643bafc27e8d1ab2e915e916f4fbf87"
+    },
+    {
+      "sourcePath": "src/components/Stories/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Stories",
+      "lineCount": 41,
+      "exports": [
+        "StoriesProps"
+      ],
+      "imports": [
+        "./renderers/types"
+      ],
+      "resolvedImports": [
+        "src/components/Stories/renderers/types.ts"
+      ],
+      "document": "generated/src/components/Stories/types.ts.md",
+      "sha256": "785bfce254d8e9f393bfa50886de0df62463ddaf219523e82d7191e5d0c8676b"
+    },
+    {
+      "sourcePath": "src/components/storybook/StoryHeader/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "storybook",
+      "lineCount": 10,
+      "exports": [
+        "StoryHeaderProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/storybook/StoryHeader/types.ts.md",
+      "sha256": "fc1cb3d9e193117f3ff16347e28e471c6ae7cc564154a92f6177fa4fb3e567fb"
+    },
+    {
+      "sourcePath": "src/components/Summary/SummaryItem/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Summary",
+      "lineCount": 55,
+      "exports": [
+        "LabelProps",
+        "SummaryItemProps",
+        "ValueProps"
+      ],
+      "imports": [
+        "../../../utils/floating-ui/types",
+        "../../Tooltip/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Tooltip/types.ts",
+        "src/utils/floating-ui/types.ts"
+      ],
+      "document": "generated/src/components/Summary/SummaryItem/types.ts.md",
+      "sha256": "42188f31b4c281fc1d06d5ba742d5d364bc2c5900128e197f8e20142a68fd690"
+    },
+    {
+      "sourcePath": "src/components/Summary/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Summary",
+      "lineCount": 38,
+      "exports": [
+        "ColumnProps",
+        "Layout",
+        "LayoutContextArgs",
+        "SummaryProps"
+      ],
+      "imports": [
+        "./SummaryItem/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Summary/SummaryItem/types.ts"
+      ],
+      "document": "generated/src/components/Summary/types.ts.md",
+      "sha256": "33ab25dd7ad8a40a86b20502bcd30d2899d66fb5fc95aa716b65da5e29e9d91e"
+    },
+    {
+      "sourcePath": "src/components/Switch/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Switch",
+      "lineCount": 17,
+      "exports": [
+        "Size",
+        "SwitchContentProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Switch/types.ts.md",
+      "sha256": "c69d3ea8324c78e0c6ac0285dff48a1fc4e25ec1e5a2cac3fc47fc0a7249dc99"
+    },
+    {
+      "sourcePath": "src/components/Tabs/Tab/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Tabs",
+      "lineCount": 33,
+      "exports": [
+        "States",
+        "TabProps"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Tabs/types.ts"
+      ],
+      "document": "generated/src/components/Tabs/Tab/types.ts.md",
+      "sha256": "d84057f2a361ef0429edd0bccb54c72bd779d29afbdb3f5cc459523fa947a4ea"
+    },
+    {
+      "sourcePath": "src/components/Tabs/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Tabs",
+      "lineCount": 43,
+      "exports": [
+        "DescriptionTabsProps",
+        "PrimarySecondaryTabsProps",
+        "TabsProps",
+        "TertiaryTabsProps",
+        "Type"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Tabs/types.ts.md",
+      "sha256": "03d325a2f1158a93bd3cecfe584a89bf5d82e14dc11680d9832400e7161280d8"
+    },
+    {
+      "sourcePath": "src/components/Tags/Chips/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Tags",
+      "lineCount": 29,
+      "exports": [
+        "ChipsProps",
+        "Size",
+        "Type"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Tags/Chips/types.ts.md",
+      "sha256": "2a02399c92b9b17ea15acd15f7361e896fbe36739c42b1a14cff7effe4226447"
+    },
+    {
+      "sourcePath": "src/components/Tags/Filter/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Tags",
+      "lineCount": 19,
+      "exports": [
+        "FilterProps",
+        "State"
+      ],
+      "imports": [
+        "../Tag/types"
+      ],
+      "resolvedImports": [
+        "src/components/Tags/Tag/types.ts"
+      ],
+      "document": "generated/src/components/Tags/Filter/types.ts.md",
+      "sha256": "bca059477f5ea8435d7e2246d82d39c7d883c61d8bd29c333c641f0b66cfcd41"
+    },
+    {
+      "sourcePath": "src/components/Tags/Hashtag/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Tags",
+      "lineCount": 15,
+      "exports": [
+        "HashtagProps",
+        "Size",
+        "State"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Tags/Hashtag/types.ts.md",
+      "sha256": "535d583ff9eee2a702314bbc49ec110b1e29f9a2ca8ffde5211a6c794112e3d3"
+    },
+    {
+      "sourcePath": "src/components/Tags/Selectable/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Tags",
+      "lineCount": 15,
+      "exports": [
+        "SelectableProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Tags/Selectable/types.ts.md",
+      "sha256": "a28283877513b0c01d803a938188213417843a82612981ffca397dffe1b94359"
+    },
+    {
+      "sourcePath": "src/components/Tags/Tag/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Tags",
+      "lineCount": 33,
+      "exports": [
+        "Color",
+        "TagColor",
+        "TagProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Tags/Tag/types.ts.md",
+      "sha256": "928393552a9ff6b6043e6e75582304674071f7e05069ad6eb30a96f0d03cee5a"
+    },
+    {
+      "sourcePath": "src/components/Text/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Text",
+      "lineCount": 10,
+      "exports": [
+        "TextProps"
+      ],
+      "imports": [
+        "styled-components",
+        "styled-system"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Text/types.ts.md",
+      "sha256": "7a02ac52c6467b60d96022f2b089713e5013f820e966145322806e7a6a1c04c4"
+    },
+    {
+      "sourcePath": "src/components/TimeCounter/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "TimeCounter",
+      "lineCount": 12,
+      "exports": [
+        "TimeCounterProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/TimeCounter/types.ts.md",
+      "sha256": "a0cf86766ad9d42ce13f5c5ff1068a14c53f91b93587188b6c692df4a7c057b4"
+    },
+    {
+      "sourcePath": "src/components/TimePicker/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "TimePicker",
+      "lineCount": 14,
+      "exports": [
+        "TimePickerProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/TimePicker/types.ts.md",
+      "sha256": "d8c73532ac877511760acffa5ac22ef15e7207b4ef83f201c7b1d3bcd3650060"
+    },
+    {
+      "sourcePath": "src/components/Title/Action/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Title",
+      "lineCount": 5,
+      "exports": [
+        "ActionProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Title/types.ts"
+      ],
+      "document": "generated/src/components/Title/Action/types.ts.md",
+      "sha256": "b34f7cdc2f4302be279a73b16dc36861934ea0ea9f7106488feee09b0a3882e6"
+    },
+    {
+      "sourcePath": "src/components/Title/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Title",
+      "lineCount": 47,
+      "exports": [
+        "Size",
+        "SizeForTitleAsTab",
+        "TitleContextType",
+        "TitleProps",
+        "TitlePropsRegular",
+        "TitlePropsTab",
+        "TitleStates",
+        "TitleStyledProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Title/types.ts.md",
+      "sha256": "cde1193e7f37442c484a5d2c24eec198c3c5cf88bcb329ccc56d833668c2ec35"
+    },
+    {
+      "sourcePath": "src/components/ToolSelector/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "ToolSelector",
+      "lineCount": 32,
+      "exports": [
+        "Size",
+        "ToolSelectorProps"
+      ],
+      "imports": [
+        "../Button/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts"
+      ],
+      "document": "generated/src/components/ToolSelector/types.ts.md",
+      "sha256": "681226f831a8c51a272b43d5ed432b550eda3737e04afc362e5f85c5f723b066"
+    },
+    {
+      "sourcePath": "src/components/Tooltip/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Tooltip",
+      "lineCount": 60,
+      "exports": [
+        "ArrowElem",
+        "TooltipContextProps",
+        "TooltipMode",
+        "TooltipProps",
+        "TooltipType"
+      ],
+      "imports": [
+        "../../utils/floating-ui/types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/utils/floating-ui/types.ts"
+      ],
+      "document": "generated/src/components/Tooltip/types.ts.md",
+      "sha256": "c09e1e4368ff00741e02e0c59ffef3aa62a7c1abc09b52f140f988e440f9d95f"
+    },
+    {
+      "sourcePath": "src/components/Tree/Node/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Tree",
+      "lineCount": 17,
+      "exports": [
+        "ArrowProps",
+        "NestedContentProps",
+        "NodeProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Tree/Node/types.ts.md",
+      "sha256": "be8b25302b0725eba703d7d394a2957122c31bc2394b51573c691a815dc0712c"
+    },
+    {
+      "sourcePath": "src/components/Upload/Dropzone/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Upload",
+      "lineCount": 11,
+      "exports": [
+        "DropzoneProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Upload/types.ts"
+      ],
+      "document": "generated/src/components/Upload/Dropzone/types.ts.md",
+      "sha256": "fcc9c2ff9f0c5caf3b3dedf81a901ee5cb38914eaa7d795edcfe227dc89effef"
+    },
+    {
+      "sourcePath": "src/components/Upload/FileList/Progress/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Upload",
+      "lineCount": 3,
+      "exports": [
+        "ProgressProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Upload/FileList/Progress/types.ts.md",
+      "sha256": "07981ad96c67063cd1d942a61bebecede1d596e385f4780453230a9e7a14e068"
+    },
+    {
+      "sourcePath": "src/components/Upload/FileList/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Upload",
+      "lineCount": 15,
+      "exports": [
+        "FileListProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Upload/types.ts"
+      ],
+      "document": "generated/src/components/Upload/FileList/types.ts.md",
+      "sha256": "b7fbe3c68d22196c93bdea6da0bdbd46ad4148bfa8e8c45f43f2ca70d232ef29"
+    },
+    {
+      "sourcePath": "src/components/Upload/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Upload",
+      "lineCount": 171,
+      "exports": [
+        "Errors",
+        "FileButton",
+        "FileProps",
+        "FileState",
+        "FileWithId",
+        "Progress",
+        "Size",
+        "State",
+        "UploadProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Upload/types.ts.md",
+      "sha256": "4dec4f7e0f67e882592da68e7bc6a63852c814411ae0e17d7442bc59fd7ab54f"
+    },
+    {
+      "sourcePath": "src/components/Videoplayer/ControlBar/PlaylistControl/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Videoplayer",
+      "lineCount": 6,
+      "exports": [
+        "PlaylistControlProps"
+      ],
+      "imports": [
+        "../../types"
+      ],
+      "resolvedImports": [
+        "src/components/Videoplayer/types.ts"
+      ],
+      "document": "generated/src/components/Videoplayer/ControlBar/PlaylistControl/types.ts.md",
+      "sha256": "8f9f9e4b04f9831d7aba5f33aa8861b82416ed8c7a733d0952875101a37fb3a3"
+    },
+    {
+      "sourcePath": "src/components/Videoplayer/ControlBar/Volume/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Videoplayer",
+      "lineCount": 5,
+      "exports": [
+        "VolumeBarProps"
+      ],
+      "imports": [
+        "react-transition-group"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Videoplayer/ControlBar/Volume/types.ts.md",
+      "sha256": "0eea8378e74b3c7a540a0eb8ce4df6b365363655231f5163f5d96cf6ffb6441a"
+    },
+    {
+      "sourcePath": "src/components/Videoplayer/Playlist/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Videoplayer",
+      "lineCount": 36,
+      "exports": [
+        "Playlist",
+        "PlaylistItem",
+        "PlaylistProps",
+        "PreviewProps",
+        "VideoCellContextProps",
+        "VideoCellProps"
+      ],
+      "imports": [
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Videoplayer/types.ts"
+      ],
+      "document": "generated/src/components/Videoplayer/Playlist/types.ts.md",
+      "sha256": "8df941d5e6fac21eb7df2a9a6ff7c62cabe295644aa72e4733e9a32431cd7e2e"
+    },
+    {
+      "sourcePath": "src/components/Videoplayer/ProgressBar/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Videoplayer",
+      "lineCount": 24,
+      "exports": [
+        "BufferedTimeRangesProps",
+        "PreviewImageProps",
+        "ProgressBarProps",
+        "ProgressBarType",
+        "TimeTooltipProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Videoplayer/types.ts"
+      ],
+      "document": "generated/src/components/Videoplayer/ProgressBar/types.ts.md",
+      "sha256": "fffe7f9444697248aea2c73919c3d0755bd11283cdda7516fd250a52ebd34c3a"
+    },
+    {
+      "sourcePath": "src/components/Videoplayer/SettingsMenu/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Videoplayer",
+      "lineCount": 13,
+      "exports": [
+        "ItemMenuProps",
+        "SettingsItemProps",
+        "SettingsMenuProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Videoplayer/SettingsMenu/types.ts.md",
+      "sha256": "86e277bf768398681b74840b7540b8e5f0daba9414195d19a4f0571c00eabb38"
+    },
+    {
+      "sourcePath": "src/components/Videoplayer/Tag/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Videoplayer",
+      "lineCount": 5,
+      "exports": [
+        "TagProps",
+        "TagType"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/components/Videoplayer/Tag/types.ts.md",
+      "sha256": "923136b7cf729301411a0f133b370db2eb518a03de4223b530319bc547cd6984"
+    },
+    {
+      "sourcePath": "src/components/Videoplayer/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "components",
+      "entity": "Videoplayer",
+      "lineCount": 208,
+      "exports": [
+        "ActionTooltipMessage",
+        "ContainerElement",
+        "ContainerProps",
+        "ContainerRef",
+        "ControlBarProps",
+        "Error",
+        "HlsElement",
+        "IconWrapperProps",
+        "PlaybackContextProps",
+        "SkeletonProps",
+        "Source",
+        "TagContent",
+        "TooltipMessages",
+        "Track",
+        "TrackKind",
+        "TransitionWrapperProps",
+        "VideoElement",
+        "VideoHotkeys",
+        "VideoplayerActions",
+        "VideoplayerContextProps",
+        "VideoplayerMenu",
+        "VideoplayerProps",
+        "VideoPlaylistOptions",
+        "VideoQualitySettings",
+        "VideoRef",
+        "VideoShortInfo"
+      ],
+      "imports": [
+        "hls.js",
+        "react",
+        "react-transition-group"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/components/Videoplayer/types.ts.md",
+      "sha256": "ab7324f5702eef0b10580883b983b00c89b361bcd2f982566dc6337d8efbb15d"
+    },
+    {
+      "sourcePath": "src/hooks/useDraggableModal/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "hooks",
+      "entity": "hooks",
+      "lineCount": 30,
+      "exports": [
+        "UseDraggableModalParams"
+      ],
+      "imports": [
+        "../../types/common",
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/hooks/useDraggableModal/types.ts.md",
+      "sha256": "3f45eae2f7524f54105fb7e5d34bdc967dd9f0bf4052f1ba139d951d5f840e74"
+    },
+    {
+      "sourcePath": "src/hooks/usePointers/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "hooks",
+      "entity": "hooks",
+      "lineCount": 4,
+      "exports": [
+        "UsePointersResult"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/hooks/usePointers/types.ts.md",
+      "sha256": "13c35af69684f98ee6baefbef20665613e406ff077035b1522554dc38ea5f2db"
+    },
+    {
+      "sourcePath": "src/hooks/useScreenSize/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "hooks",
+      "entity": "hooks",
+      "lineCount": 1,
+      "exports": [
+        "ThemeScreenSize"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/hooks/useScreenSize/types.ts.md",
+      "sha256": "4620d02a0cd9cd4dc4ad8d5c72a78fd0272fe638720c29e64325c1f255eeb680"
+    },
+    {
+      "sourcePath": "src/icons/__stories__/components/IconFilter/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "icons",
+      "entity": "icons",
+      "lineCount": 7,
+      "exports": [
+        "IconsFilterProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/icons/__stories__/components/IconFilter/types.ts.md",
+      "sha256": "823bb421106c55395ff537e2d74de03214b84958f86887b6d3e674f0e6c14ca6"
+    },
+    {
+      "sourcePath": "src/icons/__stories__/components/IconsSection/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "icons",
+      "entity": "icons",
+      "lineCount": 19,
+      "exports": [
+        "IconsSectionProps"
+      ],
+      "imports": [
+        "../../icons"
+      ],
+      "resolvedImports": [
+        "src/icons/__stories__/icons/types.ts"
+      ],
+      "document": "generated/src/icons/__stories__/components/IconsSection/types.ts.md",
+      "sha256": "6094f9cf5aa9efabb07a45ef7bfa3da3382ab204bd96efae047ef78eae92d0f2"
+    },
+    {
+      "sourcePath": "src/icons/__stories__/components/IconWithCopyButton/ButtonsGroup/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "icons",
+      "entity": "icons",
+      "lineCount": 9,
+      "exports": [
+        "ButtonGroupProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/icons/__stories__/components/IconWithCopyButton/ButtonsGroup/types.ts.md",
+      "sha256": "99249a12eb8ac2e6396914f2860ba78e76b11bfa20c6b88fec1da725e8e37807"
+    },
+    {
+      "sourcePath": "src/icons/__stories__/components/IconWithCopyButton/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "icons",
+      "entity": "icons",
+      "lineCount": 13,
+      "exports": [
+        "IconWithCopyButtonProps"
+      ],
+      "imports": [
+        "../../icons"
+      ],
+      "resolvedImports": [
+        "src/icons/__stories__/icons/types.ts"
+      ],
+      "document": "generated/src/icons/__stories__/components/IconWithCopyButton/types.ts.md",
+      "sha256": "8c6d0985d2f72ba8716c45e5141f1275feff556b4ac6743400b2ddcc7fbe73a6"
+    },
+    {
+      "sourcePath": "src/icons/__stories__/icons/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "icons",
+      "entity": "icons",
+      "lineCount": 76,
+      "exports": [
+        "AllType",
+        "ColoredType",
+        "IconCategory",
+        "IconsValue",
+        "IconType",
+        "NoneType",
+        "sections"
+      ],
+      "imports": [
+        "./constants",
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/icons/__stories__/icons/types.ts.md",
+      "sha256": "5fe9eb9689539bc9a906cd72fc06f490baa2ce4cec123f3993b171ebf25c412c"
+    },
+    {
+      "sourcePath": "src/icons/__stories__/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "icons",
+      "entity": "icons",
+      "lineCount": 7,
+      "exports": [
+        "IconCategoriesValue",
+        "IconTypeFilter"
+      ],
+      "imports": [
+        "./icons"
+      ],
+      "resolvedImports": [
+        "src/icons/__stories__/icons/types.ts"
+      ],
+      "document": "generated/src/icons/__stories__/types.ts.md",
+      "sha256": "c4a4e67b0c4b0d036384c2494f650a5a600744007c9b4d965fa1ecf8922571b9"
+    },
+    {
+      "sourcePath": "src/illustrations/__stories__/components/ButtonsGroup/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "illustrations",
+      "entity": "illustrations",
+      "lineCount": 4,
+      "exports": [
+        "ButtonGroupProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/illustrations/__stories__/components/ButtonsGroup/types.ts.md",
+      "sha256": "b4e68e8fc360aff1a5d9df1467af4cd7829bb13d11850dee3139eaf6aefc70e0"
+    },
+    {
+      "sourcePath": "src/illustrations/__stories__/components/Card/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "illustrations",
+      "entity": "illustrations",
+      "lineCount": 19,
+      "exports": [
+        "CardProps",
+        "Size",
+        "Sizes"
+      ],
+      "imports": [
+        "../../../illustrations"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/illustrations/__stories__/components/Card/types.ts.md",
+      "sha256": "6ba35a4731e3416eb98c91ed1ab9b3bab1dca53928b01d1854816d2fe0e0a0d1"
+    },
+    {
+      "sourcePath": "src/illustrations/__stories__/components/Cards/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "illustrations",
+      "entity": "illustrations",
+      "lineCount": 10,
+      "exports": [
+        "CardsProps"
+      ],
+      "imports": [
+        "../Card",
+        "@pulse/illustrations/components/Illustration/illustrations/illustrations"
+      ],
+      "resolvedImports": [
+        "src/illustrations/__stories__/components/Card/types.ts"
+      ],
+      "document": "generated/src/illustrations/__stories__/components/Cards/types.ts.md",
+      "sha256": "bbbd7fb71490a9cd30b628afd2d4daac648702ab3207d512385d9c019544ca37"
+    },
+    {
+      "sourcePath": "src/illustrations/__stories__/components/Story/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "illustrations",
+      "entity": "illustrations",
+      "lineCount": 6,
+      "exports": [
+        "StoryProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/illustrations/__stories__/components/Story/types.ts.md",
+      "sha256": "ca7e5dad9116e0c2fb7a2630b291ee5ec5dfe43746356d6097b2f6c836c89388"
+    },
+    {
+      "sourcePath": "src/illustrations/__stories__/utils/getMiniIllustration/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "illustrations",
+      "entity": "illustrations",
+      "lineCount": 13,
+      "exports": [
+        "Illustrations",
+        "IllustrationsConfig"
+      ],
+      "imports": [
+        "../../components",
+        "../../illustrations",
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/illustrations/__stories__/utils/getMiniIllustration/types.ts.md",
+      "sha256": "020453b3b5fc981c5965b20321fe33ae87e645a4b0f57e0dbd3694e54e4f4166"
+    },
+    {
+      "sourcePath": "src/illustrations/__stories__/utils/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "illustrations",
+      "entity": "illustrations",
+      "lineCount": 13,
+      "exports": [
+        "Illustrations",
+        "IllustrationsConfig"
+      ],
+      "imports": [
+        "../components",
+        "@pulse/illustrations/components/Illustration/illustrations",
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/illustrations/__stories__/utils/types.ts.md",
+      "sha256": "04568bf8fe876942b30feb214dc0ab1b0239cd6c3e4fdc8fb22f53935675b381"
+    },
+    {
+      "sourcePath": "src/patterns/ui/Accordion/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "patterns",
+      "entity": "patterns",
+      "lineCount": 6,
+      "exports": [
+        "AccordionProps"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/patterns/ui/Accordion/types.ts.md",
+      "sha256": "49bda7096beb07c1b7495051d8f2ff66de5aaac27124aad1f9e125f8d6f9f3a3"
+    },
+    {
+      "sourcePath": "src/patterns/ui/LinksSection/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "patterns",
+      "entity": "patterns",
+      "lineCount": 18,
+      "exports": [
+        "LinksSectionProps",
+        "Section"
+      ],
+      "imports": [
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/patterns/ui/LinksSection/types.ts.md",
+      "sha256": "7522ee5c4ab301a3f36b71df5d8ab0eacbfb81b79bd3c5e805c7f536bd0b0a84"
+    },
+    {
+      "sourcePath": "src/patterns/ui/Navigation/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "patterns",
+      "entity": "patterns",
+      "lineCount": 8,
+      "exports": [
+        "NavigationProps",
+        "Section"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/patterns/ui/Navigation/types.ts.md",
+      "sha256": "78cf4f79aa0532c67b917a0ff0f47a9a286e85776f0160ea1ff4043dfd3153f8"
+    },
+    {
+      "sourcePath": "src/patterns/ui/NumberBadge/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "patterns",
+      "entity": "patterns",
+      "lineCount": 5,
+      "exports": [
+        "NumberBadgeProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/patterns/ui/NumberBadge/types.ts.md",
+      "sha256": "3b56a437f5c2375155c9057d1f3d18b0faa7042e52ab349a9ddba74b45c1c470"
+    },
+    {
+      "sourcePath": "src/patterns/ui/StatusText/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "patterns",
+      "entity": "patterns",
+      "lineCount": 10,
+      "exports": [
+        "StatusTextBaseProps",
+        "StatusTextProps",
+        "TextType"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/patterns/ui/StatusText/types.ts.md",
+      "sha256": "fc5c9b3da4f71a073fa3c0d752dab47a7babc010c0fa8ba940efbdf3e5489d87"
+    },
+    {
+      "sourcePath": "src/templates/Approvals/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 88,
+      "exports": [
+        "IApprovalsProps",
+        "ISortedStep",
+        "IStep",
+        "SuggestionPayload"
+      ],
+      "imports": [
+        "../../types",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Approvals/types.ts.md",
+      "sha256": "aae1ebe397726d6cf97607ca707d295bca524cb63d119576a6b297dd18e29df4"
+    },
+    {
+      "sourcePath": "src/templates/Calendar.Range/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 43,
+      "exports": [
+        "ArrowProps",
+        "CalendarRangeProps",
+        "Day"
+      ],
+      "imports": [
+        "../../components/Button",
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts",
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Calendar.Range/types.ts.md",
+      "sha256": "6bbe48545601ccf6b7911b09ff69a4651bfabc44c4f18cbfc9716976081c709a"
+    },
+    {
+      "sourcePath": "src/templates/Calendar.Single/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 31,
+      "exports": [
+        "ArrowProps",
+        "CalendarSingleProps"
+      ],
+      "imports": [
+        "../../components/Button",
+        "../types",
+        "react"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts",
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Calendar.Single/types.ts.md",
+      "sha256": "31522987fbc6afa036cbcdb0cd982152478135b481564819203093c4b0a9bbb8"
+    },
+    {
+      "sourcePath": "src/templates/Choose.Multi/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 68,
+      "exports": [
+        "ChooseMultiProps"
+      ],
+      "imports": [
+        "../../components/Button",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts",
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Choose.Multi/types.ts.md",
+      "sha256": "61b9330a11750c44fc68c07ad5f2a87eef600fdbc5dc25a8a38aaae66befdec5"
+    },
+    {
+      "sourcePath": "src/templates/Choose.Single/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 62,
+      "exports": [
+        "ChooseSingleProps"
+      ],
+      "imports": [
+        "../../components/Button",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts",
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Choose.Single/types.ts.md",
+      "sha256": "fd99108fe9208ef974dcf2aeffa13c98c30de29d9a7a8fa8997ac56d8b64159f"
+    },
+    {
+      "sourcePath": "src/templates/Digits.Buttons/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 24,
+      "exports": [
+        "DigitsButtonsProps"
+      ],
+      "imports": [
+        "../../components/Button/types",
+        "../Digits/types",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Button/types.ts",
+        "src/templates/Digits/types.ts",
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Digits.Buttons/types.ts.md",
+      "sha256": "43a2d9f42cc90f57b94a9b074e169a20e7ca168bf3c81aa86ee6a413243e6124"
+    },
+    {
+      "sourcePath": "src/templates/Digits.Image/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 6,
+      "exports": [
+        "IDigitsImageProps"
+      ],
+      "imports": [
+        "../../blocks/Image/types",
+        "../Digits/types"
+      ],
+      "resolvedImports": [
+        "src/blocks/Image/types.ts",
+        "src/templates/Digits/types.ts"
+      ],
+      "document": "generated/src/templates/Digits.Image/types.ts.md",
+      "sha256": "c64cffa23f4b8b9f5f7dc466d8061bbd9f8feb46e70ba4fae57cc0d692c65e45"
+    },
+    {
+      "sourcePath": "src/templates/Digits.Profile/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 13,
+      "exports": [
+        "DigitsProfileProps"
+      ],
+      "imports": [
+        "../Digits/types",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/templates/Digits/types.ts",
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Digits.Profile/types.ts.md",
+      "sha256": "2b38e9d1fe0cebe6c95414ef1d5ba1777acec0f5804ccd072e3ffe2ced4116fa"
+    },
+    {
+      "sourcePath": "src/templates/Digits/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 35,
+      "exports": [
+        "DigitProps",
+        "DigitsProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/templates/Digits/types.ts.md",
+      "sha256": "7fadc9b0015daa636088045f86d911439b74469afdf6a14c6dafe7dd8222e147"
+    },
+    {
+      "sourcePath": "src/templates/Documents/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 65,
+      "exports": [
+        "DocumentProps",
+        "IDocumentsProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Documents/types.ts.md",
+      "sha256": "685ee02a40a29e1c74e4209a74a8ef63076d39f4aaee717202b3461a9a15cb2a"
+    },
+    {
+      "sourcePath": "src/templates/Event/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 47,
+      "exports": [
+        "EventProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Event/types.ts.md",
+      "sha256": "1dda143dca5d58adea2eb385ce2fc35bb2914521f4588ad01b16a4c8cc3f5d6b"
+    },
+    {
+      "sourcePath": "src/templates/Events/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 32,
+      "exports": [
+        "EventAction",
+        "EventProps",
+        "EventsItemProps",
+        "EventsProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Events/types.ts.md",
+      "sha256": "304158ab0beb944ebdbb2dbedf575619b0ff33553f4a4f84f9e24a821451670e"
+    },
+    {
+      "sourcePath": "src/templates/People/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 56,
+      "exports": [
+        "ItemProps",
+        "PeopleProps"
+      ],
+      "imports": [
+        "../../blocks/Avatar/badges",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/People/types.ts.md",
+      "sha256": "a24626101fc798c4872e250b7ef967bf31459780b99b55449989e5afcdc3e77e"
+    },
+    {
+      "sourcePath": "src/templates/Plug/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 10,
+      "exports": [
+        "PlugProps"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/templates/Plug/types.ts.md",
+      "sha256": "cc5b5fb592ef772b70dbd60da6931807cced361026b78212e13d9263a5bdffbc"
+    },
+    {
+      "sourcePath": "src/templates/Quantity/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 30,
+      "exports": [
+        "QuantityProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Quantity/types.ts.md",
+      "sha256": "97f44acd289439f1a869ac3509a942f3d69e5aa6c6525a071d99ab0acf422a40"
+    },
+    {
+      "sourcePath": "src/templates/Summary/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 56,
+      "exports": [
+        "BaseSummaryItemProps",
+        "SummaryItemProps",
+        "SummaryProps",
+        "TagsSummaryItemProps",
+        "UserSummaryItemProps",
+        "ValueSummaryItemProps"
+      ],
+      "imports": [
+        "../../components/Tags/Tag/types",
+        "../types"
+      ],
+      "resolvedImports": [
+        "src/components/Tags/Tag/types.ts",
+        "src/templates/types.ts"
+      ],
+      "document": "generated/src/templates/Summary/types.ts.md",
+      "sha256": "fa7ac6b80b29ad9512e5e5d097b98bbea5030904ba34e42ff5bd10cc68f725a9"
+    },
+    {
+      "sourcePath": "src/templates/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "templates",
+      "entity": "templates",
+      "lineCount": 11,
+      "exports": [
+        "TemplateProps"
+      ],
+      "imports": [
+        "../types"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/templates/types.ts.md",
+      "sha256": "d28dfecc1c8d8ed7d4f94a441e78f460818e249a047c5d26d86ae817709942dc"
+    },
+    {
+      "sourcePath": "src/utils/floating-ui/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "utils",
+      "entity": "utils",
+      "lineCount": 70,
+      "exports": [
+        "ArrowElem",
+        "FloatingContextArgs",
+        "FloatingProps"
+      ],
+      "imports": [
+        "@floating-ui/react",
+        "react"
+      ],
+      "resolvedImports": [],
+      "document": "generated/src/utils/floating-ui/types.ts.md",
+      "sha256": "8517f153b8068c0212360cdea551b6108f5897bfa83fec3b7f1085a47c23a31a"
+    },
+    {
+      "sourcePath": "src/utils/fullscreen/types.ts",
+      "language": "typescript",
+      "part": "part-2",
+      "rawFile": "types-context.part-2.md",
+      "area": "utils",
+      "entity": "utils",
+      "lineCount": 14,
+      "exports": [
+        "DivElementWithPrefixes",
+        "DocumentWithPrefixes"
+      ],
+      "imports": [],
+      "resolvedImports": [],
+      "document": "generated/src/utils/fullscreen/types.ts.md",
+      "sha256": "db194483b1ec191e2e7079a06a474a8dc53a48c5baacf65277b410f1c5d0bb5b"
+    }
+  ]
+}
