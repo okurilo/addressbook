@@ -31,6 +31,8 @@ npm run build
 - Проверенные контракты компонентов Pulse UI, aliases и исключения описаны в [`docs/PULSE-UI.md`](docs/PULSE-UI.md).
 - Контракт общего запросника и поиск сотрудников описаны в [`docs/HTTP-REQUESTS.md`](docs/HTTP-REQUESTS.md).
 
+Пустые состояния реализуются компонентом `@pulse/ui/components/Empty`. `EmptyState` в используемой версии DS отсутствует и локально не эмулируется.
+
 ## Доступные маршруты
 
 Локальная host-обвязка использует базовый путь `/platform/globalsearch`:

@@ -3,7 +3,7 @@ import type { RouteComponentProps } from '@reach/router';
 import styled, { useTheme } from 'styled-components';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
-import { EmptyState } from '@pulse/ui/components/EmptyState';
+import { Empty } from '@pulse/ui/components/Empty';
 import {
   fetchDepartmentChildren,
   fetchDepartmentDetails,
@@ -258,7 +258,8 @@ export const StructureDepartmentPage = ({
 
   if (viewState === 'notFound') {
     return (
-      <EmptyState
+      <Empty
+        type="noResults"
         title="Подразделение не найдено"
         description="Проверьте ссылку или вернитесь к корневой структуре."
       />
@@ -373,7 +374,8 @@ export const StructureDepartmentPage = ({
         <Divider />
 
         {employees.length === 0 ? (
-          <EmptyState
+          <Empty
+            type="noResults"
             title="Сотрудники не найдены"
             description="Для выбранного подразделения в текущем mock-наборе сотрудники отсутствуют."
           />

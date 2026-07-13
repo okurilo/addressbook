@@ -86,7 +86,8 @@
 - Инициалы `Avatar` передаются через `$type="initials"` и `$text`; доступны размеры `xs`, `s`, `m`, `l`, `xl`, `xxl`.
 - `Button` по умолчанию имеет `$type="primary"` и `$size="m"`; поддерживаемые типы и размеры перечислены в `docs/PULSE-UI.md`.
 - `Loader` использует props `isOnColor`, `size`, `wrapped`, `children` без transient-префикса.
-- В предоставленной выгрузке существует компонент `Empty`, но отсутствует `EmptyState`. Текущий `@pulse/ui/components/EmptyState` является отдельно документированным host-adapter по продуктовому требованию и не считается подтверждённым контрактом DS.
+- Для пустых состояний использовать только `@pulse/ui/components/Empty`; компонента `EmptyState` в DS нет, создавать для него alias или host-adapter запрещено.
+- `Empty` требует `type` и `description`; допустимые `type`: `start`, `noResults`, `wait`, `create`, `noData`. Props `illustration` в контракте нет.
 - Stub расширяется только после сверки соответствующего `types.ts`; несовместимость нельзя скрывать добавлением произвольного prop.
 - Не создавать stubs для неиспользуемых компонентов заранее. Если import-path не подтверждён выгрузкой (например, плоский `IconButton` или `Spinner`), такой файл не должен оставаться доступным через alias.
 - Ключевые контракты и само разрешение imports проверяются compile-time файлом `src/host/pulseUiContractAudit.ts`.

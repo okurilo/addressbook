@@ -1,7 +1,12 @@
 import type { ComponentProps, ReactNode } from 'react';
 import { Avatar } from '@pulse/ui/components/Avatar';
 import { Button } from '@pulse/ui/components/Button';
-import { EmptyState } from '@pulse/ui/components/EmptyState';
+import { Empty } from '@pulse/ui/components/Empty';
+import type {
+  EmptyType as PulseEmptyType,
+  Orientation as EmptyOrientation,
+  Size as EmptySize,
+} from '@pulse/ui/components/Empty';
 import { Input } from '@pulse/ui/components/Input';
 import { Content as LayoutContent } from '@pulse/ui/components/Layout';
 import { Loader } from '@pulse/ui/components/Loader';
@@ -72,7 +77,17 @@ type _TextHasNoWeight = Assert<Equal<'weight' extends keyof TextProps ? true : f
 type LayoutContentProps = ComponentProps<typeof LayoutContent>;
 type _LayoutAcceptsChildren = Assert<ReactNode extends LayoutContentProps['children'] ? true : false>;
 
-type EmptyStateProps = ComponentProps<typeof EmptyState>;
-type _HostEmptyStateContract = Assert<
-  Equal<Pick<EmptyStateProps, 'title' | 'description'>, { title: string; description: string }>
+type EmptyProps = ComponentProps<typeof Empty>;
+type _EmptyTypeExport = Assert<
+  Equal<PulseEmptyType, 'start' | 'noResults' | 'wait' | 'create' | 'noData'>
+>;
+type _EmptySizeExport = Assert<Equal<EmptySize, 'default' | 'small'>>;
+type _EmptyOrientationExport = Assert<Equal<EmptyOrientation, 'horizontal' | 'vertical'>>;
+type _EmptyType = Assert<
+  Equal<EmptyProps['type'], 'start' | 'noResults' | 'wait' | 'create' | 'noData'>
+>;
+type _EmptyDescriptionIsRequired = Assert<Equal<IsOptional<EmptyProps, 'description'>, false>>;
+type _EmptyTitleIsOptional = Assert<Equal<IsOptional<EmptyProps, 'title'>, true>>;
+type _EmptyHasNoIllustration = Assert<
+  Equal<'illustration' extends keyof EmptyProps ? true : false, false>
 >;

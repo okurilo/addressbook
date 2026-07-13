@@ -3,7 +3,7 @@ import type { RouteComponentProps } from '@reach/router';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
-import { EmptyState } from '@pulse/ui/components/EmptyState';
+import { Empty } from '@pulse/ui/components/Empty';
 import { fetchEmployees, fetchRecentEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
 import { EmployeeTable } from '../../components/EmployeeTable';
@@ -91,7 +91,8 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
           />
         ) : null}
         {viewState === 'empty' ? (
-          <EmptyState
+          <Empty
+            type={query.trim() === '' ? 'noData' : 'noResults'}
             title="Ничего не найдено"
             description={
               query.trim() === ''

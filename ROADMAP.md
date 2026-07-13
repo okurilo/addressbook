@@ -37,7 +37,7 @@
   - [x] `Tabs`
   - [x] `Spinner`
   - [x] `Skeleton`
-  - [x] `EmptyState`
+  - [x] `Empty`
 - [x] Подготовить структуру проекта:
   - [x] `src/api/`
   - [x] `src/components/`
@@ -303,10 +303,12 @@
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.
 
-### Итерация 10. Pulse EmptyState
+### Итерация 10. Историческая адаптация пустого состояния
 
-- [x] Перевести активные экраны на `@pulse/ui/components/EmptyState`.
-- [x] Добавить совместимый типизированный stub для локальной среды.
+> Историческая реализация заменена подтверждённым `Empty` в итерации 23.
+
+- [x] Исторически экраны были переведены на неподтверждённый `EmptyState`; решение удалено в итерации 23.
+- [x] Исторический stub удалён в итерации 23.
 - [x] Использовать host design tokens в стилях stub-компонента.
 - [x] Сохранить прежний внутренний файл исходного снимка без удаления.
 - [x] Прогнать `npm run typecheck`.
@@ -404,7 +406,7 @@
 - [x] Добавить полный набор типов и размеров `Avatar`.
 - [x] Привести `Button` к DS types, sizes, states и значениям по умолчанию.
 - [x] Привести `Loader` к контракту `isOnColor/size/wrapped/children`.
-- [x] Зафиксировать отсутствие `EmptyState` в выгрузке и статус host-adapter.
+- [x] Зафиксировать наличие `Empty` и отсутствие `EmptyState` в выгрузке.
 - [x] Добавить справочник `docs/PULSE-UI.md` и правила расширения stubs.
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.
@@ -414,7 +416,7 @@
 - [x] Сверить Vite aliases и TypeScript paths для `@pulse/ui/components/*`.
 - [x] Собрать все фактически используемые Pulse imports.
 - [x] Повторно сверить `Text`, `Avatar`, `Button`, `Loader`, `Input` с полной типизацией.
-- [x] Зафиксировать статус `Layout.Content` и host-adapter `EmptyState`.
+- [x] Зафиксировать статус `Layout.Content` и DS-компонента `Empty`.
 - [x] Удалить неподтверждённые и неиспользуемые `Spinner` и `LayoutGrid.Main`.
 - [x] Удалить несовместимые исторические `Tabs`, `IconButton`, `Skeleton` stubs.
 - [x] Добавить compile-time аудит активных named exports и prop-union.
@@ -454,5 +456,16 @@
 - [x] Добавить обязательный шаблон вызова `http.get<TResponse>`.
 - [x] Зафиксировать запрет прямого `fetch`, второго клиента и глобального fetch-перехвата.
 - [x] Зафиксировать правила системных заголовков, относительного пути и `AbortSignal`.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 23. Замена EmptyState на DS Empty
+
+- [x] Сверить `EmptyProps` с полной выгрузкой типов `@pulse/ui`.
+- [x] Добавить локальный stub `@pulse/ui/components/Empty` по подтверждённому контракту.
+- [x] Перевести пустые результаты на `noResults`, пустые наборы на `noData`, retry на `wait`.
+- [x] Удалить вымышленные `EmptyState` и prop `illustration`.
+- [x] Обновить compile-time аудит Pulse imports и props.
+- [x] Обновить правила и документацию DS.
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.

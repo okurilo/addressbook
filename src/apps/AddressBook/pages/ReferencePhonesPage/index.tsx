@@ -3,7 +3,7 @@ import { useTheme } from 'styled-components';
 import type { RouteComponentProps } from '@reach/router';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
-import { EmptyState } from '@pulse/ui/components/EmptyState';
+import { Empty } from '@pulse/ui/components/Empty';
 import {
   fetchReferencePhoneCategories,
   fetchReferencePhones,
@@ -182,7 +182,8 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
 
   if (categoriesState === 'empty') {
     return (
-      <EmptyState
+      <Empty
+        type="noData"
         title="Категории не найдены"
         description="Для текущего mock-сценария справочные телефоны отсутствуют."
       />
@@ -253,7 +254,8 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
         ) : null}
 
         {phonesState === 'empty' ? (
-          <EmptyState
+          <Empty
+            type="noResults"
             title="Список служб пуст"
             description="Для выбранной категории службы в текущем mock-сценарии отсутствуют."
           />
