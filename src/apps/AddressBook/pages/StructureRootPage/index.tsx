@@ -46,6 +46,32 @@ const CenteredState = styled.div({
   padding: 32,
 });
 
+const SearchResultsLayout = styled.div({
+  display: 'grid',
+  gridTemplateColumns: '260px minmax(0, 1fr)',
+  gap: 32,
+  alignItems: 'start',
+});
+
+const StructureList = styled.aside(({ theme }) => ({
+  padding: 24,
+  borderRadius: 20,
+  background: theme.tokens.current.core.background.default,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 16,
+}));
+
+const StructureItem = styled.div(({ theme }) => ({
+  paddingTop: 12,
+  borderTop: `1px solid ${theme.tokens.current.core.border.gentle}`,
+  color: theme.tokens.current.core.text.secondary,
+  '&:first-of-type': {
+    paddingTop: 0,
+    borderTop: 'none',
+  },
+}));
+
 type ViewState = 'loading' | 'success' | 'empty' | 'error';
 
 export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
@@ -58,6 +84,7 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
   const [totalEmployees, setTotalEmployees] = useState(0);
   const [viewState, setViewState] = useState<ViewState>('loading');
   const [retryToken, setRetryToken] = useState(0);
+  const isSearchMode = query.trim() !== '';
 
   useEffect(() => {
     let isActive = true;
@@ -95,59 +122,109 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
     };
   }, [debouncedQuery, retryToken]);
 
+  const resultStructures = Array.from(
+    employees.reduce<Map<string, string>>((structures, employee) => {
+      const structureName = employee.departmentName || employee.shortStructure;
+
+      if (structureName !== '') {
+        structures.set(employee.departmentId || structureName, structureName);
+      }
+
+      return structures;
+    }, new Map<string, string>())
+  );
+
+  const resultsSurface = (
+    <Surface>
+      {viewState === 'loading' ? (
+        <CenteredState>
+          <Loader />
+        </CenteredState>
+      ) : null}
+
+      {viewState === 'error' ? (
+        <RetryState
+          title="Не удалось загрузить сотрудников"
+          description="Попробуйте повторить запрос или открыть экран позже."
+          onRetry={() => {
+            setRetryToken((currentValue) => currentValue + 1);
+          }}
+        />
+      ) : null}
+
+      {viewState === 'empty' ? (
+        <Empty
+          type={isSearchMode ? 'noResults' : 'noData'}
+          title="Сотрудники не найдены"
+          description={
+            isSearchMode
+              ? 'Попробуйте уточнить поисковый запрос.'
+              : 'В выбранной структуре сотрудники отсутствуют.'
+          }
+        />
+      ) : null}
+
+      {viewState === 'success' ? (
+        <EmployeeTable
+          employees={employees}
+          favoriteIds={favoriteIds}
+          onToggleFavorite={(employeeId) => {
+            ignorePromise(toggleFavorite(employeeId));
+          }}
+        />
+      ) : null}
+    </Surface>
+  );
+
   return (
     <Page>
       <Header>
-        <Text variant="h2Semibold">Кадровая структура</Text>
-        <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
-          Сотрудники организационной структуры
+        <Text variant="h2Semibold">
+          {isSearchMode ? 'Результаты поиска' : 'Кадровая структура'}
         </Text>
-        <SummaryLine>
+        {isSearchMode ? (
           <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
-            В структуре
+            Найдено {totalEmployees} результатов по запросу «{query}»
           </Text>
-          <Text variant="body1Semibold">{totalEmployees}</Text>
-          <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
-            сотрудников
-          </Text>
-        </SummaryLine>
+        ) : (
+          <>
+            <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
+              Сотрудники организационной структуры
+            </Text>
+            <SummaryLine>
+              <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
+                В структуре
+              </Text>
+              <Text variant="body1Semibold">{totalEmployees}</Text>
+              <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
+                сотрудников
+              </Text>
+            </SummaryLine>
+          </>
+        )}
       </Header>
 
-      <Surface>
-        {viewState === 'loading' ? (
-          <CenteredState>
-            <Loader />
-          </CenteredState>
-        ) : null}
-
-        {viewState === 'error' ? (
-          <RetryState
-            title="Не удалось загрузить сотрудников"
-            description="Попробуйте повторить запрос или открыть экран позже."
-            onRetry={() => {
-              setRetryToken((currentValue) => currentValue + 1);
-            }}
-          />
-        ) : null}
-
-        {viewState === 'empty' ? (
-          <Empty
-            type="noData"
-            title="Сотрудники не найдены"
-            description="В выбранной структуре сотрудники отсутствуют."
-          />
-        ) : null}
-
-        {viewState === 'success' ? (
-          <EmployeeTable
-            employees={employees}
-            favoriteIds={favoriteIds}
-            onToggleFavorite={(employeeId) => {
-              ignorePromise(toggleFavorite(employeeId));
-            }}
-          />
-        ) : null}
-      </Surface>
+      {isSearchMode ? (
+        <SearchResultsLayout>
+          <StructureList>
+            <Text variant="body1Semibold">Структуры в результатах</Text>
+            {resultStructures.length === 0 ? (
+              <Text variant="body2Regular" color={theme.tokens.current.core.text.tertiary}>
+                Структуры не найдены
+              </Text>
+            ) : (
+              resultStructures.map(([structureId, structureName]) => (
+                <StructureItem key={structureId}>
+                  <Text variant="body2Regular">{structureName}</Text>
+                </StructureItem>
+              ))
+            )}
+          </StructureList>
+          {resultsSurface}
+        </SearchResultsLayout>
+      ) : (
+        resultsSurface
+      )}
     </Page>
   );
 };

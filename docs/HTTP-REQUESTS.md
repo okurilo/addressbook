@@ -115,3 +115,13 @@ return http.get<MultiSearchResponse>(
   }
 );
 ```
+
+## История поиска
+
+Раздел «Все контакты» при пустом `q` загружает недавние записи через:
+
+```text
+/api-web/globalsearch/api/v3/history?paths=all&size=4
+```
+
+`http.get<SearchHistoryItem[]>` уже извлекает внешнее транспортное поле `data`, поэтому feature-код получает массив напрямую. При выборе записи вызывается `POST /globalsearch/api/v3/history/{id}?path=globalsearch:all`.
