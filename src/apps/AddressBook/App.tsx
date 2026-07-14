@@ -18,7 +18,7 @@ export const App = (): JSX.Element => (
       <FavoriteEmployeesProvider>
         <DirectoryLayout>
           <RouterContainer>
-            <Router primary={false}>
+            <Router basepath="/" primary={false}>
               <Redirect noThrow from="/" to={routePaths.contacts} />
               <ContactsPage path={routePaths.contacts} />
               <EmployeePage path={routePaths.employee} />

@@ -57,7 +57,7 @@ export const DirectoryNavigation = (): JSX.Element => {
           >
             <Text
               color={
-                isActive ? tokens.current.text.primary : tokens.current.text.secondary
+                isActive ? tokens.current.core.text.primary : tokens.current.core.text.secondary
               }
               variant={isActive ? 'body1Semibold' : 'body1Regular'}
             >

@@ -8,7 +8,7 @@ export const Page = styled.section(({ theme }) => ({
 }));
 
 export const Sidebar = styled.aside(({ theme }) => ({
-  background: theme.tokens.current.layer['01'],
+  background: theme.tokens.current.core.layer['01'],
   borderRadius: theme.radii.lg,
   padding: 12,
   display: 'flex',
@@ -19,18 +19,18 @@ export const Sidebar = styled.aside(({ theme }) => ({
 export const SidebarButton = styled.button<{ $active: boolean }>(({ theme, $active }) => ({
   minHeight: 48,
   border: `1px solid ${
-    $active ? theme.tokens.current.border.interactive : 'transparent'
+    $active ? theme.tokens.current.core.border.interactive : 'transparent'
   }`,
   borderRadius: theme.radii.md,
   background: $active
-    ? theme.tokens.current.accent.secondary
+    ? theme.tokens.current.core.accent.secondary
     : 'transparent',
   padding: '12px 16px',
   textAlign: 'left',
   cursor: 'pointer',
   color: $active
-    ? theme.tokens.current.text.primary
-    : theme.tokens.current.text.secondary,
+    ? theme.tokens.current.core.text.primary
+    : theme.tokens.current.core.text.secondary,
   ...theme.typography.body1Regular,
   fontWeight: $active
     ? theme.typography.body1Semibold.fontWeight
@@ -38,7 +38,7 @@ export const SidebarButton = styled.button<{ $active: boolean }>(({ theme, $acti
 }));
 
 export const Content = styled.section(({ theme }) => ({
-  background: theme.tokens.current.layer['01'],
+  background: theme.tokens.current.core.layer['01'],
   borderRadius: theme.radii.lg,
   padding: 32,
   display: 'flex',
@@ -55,13 +55,13 @@ export const Table = styled.table({
 export const HeadCell = styled.th(({ theme }) => ({
   padding: `${8}px 0 ${16}px`,
   textAlign: 'left',
-  color: theme.tokens.current.text.secondary,
+  color: theme.tokens.current.core.text.secondary,
   fontWeight: 500,
-  borderBottom: `1px solid ${theme.tokens.current.border.gentle}`,
+  borderBottom: `1px solid ${theme.tokens.current.core.border.gentle}`,
 }));
 
 export const Row = styled.tr(({ theme }) => ({
-  borderBottom: `1px solid ${theme.tokens.current.border.gentle}`,
+  borderBottom: `1px solid ${theme.tokens.current.core.border.gentle}`,
 }));
 
 export const Cell = styled.td(({ theme }) => ({
@@ -81,7 +81,7 @@ export const ServiceAvatar = styled.div<{ $accentColor: string }>(({ theme, $acc
   height: 40,
   borderRadius: theme.radii.pill,
   background: $accentColor,
-  color: theme.tokens.current.text.onColor,
+  color: theme.tokens.current.core.text.onColor,
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -100,24 +100,24 @@ export const ActionLink = styled.a(({ theme }) => ({
   minHeight: 32,
   padding: `0 ${16}px`,
   borderRadius: theme.radii.pill,
-  border: `1px solid ${theme.tokens.current.border.gentle}`,
-  background: theme.tokens.current.layer['01'],
+  border: `1px solid ${theme.tokens.current.core.border.gentle}`,
+  background: theme.tokens.current.core.layer['01'],
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: theme.tokens.current.text.primary,
+  color: theme.tokens.current.core.text.primary,
 }));
 
 export const ActionButton = styled.button(({ theme }) => ({
   minHeight: 32,
   padding: `0 ${16}px`,
   borderRadius: theme.radii.pill,
-  border: `1px solid ${theme.tokens.current.border.gentle}`,
-  background: theme.tokens.current.layer['01'],
+  border: `1px solid ${theme.tokens.current.core.border.gentle}`,
+  background: theme.tokens.current.core.layer['01'],
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: theme.tokens.current.text.secondary,
+  color: theme.tokens.current.core.text.secondary,
   cursor: 'pointer',
 }));
 
@@ -126,7 +126,7 @@ export const CenteredState = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: theme.tokens.current.layer['01'],
+  background: theme.tokens.current.core.layer['01'],
   borderRadius: theme.radii.lg,
   padding: 32,
 }));

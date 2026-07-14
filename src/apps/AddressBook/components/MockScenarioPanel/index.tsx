@@ -30,7 +30,7 @@ export const MockScenarioPanel = (): JSX.Element => {
       <Text variant="body1Semibold">Mock-сценарии</Text>
       <Text
         variant="body2ParagraphRegular"
-        color={theme.tokens.current.text.secondary}
+        color={theme.tokens.current.core.text.secondary}
       >
         Служебная панель отделена от продуктовой области и управляет ответами локального fetch-mock.
       </Text>

@@ -16,7 +16,7 @@ export const SummaryLine = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'baseline',
   gap: 4,
-  color: theme.tokens.current.text.secondary,
+  color: theme.tokens.current.core.text.secondary,
 }));
 
 export const Grid = styled.div(({ theme }) => ({
@@ -29,7 +29,7 @@ export const CardButton = styled.button(({ theme }) => ({
   minHeight: 136,
   padding: 32,
   borderRadius: 20,
-  border: `1px solid ${theme.tokens.current.border.gentle}`,
+  border: `1px solid ${theme.tokens.current.core.border.gentle}`,
   background: '#edf1ed',
   display: 'flex',
   flexDirection: 'column',
@@ -44,7 +44,7 @@ export const CenteredState = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: theme.tokens.current.layer['01'],
+  background: theme.tokens.current.core.layer['01'],
   borderRadius: 20,
   padding: 32,
 }));

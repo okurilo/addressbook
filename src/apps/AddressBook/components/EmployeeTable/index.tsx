@@ -47,10 +47,10 @@ type EmployeeDetailsProps = {
 const EmployeeDetails = ({ employee, onClose }: EmployeeDetailsProps): JSX.Element => {
   const theme = useTheme();
   const statusColorMap: Record<Employee['status'], string> = {
-    available: theme.tokens.current.support.success,
-    busy: theme.tokens.current.support.attention,
-    offline: theme.tokens.current.text.tertiary,
-    vacation: theme.tokens.current.support.info,
+    available: theme.tokens.current.core.support.success,
+    busy: theme.tokens.current.core.support.attention,
+    offline: theme.tokens.current.core.text.tertiary,
+    vacation: theme.tokens.current.core.support.info,
   };
 
   return (
@@ -73,13 +73,13 @@ const EmployeeDetails = ({ employee, onClose }: EmployeeDetailsProps): JSX.Eleme
             />
             <ProfileContent>
               <Text variant="body1Semibold">{employee.fullName}</Text>
-              <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+              <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
                 {employee.position}
               </Text>
-              <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+              <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
                 {employee.subtitle}
               </Text>
-              <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+              <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
                 Табельный номер: {employee.employeeNumber}
               </Text>
               <StatusLine>
@@ -107,7 +107,7 @@ const EmployeeDetails = ({ employee, onClose }: EmployeeDetailsProps): JSX.Eleme
                 <DefinitionTerm>Внутренний</DefinitionTerm>
                 <DefinitionDescription>
                   {employee.phone === null ? (
-                    <Text variant="body2Regular" color={theme.tokens.current.text.tertiary}>
+                    <Text variant="body2Regular" color={theme.tokens.current.core.text.tertiary}>
                       отсутствует
                     </Text>
                   ) : (
@@ -117,7 +117,7 @@ const EmployeeDetails = ({ employee, onClose }: EmployeeDetailsProps): JSX.Eleme
                 <DefinitionTerm>Мобильный</DefinitionTerm>
                 <DefinitionDescription>
                   {employee.mobilePhone === null ? (
-                    <Text variant="body2Regular" color={theme.tokens.current.text.tertiary}>
+                    <Text variant="body2Regular" color={theme.tokens.current.core.text.tertiary}>
                       не указан
                     </Text>
                   ) : (

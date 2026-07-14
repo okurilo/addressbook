@@ -56,21 +56,21 @@ const buttonStyles = ({
     borderRadius: theme.radii.md,
     border: `1px solid ${
       isPrimary
-        ? theme.tokens.current.accent.primary
+        ? theme.tokens.current.core.accent.primary
         : isSecondary
-        ? theme.tokens.current.border.gentle
+        ? theme.tokens.current.core.border.gentle
         : 'transparent'
     }`,
     background: isPrimary
-      ? theme.tokens.current.accent.primary
+      ? theme.tokens.current.core.accent.primary
       : isSecondary
-      ? theme.tokens.current.layer['01']
+      ? theme.tokens.current.core.layer['01']
       : 'transparent',
     color: isPrimary
-      ? theme.tokens.current.text.onColor
+      ? theme.tokens.current.core.text.onColor
       : isMonoSecondary
-      ? theme.tokens.current.text.secondary
-      : theme.tokens.current.text.primary,
+      ? theme.tokens.current.core.text.secondary
+      : theme.tokens.current.core.text.primary,
     cursor: 'pointer',
     display: 'inline-flex',
     alignItems: 'center',

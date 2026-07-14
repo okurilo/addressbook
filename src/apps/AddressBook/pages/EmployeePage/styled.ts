@@ -7,7 +7,7 @@ export const Page = styled.section(({ theme }) => ({
 }));
 
 export const Card = styled.div(({ theme }) => ({
-  background: theme.tokens.current.layer['01'],
+  background: theme.tokens.current.core.layer['01'],
   borderRadius: 20,
   display: 'grid',
   gridTemplateColumns: '1fr 280px',
@@ -36,11 +36,11 @@ export const DefinitionList = styled.dl(({ theme }) => ({
 }));
 
 export const DefinitionTerm = styled.dt(({ theme }) => ({
-  color: theme.tokens.current.text.secondary,
+  color: theme.tokens.current.core.text.secondary,
 }));
 
 export const DefinitionDescription = styled.dd(({ theme }) => ({
-  color: theme.tokens.current.text.primary,
+  color: theme.tokens.current.core.text.primary,
   fontWeight: 600,
   margin: 0,
 }));
@@ -50,7 +50,7 @@ export const CenteredState = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: theme.tokens.current.layer['01'],
+  background: theme.tokens.current.core.layer['01'],
   borderRadius: 20,
   padding: 32,
 }));

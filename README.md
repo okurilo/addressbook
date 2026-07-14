@@ -29,9 +29,12 @@ npm run build
 - После каждой итерации обязательны `npm run typecheck` и `npm run build`.
 - Полный контракт host theme и доступные Pulse tokens описаны в [`docs/THEME.md`](docs/THEME.md).
 - Проверенные контракты компонентов Pulse UI, aliases и исключения описаны в [`docs/PULSE-UI.md`](docs/PULSE-UI.md).
+- Полная типизация Pulse UI, файловый индекс и инструкция для точечного чтения LLM находятся в [`docs/pulse-ui-types/README.md`](docs/pulse-ui-types/README.md).
 - Контракт общего запросника и поиск сотрудников описаны в [`docs/HTTP-REQUESTS.md`](docs/HTTP-REQUESTS.md).
 
 Пустые состояния реализуются компонентом `@pulse/ui/components/Empty`. `EmptyState` в используемой версии DS отсутствует и локально не эмулируется.
+
+Перед изменением любого Pulse-компонента используйте `docs/pulse-ui-types/INDEX.md` или `EXPORTS.md` и открывайте только нужные generated-файлы. Обе raw-части целиком по умолчанию не читаются. Каталог обновляется командой `npm run docs:pulse-types`.
 
 ## Доступные маршруты
 
@@ -45,6 +48,17 @@ npm run build
 - `/platform/globalsearch/addressbook/favorites`
 
 Маршруты объявлены через `@reach/router`: общий layout обёрнут в `LocationProvider`, экраны выбираются `Router`, а переходы выполняются через `useNavigate`/`Redirect`. Прямое управление `window.history` в приложении не используется.
+
+При встраивании в существующий Reach Router модуль подключается с wildcard, чтобы внешний `default`-маршрут не перехватывал дочерние URL:
+
+```tsx
+<Router primary={false}>
+  <Layout default />
+  <AddressBook path="/addressbook/*" />
+</Router>
+```
+
+Родительский router уже находится под `/platform/globalsearch`, поэтому этот route соответствует полному публичному префиксу `/platform/globalsearch/addressbook`. Внутренний Router AddressBook имеет `basepath="/"`: его `routePaths` уже абсолютные и не должны повторно получать внешний basepath.
 
 `@reach/router@1.3.4` является legacy-библиотекой и не публикует location-обновления в React 18 `StrictMode`, поэтому локальная точка входа работает без `StrictMode` до отдельной миграции роутера.
 

@@ -27,7 +27,7 @@ const SummaryLine = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'baseline',
   gap: 4,
-  color: theme.tokens.current.text.secondary,
+  color: theme.tokens.current.core.text.secondary,
 }));
 
 const Grid = styled.div(({ theme }) => ({
@@ -40,7 +40,7 @@ const CardButton = styled.button(({ theme }) => ({
   minHeight: 136,
   padding: 32,
   borderRadius: 20,
-  border: `1px solid ${theme.tokens.current.border.gentle}`,
+  border: `1px solid ${theme.tokens.current.core.border.gentle}`,
   background: '#edf1ed',
   display: 'flex',
   flexDirection: 'column',
@@ -55,7 +55,7 @@ const CenteredState = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: theme.tokens.current.background.default,
+  background: theme.tokens.current.core.background.default,
   borderRadius: 20,
   padding: 32,
 }));
@@ -108,15 +108,15 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
     <Page>
       <Header>
         <Text variant="h2Semibold">Кадровая структура</Text>
-        <Text variant="body1Regular" color={theme.tokens.current.text.secondary}>
+        <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
           Организационно-штатная структура Банка
         </Text>
         <SummaryLine>
-          <Text variant="body1Regular" color={theme.tokens.current.text.secondary}>
+          <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
             В структуре
           </Text>
           <Text variant="body1Semibold">{totalEmployees}</Text>
-          <Text variant="body1Regular" color={theme.tokens.current.text.secondary}>
+          <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
             сотрудников
           </Text>
         </SummaryLine>
@@ -159,7 +159,7 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
               }}
             >
               <Text variant="body1Semibold">{department.name}</Text>
-              <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+              <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
                 {department.employeeCount} сотрудников
               </Text>
             </CardButton>

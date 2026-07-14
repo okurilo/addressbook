@@ -13,7 +13,7 @@ export const PagePlaceholder = ({ title, description }: PagePlaceholderProps): J
   return (
     <Wrapper>
       <Text variant="h4Semibold">{title}</Text>
-      <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+      <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
         {description}
       </Text>
     </Wrapper>

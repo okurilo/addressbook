@@ -14,7 +14,7 @@ export const SectionHeader = styled.div(({ theme }) => ({
 }));
 
 export const Surface = styled.div(({ theme }) => ({
-  background: theme.tokens.current.layer['01'],
+  background: theme.tokens.current.core.layer['01'],
   borderRadius: 20,
 }));
 

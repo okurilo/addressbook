@@ -12,12 +12,12 @@ export const ActionLink = styled.a(({ theme }) => ({
   minHeight: 32,
   padding: `0 ${16}px`,
   borderRadius: 999,
-  border: `1px solid ${theme.tokens.current.border.gentle}`,
-  background: theme.tokens.current.layer['01'],
+  border: `1px solid ${theme.tokens.current.core.border.gentle}`,
+  background: theme.tokens.current.core.layer['01'],
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: theme.tokens.current.text.primary,
+  color: theme.tokens.current.core.text.primary,
 }));
 
 export const ActionButton = styled.button<{ $active?: boolean }>(({ theme, $active = false }) => ({
@@ -26,17 +26,17 @@ export const ActionButton = styled.button<{ $active?: boolean }>(({ theme, $acti
   padding: `0 ${16}px`,
   borderRadius: 999,
   border: `1px solid ${
-    $active ? theme.tokens.current.accent.primary : theme.tokens.current.border.gentle
+    $active ? theme.tokens.current.core.accent.primary : theme.tokens.current.core.border.gentle
   }`,
   background: $active
-    ? theme.tokens.current.accent.secondary
-    : theme.tokens.current.layer['01'],
+    ? theme.tokens.current.core.accent.secondary
+    : theme.tokens.current.core.layer['01'],
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
   color: $active
-    ? theme.tokens.current.accent.primary
-    : theme.tokens.current.text.secondary,
+    ? theme.tokens.current.core.accent.primary
+    : theme.tokens.current.core.text.secondary,
   cursor: 'pointer',
 }));
 

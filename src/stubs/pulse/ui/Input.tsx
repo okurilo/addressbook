@@ -12,9 +12,9 @@ const StyledInput = styled.input(({ theme }) => ({
   minHeight: 44,
   padding: '0 16px',
   borderRadius: theme.radii.md,
-  border: `1px solid ${theme.tokens.current.border.gentle}`,
-  background: theme.tokens.current.layer['01'],
-  color: theme.tokens.current.text.primary,
+  border: `1px solid ${theme.tokens.current.core.border.gentle}`,
+  background: theme.tokens.current.core.layer['01'],
+  color: theme.tokens.current.core.text.primary,
 }));
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement> & {

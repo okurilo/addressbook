@@ -326,7 +326,7 @@
 ### Итерация 12. Актуализация Pulse theme
 
 - [x] Перенести структуру выгруженной Pulse theme в типизированную host-обвязку.
-- [x] Перевести design tokens с `tokens.current.core` на `tokens.current`.
+- [x] Историческое сплющивание `tokens.current.core` до `tokens.current` признано ошибочным и отменено в итерации 25.
 - [x] Добавить полный доступный контракт typography, layout, mediaQueries, radii и zIndices.
 - [x] Перевести Pulse-stubs на host typography, tokens и radii.
 - [x] Зафиксировать правила styled-components v5.
@@ -467,5 +467,36 @@
 - [x] Удалить вымышленные `EmptyState` и prop `illustration`.
 - [x] Обновить compile-time аудит Pulse imports и props.
 - [x] Обновить правила и документацию DS.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 24. LLM-оптимизированный каталог типов Pulse UI
+
+- [x] Добавить обе исходные выгрузки типов без изменения содержимого.
+- [x] Зафиксировать raw-файлы как источник истины и сохранить SHA-256.
+- [x] Разбить 264 `FILE:`-секции на отдельные generated-документы.
+- [x] Построить индекс компонентов и групп.
+- [x] Построить обратный индекс экспортируемых типов.
+- [x] Добавить машиночитаемый manifest с импортами, экспортами и путями.
+- [x] Добавить быстрые ссылки для компонентов, используемых AddressBook.
+- [x] Закрепить обязательный маршрут чтения типов для последующих LLM-задач.
+- [x] Проверить детерминированную повторную генерацию.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 25. Восстановление корректных путей theme tokens
+
+- [x] Вернуть контракт `theme.tokens.current.core.*` в host theme.
+- [x] Исправить обращения к токенам во всём `src`, включая Pulse-stubs.
+- [x] Добавить compile-time проверку отсутствия сплющённого `current.text`.
+- [x] Обновить `CODEX-RULES.MD`, `CODEX.md` и `docs/THEME.md`.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
+### Итерация 26. Встраивание AddressBook во внешний Reach Router
+
+- [x] Отключить наследование внешнего basepath внутренним Router AddressBook.
+- [x] Зафиксировать обязательный wildcard `path="/addressbook/*"` в host-маршруте.
+- [x] Документировать причину удвоения абсолютных routePaths во вложенном Router.
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.

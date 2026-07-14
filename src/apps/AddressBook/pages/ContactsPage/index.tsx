@@ -70,7 +70,7 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
       <SectionHeader>
         <Text variant="h2Semibold">{title}</Text>
         {query.trim() === '' ? null : (
-          <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+          <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
             по запросу: {query}
           </Text>
         )}

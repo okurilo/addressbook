@@ -44,21 +44,21 @@ export const EmployeeRow = ({
           <EmployeeAvatar initials={employee.avatarInitials} status={employee.status} />
           <div>
             <Text variant="body1Semibold">{employee.fullName}</Text>
-            <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+            <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
               {employee.subtitle}
             </Text>
           </div>
         </NameCell>
       </Cell>
       <Cell>
-        <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+        <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
           {employee.shortStructure}
         </Text>
       </Cell>
       <Cell>
         <PositionCell>
           <Text variant="body1Regular">{employee.position}</Text>
-          <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+          <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
             {employee.departmentName}
           </Text>
         </PositionCell>

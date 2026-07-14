@@ -35,7 +35,7 @@ const Page = styled.section(({ theme }) => ({
 }));
 
 const Sidebar = styled.aside(({ theme }) => ({
-  background: theme.tokens.current.background.default,
+  background: theme.tokens.current.core.background.default,
   borderRadius: 20,
   padding: 24,
   display: 'flex',
@@ -49,13 +49,13 @@ const SidebarButton = styled.button<{ $active?: boolean }>(({ theme, $active = f
   padding: 0,
   textAlign: 'left',
   cursor: 'pointer',
-  color: $active ? theme.tokens.current.text.primary : theme.tokens.current.text.secondary,
+  color: $active ? theme.tokens.current.core.text.primary : theme.tokens.current.core.text.secondary,
   fontWeight: $active ? 600 : 400,
   lineHeight: 1.45,
 }));
 
 const Content = styled.section(({ theme }) => ({
-  background: theme.tokens.current.background.default,
+  background: theme.tokens.current.core.background.default,
   borderRadius: 20,
   padding: 32,
   display: 'flex',
@@ -81,7 +81,7 @@ const BreadcrumbButton = styled.button(({ theme }) => ({
   background: 'transparent',
   padding: 0,
   ...theme.typography.caption1Regular,
-  color: theme.tokens.current.text.secondary,
+  color: theme.tokens.current.core.text.secondary,
   cursor: 'pointer',
 }));
 
@@ -92,7 +92,7 @@ const SummaryLine = styled.div(({ theme }) => ({
 }));
 
 const Divider = styled.div(({ theme }) => ({
-  borderTop: `1px solid ${theme.tokens.current.border.gentle}`,
+  borderTop: `1px solid ${theme.tokens.current.core.border.gentle}`,
 }));
 
 const CenteredState = styled.div(({ theme }) => ({
@@ -100,7 +100,7 @@ const CenteredState = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: theme.tokens.current.background.default,
+  background: theme.tokens.current.core.background.default,
   borderRadius: 20,
   padding: 32,
 }));
@@ -329,11 +329,11 @@ export const StructureDepartmentPage = ({
           </BreadcrumbButton>
           {currentPath.map((item, index) => (
             <BreadcrumbItem key={item.id}>
-              <Text variant="caption1Regular" color={theme.tokens.current.text.tertiary}>
+              <Text variant="caption1Regular" color={theme.tokens.current.core.text.tertiary}>
                 /
               </Text>
               {index === currentPath.length - 1 ? (
-                <Text variant="caption1Semibold" color={theme.tokens.current.text.primary}>
+                <Text variant="caption1Semibold" color={theme.tokens.current.core.text.primary}>
                   {item.name}
                 </Text>
               ) : (
@@ -353,11 +353,11 @@ export const StructureDepartmentPage = ({
         <Text variant="h2Semibold">{details.name}</Text>
 
         <SummaryLine>
-          <Text variant="body1Regular" color={theme.tokens.current.text.secondary}>
+          <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
             В структуре
           </Text>
           <Text variant="body1Semibold">{details.employeeCount}</Text>
-          <Text variant="body1Regular" color={theme.tokens.current.text.secondary}>
+          <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
             сотрудников
           </Text>
         </SummaryLine>
@@ -365,7 +365,7 @@ export const StructureDepartmentPage = ({
         <Divider />
 
         <div>
-          <Text variant="body2Regular" color={theme.tokens.current.text.secondary}>
+          <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
             Номер организационной единицы
           </Text>
           <Text variant="body1Semibold">{details.orgUnitNumber}</Text>
