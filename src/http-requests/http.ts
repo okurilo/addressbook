@@ -17,3 +17,5 @@ export const httpRequestOptions = {
 };
 
 export const http = new HttpRequest('/api-web/', httpRequestOptions);
+
+export const profileHttp = new HttpRequest('/api-mobile/', httpRequestOptions);

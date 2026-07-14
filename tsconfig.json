@@ -14,6 +14,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
+      "*.svg": ["src/host/svgComponentStub.tsx"],
       "@pulse/ui/components/*": ["src/stubs/pulse/ui/*"],
       "@pulse/ui/theme": ["src/host/pulseTheme.ts"],
       "@pulse/*": ["src/stubs/pulse/*"],

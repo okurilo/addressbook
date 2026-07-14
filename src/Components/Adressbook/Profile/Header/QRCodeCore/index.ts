@@ -1,0 +1,2 @@
+export { QRCodeCore } from './QRCodeCore';
+

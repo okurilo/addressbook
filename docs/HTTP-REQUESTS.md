@@ -2,7 +2,7 @@
 
 ## Единая точка входа
 
-Продуктовые API-запросы выполняются через общий экземпляр `http` из `src/http-requests/http.ts`:
+Продуктовые API-запросы выполняются через общие экземпляры из `src/http-requests/http.ts`:
 
 ```ts
 import { HttpRequest } from '@hrplatform/utils';
@@ -17,9 +17,10 @@ export const httpRequestOptions = {
 };
 
 export const http = new HttpRequest('/api-web/', httpRequestOptions);
+export const profileHttp = new HttpRequest('/api-mobile/', httpRequestOptions);
 ```
 
-Напрямую вызывать `fetch` для реального API или глобально перехватывать `window.fetch` нельзя. Локальный fetch-mock остаётся только для PoC endpoints `/api/*`.
+`http` обслуживает `/api-web/*`, а `profileHttp` — только Profile API `/api-mobile/*`. Напрямую вызывать `fetch` для реального API или глобально перехватывать `window.fetch` нельзя. Локальный fetch-mock остаётся только для PoC endpoints `/api/*`.
 
 `httpRequestOptions` добавляет обязательные host-заголовки:
 
@@ -43,7 +44,7 @@ export const loadData = async (signal?: AbortSignal): Promise<Response> =>
 
 Обязательные правила:
 
-- не создавать новый `HttpRequest` в feature-коде;
+- не создавать новый `HttpRequest` в feature-коде; оба разрешённых экземпляра находятся в общем HTTP-модуле;
 - не дублировать `httpRequestOptions` и системные заголовки;
 - не добавлять `/api-web/` повторно в путь, передаваемый `http.get`;
 - не использовать прямой `fetch`, axios или второй HTTP-клиент для продуктовых API;

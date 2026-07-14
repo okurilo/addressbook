@@ -1,5 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AddressBook } from './apps/AddressBook';
 import { hostTheme } from './host/theme';
 
@@ -12,5 +14,6 @@ if (container === null) {
 createRoot(container).render(
   <ThemeProvider theme={hostTheme}>
     <AddressBook />
+    <ToastContainer />
   </ThemeProvider>,
 );

@@ -1,0 +1,2 @@
+export { getVCardValue } from './getVCardValue';
+

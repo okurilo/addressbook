@@ -10,6 +10,11 @@ import type {
 import { Input } from '@pulse/ui/components/Input';
 import { Content as LayoutContent } from '@pulse/ui/components/Layout';
 import { Loader } from '@pulse/ui/components/Loader';
+import { Modal } from '@pulse/ui/components/ModalNew';
+import { SkeletonRect } from '@pulse/ui/components/Skeleton';
+import { Content as SnackbarContent } from '@pulse/ui/components/Snackbar';
+import { Success } from '@pulse/ui/components/Snackbar/icons';
+import { Tab, Tabs } from '@pulse/ui/components/Tabs';
 import { Text } from '@pulse/ui/components/Text';
 import type { HostTheme, TypographyVariant } from './theme';
 
@@ -97,3 +102,20 @@ type _EmptyTitleIsOptional = Assert<Equal<IsOptional<EmptyProps, 'title'>, true>
 type _EmptyHasNoIllustration = Assert<
   Equal<'illustration' extends keyof EmptyProps ? true : false, false>
 >;
+
+type ModalProps = ComponentProps<typeof Modal>;
+type _ModalTitleIsRequired = Assert<Equal<IsOptional<ModalProps, 'title'>, false>>;
+type _ModalType = Assert<Equal<NonNullable<ModalProps['type']>, 'default' | 'fullscreen' | 'alert'>>;
+
+type SkeletonRectProps = ComponentProps<typeof SkeletonRect>;
+type _SkeletonSupportsWidth = Assert<Equal<'width' extends keyof SkeletonRectProps ? true : false, true>>;
+
+type SnackbarContentProps = ComponentProps<typeof SnackbarContent>;
+type _SnackbarCompact = Assert<Equal<SnackbarContentProps['compact'], boolean | undefined>>;
+
+type TabsProps = ComponentProps<typeof Tabs>;
+type _TabsType = Assert<Equal<TabsProps['$type'], 'primary' | 'secondary' | 'tertiary' | 'description'>>;
+
+type TabProps = ComponentProps<typeof Tab>;
+type _TabActive = Assert<Equal<TabProps['$isActive'], boolean | undefined>>;
+type _SuccessIsComponent = Assert<Equal<'width' extends keyof ComponentProps<typeof Success> ? true : false, true>>;

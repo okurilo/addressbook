@@ -106,10 +106,26 @@ type CoreTokens = {
     warning: string;
     info: string;
   };
+  link: {
+    default: string;
+  };
 };
 
 type CurrentTokens = {
   core: CoreTokens;
+  colors: {
+    grey: {
+      solid: {
+        '10': string;
+        '50': string;
+        '60': string;
+        '70': string;
+      };
+    };
+  };
+  shadows: {
+    small: string;
+  };
 };
 
 export type HostTheme = {
@@ -286,6 +302,22 @@ export const hostTheme: HostTheme = {
           warning: '#e3a51b',
           info: '#2476d3',
         },
+        link: {
+          default: '#146cc2',
+        },
+      },
+      colors: {
+        grey: {
+          solid: {
+            '10': '#f3f5f3',
+            '50': '#89918b',
+            '60': '#657068',
+            '70': '#4f5952',
+          },
+        },
+      },
+      shadows: {
+        small: '0 4px 16px rgba(31, 37, 33, 0.14)',
       },
     },
   },

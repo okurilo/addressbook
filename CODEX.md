@@ -64,3 +64,8 @@
 - Для экономии контекста LLM команда `npm run docs:pulse-types` разбивает 264 исходных секции на отдельные `generated/src/**` документы, строит индекс компонентов, обратный индекс экспортов и JSON-манифест зависимостей.
 - Обязательный маршрут работы с DS: краткая памятка `docs/PULSE-UI.md` → поиск в `docs/pulse-ui-types/INDEX.md`/`EXPORTS.md` → чтение только точных generated-файлов и необходимых импортов; полные raw-файлы не загружаются без необходимости.
 - Для встраивания в host Reach Router AddressBook подключается как `path="/addressbook/*"`; wildcard удерживает модуль на дочерних URL, а внутренний `Router basepath="/"` не допускает удвоения `/platform/globalsearch/addressbook` у абсолютных routePaths.
+- Импортированный generic `src/Components/Adressbook/common/Table` заменил прежнюю HTML-таблицу сотрудников на экранах контактов, избранного и подразделений; внешний контракт `EmployeeTable` сохранён через адаптер `Employee → PersonRow`.
+- Раскрытая строка использует исходную композицию `renderExpanded={(person) => <Profile person={person._profile} pid={person.pid} />}`; строка остаётся видимой для повторного закрытия Profile.
+- Profile API выполняется через общий `profileHttp` с base URL `/api-mobile/`, а пользовательские группы — через общий `/api-web`-клиент; прямые `fetch` из Profile удалены.
+- Для импортированного Profile host theme предоставляет подтверждённые ветки `tokens.current.colors.grey.solid`, `tokens.current.shadows.small` и `core.link.default` без переписывания исходных token-path.
+- Отсутствующие SVG разрешаются во временный host-placeholder, а отложенные несовместимости импортированного окружения маркируются `TODO(addressbook-host)`.
