@@ -1,7 +1,11 @@
 import type { Employee, EmployeeSearchResponse } from './types';
 import { fetchDirectoryEmployees } from './search';
 
-export { fetchFavoriteEmployees } from './favorites';
+export {
+  addFavoriteEmployee,
+  fetchFavoriteEmployees,
+  removeFavoriteEmployee,
+} from './favorites';
 
 export class DirectoryApiError extends Error {
   public readonly status: number;
@@ -39,22 +43,3 @@ export const fetchStructureEmployees = async (
 
 export const fetchEmployeeById = async (employeeId: string): Promise<Employee> =>
   fetchJson<Employee>(`/api/directory/employees/${encodeURIComponent(employeeId)}`);
-
-export const addFavoriteEmployee = async (employeeId: string): Promise<void> => {
-  await fetchJson<{ success: boolean }>(
-    `/api/directory/favorites/${encodeURIComponent(employeeId)}`,
-    {
-      method: 'POST',
-    }
-  );
-};
-
-export const removeFavoriteEmployee = async (employeeId: string): Promise<void> => {
-  const response = await fetch(`/api/directory/favorites/${encodeURIComponent(employeeId)}`, {
-    method: 'DELETE',
-  });
-
-  if (!response.ok) {
-    throw new DirectoryApiError(response.status, `Request failed with status ${response.status}`);
-  }
-};

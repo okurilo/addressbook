@@ -1,8 +1,11 @@
 import { http } from '../../../../http-requests/http';
 import type { Employee, EmployeeContact } from './types';
 
-const FAVORITES_TEAM_NAME = 'избранные';
+const FAVORITES_TEAM_NAME = 'избранное';
 const FAVORITES_PAGE_SIZE = 20;
+const PEOPLE_TEAMS_PATH = '/srv/v7/people/teams';
+const CUSTOM_GROUPS_PATH = '/srv/v7/people/custom-groups';
+const UPDATE_CUSTOM_GROUP_PATH = `${CUSTOM_GROUPS_PATH}/update`;
 
 export type PeopleTeam = {
   id: string;
@@ -37,6 +40,18 @@ export type TeamMembersPage = {
   totalElements?: number;
   totalPages?: number;
   last?: boolean;
+};
+
+export type CreateCustomGroupBody = {
+  name: string;
+  persons: string[];
+};
+
+export type UpdateCustomGroupBody = {
+  name: string;
+  groupId: string;
+  personsToAdd: string[];
+  personsToDelete: string[];
 };
 
 const getTrimmedValue = (value?: string | null): string => value?.trim() ?? '';
@@ -128,8 +143,11 @@ export const normalizeTeamMembers = (response: TeamMembersPage): Employee[] => {
     .filter((employee): employee is Employee => employee !== null);
 };
 
+const fetchPeopleTeams = async (): Promise<PeopleTeam[]> =>
+  http.get<PeopleTeam[]>(PEOPLE_TEAMS_PATH);
+
 export const fetchFavoriteEmployees = async (): Promise<Employee[]> => {
-  const teams = await http.get<PeopleTeam[]>('/srv/v7/people/teams');
+  const teams = await fetchPeopleTeams();
   const favoritesTeam = findFavoritesTeam(teams);
 
   if (favoritesTeam === null) {
@@ -146,4 +164,46 @@ export const fetchFavoriteEmployees = async (): Promise<Employee[]> => {
   );
 
   return normalizeTeamMembers(response);
+};
+
+export const addFavoriteEmployee = async (employeeId: string): Promise<void> => {
+  const teams = await fetchPeopleTeams();
+  const favoritesTeam = findFavoritesTeam(teams);
+
+  if (favoritesTeam === null) {
+    const body: CreateCustomGroupBody = {
+      name: FAVORITES_TEAM_NAME,
+      persons: [employeeId],
+    };
+
+    await http.post<void>(CUSTOM_GROUPS_PATH, body);
+    return;
+  }
+
+  const body: UpdateCustomGroupBody = {
+    name: favoritesTeam.name,
+    groupId: favoritesTeam.id,
+    personsToAdd: [employeeId],
+    personsToDelete: [],
+  };
+
+  await http.post<void>(UPDATE_CUSTOM_GROUP_PATH, body);
+};
+
+export const removeFavoriteEmployee = async (employeeId: string): Promise<void> => {
+  const teams = await fetchPeopleTeams();
+  const favoritesTeam = findFavoritesTeam(teams);
+
+  if (favoritesTeam === null) {
+    return;
+  }
+
+  const body: UpdateCustomGroupBody = {
+    name: favoritesTeam.name,
+    groupId: favoritesTeam.id,
+    personsToAdd: [],
+    personsToDelete: [employeeId],
+  };
+
+  await http.post<void>(UPDATE_CUSTOM_GROUP_PATH, body);
 };
