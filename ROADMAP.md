@@ -429,7 +429,7 @@
 - [x] Сохранить исходный локальный контракт `/api/directory/employees?q={query}`.
 - [x] Добавить внешний host-адаптер для `multiSearch`.
 - [x] Передавать `query`, `page=0`, `size=20` и `category=PERSONADDRESSBOOK`.
-- [x] Не передавать `orgFilter`, пока выбранная структура равна `null`.
+- [x] Передавать `orgFilter=null`, пока структура не выбрана, и UUID после выбора структуры.
 - [x] Разобрать `data.PERSONADDRESSBOOK.data.content` без `any`.
 - [x] Нормализовать данные API в текущий контракт `Employee`.
 - [x] Добавить локальный Vite proxy для `/api-web`.
@@ -507,6 +507,7 @@
 - [x] Брать `query` из верхнего поискового инпута через URL-параметр `q`.
 - [x] Оставлять пользователя на экране кадровой структуры при вводе поискового запроса.
 - [x] Загружать сотрудников через общий `multiSearch` с введённым `query` и `orgFilter = null`.
+- [x] Явно сериализовать `orgFilter=null` в URL запроса.
 - [x] Передавать `AbortSignal` и отменять запрос при размонтировании экрана.
 - [x] Показывать общее число сотрудников из `totalElements` ответа `PERSONADDRESSBOOK`.
 - [x] Прогнать `npm run typecheck`.

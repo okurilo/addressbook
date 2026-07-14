@@ -201,9 +201,7 @@ export const getSearchData = async ({
     searchParams.append('category', category.toLocaleUpperCase('ru'));
   });
 
-  if (orgFilter !== null) {
-    searchParams.append('orgFilter', orgFilter);
-  }
+  searchParams.append('orgFilter', orgFilter ?? 'null');
 
   return http.get<MultiSearchResponse>(
     `/globalsearch/api/v3/multiSearch?query=${encodeURIComponent(query)}&${searchParams.toString()}`,
