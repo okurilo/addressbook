@@ -1,5 +1,5 @@
 import type { Employee, EmployeeSearchResponse } from './types';
-import { fetchDirectoryEmployees } from '../../../../http-requests/directorySearch';
+import { fetchDirectoryEmployees } from './search';
 
 export class DirectoryApiError extends Error {
   public readonly status: number;
@@ -27,8 +27,9 @@ export const fetchRecentEmployees = async (): Promise<Employee[]> => {
 
 export const fetchEmployees = async (
   query: string,
-  signal?: AbortSignal
-): Promise<EmployeeSearchResponse> => fetchDirectoryEmployees(query, signal);
+  signal?: AbortSignal,
+  orgFilter: string | null = null
+): Promise<EmployeeSearchResponse> => fetchDirectoryEmployees(query, signal, orgFilter);
 
 export const fetchEmployeeById = async (employeeId: string): Promise<Employee> =>
   fetchJson<Employee>(`/api/directory/employees/${encodeURIComponent(employeeId)}`);

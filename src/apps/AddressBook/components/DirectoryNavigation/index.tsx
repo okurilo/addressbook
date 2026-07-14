@@ -52,7 +52,7 @@ export const DirectoryNavigation = (): JSX.Element => {
             $active={isActive}
             aria-current={isActive ? 'page' : undefined}
             onClick={() => {
-              ignorePromise(navigate(item.href));
+              ignorePromise(navigate(item.href + location.search));
             }}
           >
             <Text

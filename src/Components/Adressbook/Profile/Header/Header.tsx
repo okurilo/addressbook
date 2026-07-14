@@ -22,8 +22,8 @@ import { ReactComponent as ShareIcon } from '../assets/share.svg';
 import { ReactComponent as StarIcon } from '../assets/star.svg';
 import { IconButton } from '../../common/IconButton';
 import { QRCodeCore } from './QRCodeCore';
-import { fetchCustomGroups as loadCustomGroups } from '../../../../http-requests/profile';
-import type { CustomGroup } from '../../../../http-requests/profile';
+import { fetchCustomGroups as loadCustomGroups } from '../../api/profile';
+import type { CustomGroup } from '../../api/profile';
 
 const PopoverContainer = styled('div')<{ $visible: boolean; $top?: boolean }>(
   ({ $visible, $top, theme }) => ({

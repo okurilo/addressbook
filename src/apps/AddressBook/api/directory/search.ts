@@ -3,8 +3,8 @@ import type {
   EmployeeContact,
   EmployeeSearchResponse,
   EmployeeStatus,
-} from '../apps/AddressBook/api/directory/types';
-import { http } from './http';
+} from './types';
+import { http } from '../../../../http-requests/http';
 
 type JsonRecord = Record<string, unknown>;
 
@@ -215,7 +215,8 @@ export const getSearchData = async ({
 
 export const fetchDirectoryEmployees = async (
   query: string,
-  signal?: AbortSignal
+  signal?: AbortSignal,
+  orgFilter: string | null = null
 ): Promise<EmployeeSearchResponse> => {
   const response = await getSearchData({
     signal,
@@ -223,7 +224,7 @@ export const fetchDirectoryEmployees = async (
     page: 0,
     size: 20,
     categories: [PERSON_CATEGORY],
-    orgFilter: null,
+    orgFilter,
   });
   const content = response.data?.PERSONADDRESSBOOK?.data?.content;
 

@@ -1,109 +1,36 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import type { RouteComponentProps } from '@reach/router';
-import styled, { useTheme } from 'styled-components';
+import { useLocation, useNavigate } from '@reach/router';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
 import { Empty } from '@pulse/ui/components/Empty';
-import {
-  fetchDepartmentChildren,
-  fetchDepartmentDetails,
-  fetchEmployeesByDepartment,
-} from '../../api/directory/departmentsClient';
-import { DirectoryApiError } from '../../api/directory/client';
-import type {
-  DepartmentDetails,
-  DepartmentNode,
-  DepartmentPath,
-} from '../../api/directory/departments';
+import { useTheme } from 'styled-components';
+import { fetchEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
 import { EmployeeTable } from '../../components/EmployeeTable';
 import { RetryState } from '../../components/RetryState';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
-import { useNavigate } from '@reach/router';
 import { getDepartmentPath, routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
+import {
+  fetchGroups,
+  getGroupPath,
+  getVisibleGroups,
+} from '../../api/directory/groups';
+import type { GroupNode } from '../../api/directory/groups';
+import {
+  Breadcrumbs,
+  BreadcrumbButton,
+  CenteredState,
+  Content,
+  Page,
+  Sidebar,
+  SidebarButton,
+} from './styled';
 
 type StructureDepartmentPageProps = RouteComponentProps & {
   departmentId?: string;
 };
-
-const Page = styled.section(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: '280px minmax(0, 1fr)',
-  gap: 32,
-  alignItems: 'start',
-}));
-
-const Sidebar = styled.aside(({ theme }) => ({
-  background: theme.tokens.current.core.background.default,
-  borderRadius: 20,
-  padding: 24,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-}));
-
-const SidebarButton = styled.button<{ $active?: boolean }>(({ theme, $active = false }) => ({
-  border: 'none',
-  background: 'transparent',
-  padding: 0,
-  textAlign: 'left',
-  cursor: 'pointer',
-  color: $active ? theme.tokens.current.core.text.primary : theme.tokens.current.core.text.secondary,
-  fontWeight: $active ? 600 : 400,
-  lineHeight: 1.45,
-}));
-
-const Content = styled.section(({ theme }) => ({
-  background: theme.tokens.current.core.background.default,
-  borderRadius: 20,
-  padding: 32,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 24,
-}));
-
-const Breadcrumbs = styled.div(({ theme }) => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: 8,
-  alignItems: 'center',
-}));
-
-const BreadcrumbItem = styled.span(({ theme }) => ({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: 8,
-}));
-
-const BreadcrumbButton = styled.button(({ theme }) => ({
-  border: 'none',
-  background: 'transparent',
-  padding: 0,
-  ...theme.typography.caption1Regular,
-  color: theme.tokens.current.core.text.secondary,
-  cursor: 'pointer',
-}));
-
-const SummaryLine = styled.div(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'baseline',
-  gap: 4,
-}));
-
-const Divider = styled.div(({ theme }) => ({
-  borderTop: `1px solid ${theme.tokens.current.core.border.gentle}`,
-}));
-
-const CenteredState = styled.div(({ theme }) => ({
-  minHeight: 280,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  background: theme.tokens.current.core.background.default,
-  borderRadius: 20,
-  padding: 32,
-}));
 
 type ViewState = 'loading' | 'success' | 'notFound' | 'error';
 
@@ -111,127 +38,60 @@ export const StructureDepartmentPage = ({
   departmentId,
 }: StructureDepartmentPageProps): JSX.Element => {
   const theme = useTheme();
+  const location = useLocation();
   const navigate = useNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
-  const [detailsCache, setDetailsCache] = useState<Record<string, DepartmentDetails>>({});
-  const [childrenCache, setChildrenCache] = useState<Record<string, DepartmentNode[]>>({});
-  const [employeesCache, setEmployeesCache] = useState<Record<string, Employee[]>>({});
-  const [viewState, setViewState] = useState<ViewState>('loading');
-  const [navItems, setNavItems] = useState<DepartmentNode[]>([]);
-  const [details, setDetails] = useState<DepartmentDetails | null>(null);
+  const query = new URLSearchParams(location.search).get('q') ?? '';
+  const [group, setGroup] = useState<GroupNode | null>(null);
+  const [navItems, setNavItems] = useState<GroupNode[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [viewState, setViewState] = useState<ViewState>('loading');
   const [retryToken, setRetryToken] = useState(0);
 
   useEffect(() => {
+    const controller = new AbortController();
     let isActive = true;
 
     if (departmentId === undefined) {
       setViewState('notFound');
-      setDetails(null);
+      setGroup(null);
       setEmployees([]);
       setNavItems([]);
-      return undefined;
+      return () => controller.abort();
     }
-
-    const ensureDetails = async (targetDepartmentId: string): Promise<DepartmentDetails> => {
-      const cachedDetails = detailsCache[targetDepartmentId];
-
-      if (cachedDetails !== undefined) {
-        return cachedDetails;
-      }
-
-      const nextDetails = await fetchDepartmentDetails(targetDepartmentId);
-
-      if (isActive) {
-        setDetailsCache((currentValue) => ({
-          ...currentValue,
-          [targetDepartmentId]: nextDetails,
-        }));
-      }
-
-      return nextDetails;
-    };
-
-    const ensureChildren = async (targetDepartmentId: string): Promise<DepartmentNode[]> => {
-      const cachedChildren = childrenCache[targetDepartmentId];
-
-      if (cachedChildren !== undefined) {
-        return cachedChildren;
-      }
-
-      const nextChildren = await fetchDepartmentChildren(targetDepartmentId);
-
-      if (isActive) {
-        setChildrenCache((currentValue) => ({
-          ...currentValue,
-          [targetDepartmentId]: nextChildren,
-        }));
-      }
-
-      return nextChildren;
-    };
-
-    const ensureEmployees = async (targetDepartmentId: string): Promise<Employee[]> => {
-      const cachedEmployees = employeesCache[targetDepartmentId];
-
-      if (cachedEmployees !== undefined) {
-        return cachedEmployees;
-      }
-
-      const nextEmployees = await fetchEmployeesByDepartment(targetDepartmentId);
-
-      if (isActive) {
-        setEmployeesCache((currentValue) => ({
-          ...currentValue,
-          [targetDepartmentId]: nextEmployees,
-        }));
-      }
-
-      return nextEmployees;
-    };
 
     const loadDepartment = async (): Promise<void> => {
       setViewState('loading');
 
       try {
-        const nextDetails = await ensureDetails(departmentId);
-        const [nextChildren, nextEmployees] = await Promise.all([
-          ensureChildren(departmentId),
-          ensureEmployees(departmentId),
-        ]);
-
-        const nextNavItems =
-          nextChildren.length > 0
-            ? nextChildren
-            : nextDetails.parentId === null
-            ? []
-            : (await ensureChildren(nextDetails.parentId)).filter(
-                (item) => item.id !== nextDetails.id
-              );
+        const isGlobalSearch = query.trim() !== '';
+        const nextGroup = await fetchGroups(
+          isGlobalSearch ? undefined : departmentId,
+          controller.signal
+        );
+        const nextEmployees = (
+          await fetchEmployees(
+            isGlobalSearch ? query : '',
+            controller.signal,
+            isGlobalSearch ? null : departmentId
+          )
+        ).items;
 
         if (!isActive) {
           return;
         }
 
-        setDetails(nextDetails);
+        setGroup(nextGroup);
+        setNavItems(isGlobalSearch ? getVisibleGroups(nextGroup) : nextGroup.children);
         setEmployees(nextEmployees);
-        setNavItems(nextNavItems);
         setViewState('success');
-      } catch (error: unknown) {
-        if (!isActive) {
-          return;
+      } catch {
+        if (isActive && !controller.signal.aborted) {
+          setGroup(null);
+          setEmployees([]);
+          setNavItems([]);
+          setViewState('error');
         }
-
-        setDetails(null);
-        setEmployees([]);
-        setNavItems([]);
-
-        if (error instanceof DirectoryApiError && error.status === 404) {
-          setViewState('notFound');
-          return;
-        }
-
-        setViewState('error');
       }
     };
 
@@ -239,13 +99,12 @@ export const StructureDepartmentPage = ({
 
     return () => {
       isActive = false;
+      controller.abort();
     };
-  }, [childrenCache, departmentId, detailsCache, employeesCache, retryToken]);
+  }, [departmentId, query, retryToken]);
 
-  const openDepartment = (targetDepartmentId: string): void => {
-    ignorePromise(
-      navigate(getDepartmentPath(targetDepartmentId))
-    );
+  const openGroup = (targetGroupId: string): void => {
+    ignorePromise(navigate(getDepartmentPath(targetGroupId)));
   };
 
   if (viewState === 'loading') {
@@ -266,11 +125,11 @@ export const StructureDepartmentPage = ({
     );
   }
 
-  if (viewState === 'error' || details === null) {
+  if (viewState === 'error' || group === null) {
     return (
       <RetryState
         title="Не удалось загрузить подразделение"
-        description="Попробуйте переключить mock-сценарий или открыть подразделение позже."
+        description="Попробуйте открыть подразделение позже."
         onRetry={() => {
           setRetryToken((currentValue) => currentValue + 1);
         }}
@@ -278,7 +137,9 @@ export const StructureDepartmentPage = ({
     );
   }
 
-  const currentPath: DepartmentPath[] = details.path;
+  const isGlobalSearch = query.trim() !== '';
+  const groupPath = isGlobalSearch ? [] : getGroupPath(group);
+  const parentGroup = groupPath.length > 1 ? groupPath[groupPath.length - 2] : null;
 
   return (
     <Page>
@@ -286,98 +147,72 @@ export const StructureDepartmentPage = ({
         <SidebarButton
           type="button"
           onClick={() => {
-            if (details.parentId === null) {
-              ignorePromise(navigate(routePaths.structure));
+            if (isGlobalSearch || parentGroup === null) {
+              ignorePromise(navigate(routePaths.structure + location.search));
               return;
             }
 
-            openDepartment(details.parentId);
+            openGroup(parentGroup.id);
           }}
         >
           ↑ Наверх
         </SidebarButton>
-        <SidebarButton type="button" $active>
-          {details.name}
-        </SidebarButton>
+        {!isGlobalSearch ? (
+          <SidebarButton type="button" $active>
+            {group.name}
+          </SidebarButton>
+        ) : null}
         {navItems.map((item) => (
-          <SidebarButton
-            key={item.id}
-            type="button"
-            $active={item.id === details.id}
-            onClick={() => {
-              if (item.id === details.id) {
-                return;
-              }
-
-              openDepartment(item.id);
-            }}
-          >
+          <SidebarButton key={item.id} type="button" onClick={() => openGroup(item.id)}>
             {item.name}
           </SidebarButton>
         ))}
       </Sidebar>
 
       <Content>
-        <Breadcrumbs>
-          <BreadcrumbButton
-            type="button"
-            onClick={() => {
-              ignorePromise(navigate(routePaths.structure));
-            }}
-          >
-            Структура
-          </BreadcrumbButton>
-          {currentPath.map((item, index) => (
-            <BreadcrumbItem key={item.id}>
-              <Text variant="caption1Regular" color={theme.tokens.current.core.text.tertiary}>
-                /
-              </Text>
-              {index === currentPath.length - 1 ? (
-                <Text variant="caption1Semibold" color={theme.tokens.current.core.text.primary}>
-                  {item.name}
+        {!isGlobalSearch ? (
+          <Breadcrumbs>
+            <BreadcrumbButton
+              type="button"
+              onClick={() => {
+                ignorePromise(navigate(routePaths.structure));
+              }}
+            >
+              Структура
+            </BreadcrumbButton>
+            {groupPath.map((item, index) => (
+              <Fragment key={item.id}>
+                <Text variant="caption1Regular" color={theme.tokens.current.core.text.tertiary}>
+                  /
                 </Text>
-              ) : (
-                <BreadcrumbButton
-                  type="button"
-                  onClick={() => {
-                    openDepartment(item.id);
-                  }}
-                >
-                  {item.name}
-                </BreadcrumbButton>
-              )}
-            </BreadcrumbItem>
-          ))}
-        </Breadcrumbs>
+                {index === groupPath.length - 1 ? (
+                  <Text variant="caption1Semibold" color={theme.tokens.current.core.text.primary}>
+                    {item.name}
+                  </Text>
+                ) : (
+                  <BreadcrumbButton type="button" onClick={() => openGroup(item.id)}>
+                    {item.name}
+                  </BreadcrumbButton>
+                )}
+              </Fragment>
+            ))}
+          </Breadcrumbs>
+        ) : null}
 
-        <Text variant="h2Semibold">{details.name}</Text>
-
-        <SummaryLine>
-          <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
-            В структуре
-          </Text>
-          <Text variant="body1Semibold">{details.employeeCount}</Text>
-          <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
-            сотрудников
-          </Text>
-        </SummaryLine>
-
-        <Divider />
-
-        <div>
+        <Text variant="h2Semibold">
+          {isGlobalSearch ? 'результаты поиска' : group.name}
+        </Text>
+        {isGlobalSearch ? (
           <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
-            Номер организационной единицы
+            по запросу: {query}
           </Text>
-          <Text variant="body1Semibold">{details.orgUnitNumber}</Text>
-        </div>
-
-        <Divider />
+        ) : null}
 
         {employees.length === 0 ? (
           <Empty
             type="noResults"
             title="Сотрудники не найдены"
-            description="Для выбранного подразделения в текущем mock-наборе сотрудники отсутствуют."
+            description="Попробуйте изменить поисковый запрос или выбрать другое подразделение."
           />
         ) : (
           <EmployeeTable

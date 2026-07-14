@@ -1,4 +1,5 @@
 import type { RouteComponentProps } from '@reach/router';
+import { useLocation } from '@reach/router';
 import { useEffect, useState } from 'react';
 import { Button } from '@pulse/ui/components/Button';
 import { Loader } from '@pulse/ui/components/Loader';
@@ -32,8 +33,21 @@ type EmployeePageProps = RouteComponentProps & {
   employeeId?: string;
 };
 
+const getEmployeeFromLocationState = (state: unknown): Employee | null => {
+  if (typeof state !== 'object' || state === null || !('employee' in state)) {
+    return null;
+  }
+
+  const employee = state.employee;
+  return typeof employee === 'object' && employee !== null && 'id' in employee
+    ? employee as Employee
+    : null;
+};
+
 export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => {
   const theme = useTheme();
+  const location = useLocation();
+  const locationEmployee = getEmployeeFromLocationState(location.state);
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [viewState, setViewState] = useState<'loading' | 'success' | 'notFound' | 'error'>(
@@ -46,6 +60,12 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
 
     if (employeeId === undefined) {
       setViewState('notFound');
+      return undefined;
+    }
+
+    if (locationEmployee?.id === employeeId) {
+      setEmployee(locationEmployee);
+      setViewState('success');
       return undefined;
     }
 
@@ -82,7 +102,7 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
     return () => {
       isActive = false;
     };
-  }, [employeeId, retryToken]);
+  }, [employeeId, locationEmployee, retryToken]);
 
   if (viewState === 'loading') {
     return (

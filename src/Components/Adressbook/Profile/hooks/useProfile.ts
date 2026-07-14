@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchProfileMainInfo } from '../../../../http-requests/profile';
+import { fetchProfileMainInfo } from '../../api/profile';
 import type { ProfileMainInfoV1Data } from './types';
 
 export const useProfile = (pid?: string) => {

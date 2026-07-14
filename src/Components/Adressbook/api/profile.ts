@@ -1,4 +1,4 @@
-import { http, profileHttp } from './http';
+import { http, profileHttp } from '../../../http-requests/http';
 
 export type ProfileOrgPathItem = {
   title: string;

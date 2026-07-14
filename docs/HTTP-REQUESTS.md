@@ -56,7 +56,7 @@ export const loadData = async (signal?: AbortSignal): Promise<Response> =>
 
 ## Поиск сотрудников
 
-`src/http-requests/directorySearch.ts` формирует запрос через `http.get`:
+`src/apps/AddressBook/api/directory/search.ts` формирует запрос через `http.get`:
 
 ```text
 /api-web/globalsearch/api/v3/multiSearch
@@ -80,3 +80,16 @@ return http.get<MultiSearchResponse>(
   }
 );
 ```
+
+## Кадровая структура
+
+Структура загружается через общий `http` по пути `posts/api/v1/addressbook/groups`:
+
+- корневой запрос выполняется без query-параметра `id`;
+- открытие подразделения добавляет `id=${encodeURIComponent(group.id)}`;
+- в `id` разрешено передавать только строковый UUID, но не объект группы;
+- один явный переход запускает не более одного запроса `groups`, а устаревший запрос отменяется через `AbortSignal`.
+
+Ответ имеет форму `{ data: GroupNode; success: boolean }`. Узел содержит `id`, `type`, `name`, `hasChild`, `children` и опциональный `parentTree`.
+
+При пустом текстовом запросе выбранный `group.id` передаётся в `multiSearch` как `orgFilter`. Непустой поиск людей выполняется по всей компании без `orgFilter`.

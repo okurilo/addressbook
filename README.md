@@ -27,6 +27,7 @@ npm run build
 - Собственный backend не добавляется; реальные frontend API подключаются через общий `src/http-requests/http.ts`.
 - Изменения вносятся только в рамках активной итерации.
 - После каждой итерации обязательны `npm run typecheck` и `npm run build`.
+- Единый источник подтверждённой бизнес-логики и обязательных сценариев — [`docs/BUSINESS-RULES.md`](docs/BUSINESS-RULES.md).
 - Полный контракт host theme и доступные Pulse tokens описаны в [`docs/THEME.md`](docs/THEME.md).
 - Проверенные контракты компонентов Pulse UI, aliases и исключения описаны в [`docs/PULSE-UI.md`](docs/PULSE-UI.md).
 - Полная типизация Pulse UI, файловый индекс и инструкция для точечного чтения LLM находятся в [`docs/pulse-ui-types/README.md`](docs/pulse-ui-types/README.md).
