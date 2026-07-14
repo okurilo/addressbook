@@ -1,13 +1,9 @@
 import { getAvatarUrl } from '@hrplatform/utils';
 import { Avatar } from '@pulse/ui/components/Avatar';
 import { useMemo } from 'react';
-import styled, { useTheme } from 'styled-components';
-
-const StatusIcon = styled.img({
-  display: 'block',
-  width: 20,
-  height: 20,
-});
+import { useTheme } from 'styled-components';
+import { getIconUrl } from '../../../../utils';
+import { StatusIcon } from '../../../SearchResults/PersonCard/styled';
 
 export const ProfileImage = ({ absence, photo, size, pid, initials }) => {
   const { mode } = useTheme();
@@ -22,7 +18,7 @@ export const ProfileImage = ({ absence, photo, size, pid, initials }) => {
         statusIconSrc && (
           <StatusIcon
             data-testid={`avatar-status-icon-${absence?.badge}`}
-            src={statusIconSrc}
+            src={getIconUrl(statusIconSrc)}
           />
         )
       }

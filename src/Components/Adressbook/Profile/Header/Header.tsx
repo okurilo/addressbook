@@ -21,7 +21,17 @@ import { ReactComponent as ShareIcon } from '../assets/share.svg';
 import { ReactComponent as StarIcon } from '../assets/star.svg';
 import { IconButton } from '../../common/IconButton';
 
-export const Header = ({ name, position, employeeNumber, photo, initials, absence, pid }) => {
+export const Header = ({
+  name,
+  position,
+  employeeNumber,
+  photo,
+  initials,
+  absence,
+  pid,
+  isFavorite = false,
+  onToggleFavorite,
+}) => {
   const { tokens } = useTheme();
   return (
     <MainContainerStyled>
@@ -57,7 +67,14 @@ export const Header = ({ name, position, employeeNumber, photo, initials, absenc
         <IconButton color={tokens.current.colors.grey.solid['60']}>
           <ShareIcon />
         </IconButton>
-        <IconButton color={tokens.current.colors.grey.solid['60']}>
+        <IconButton
+          color={
+            isFavorite
+              ? tokens.current.core.accent.primary
+              : tokens.current.colors.grey.solid['60']
+          }
+          onClick={() => onToggleFavorite?.(pid)}
+        >
           <StarIcon />
         </IconButton>
       </ButtonsSectionStyled>

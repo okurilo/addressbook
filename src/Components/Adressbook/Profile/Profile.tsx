@@ -8,7 +8,7 @@ import { Content } from './Content';
 import { useProfile } from './hooks/useProfile';
 
 // сделать отдельным виджетом
-export const Profile = ({ person, pid }) => {
+export const Profile = ({ person, pid, isFavorite = false, onToggleFavorite }) => {
   const profile = useProfile(pid);
 
   const [activeTab, setActiveTab] = useState(TABS[0].key);
@@ -23,10 +23,11 @@ export const Profile = ({ person, pid }) => {
         absence={person.absence}
         pid={pid}
         initials={person.initials}
+        isFavorite={isFavorite}
+        onToggleFavorite={onToggleFavorite}
       />
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <Content activeTab={activeTab} person={person} pid={pid} profile={profile} />
     </MainContainerStyled>
   );
 };
-

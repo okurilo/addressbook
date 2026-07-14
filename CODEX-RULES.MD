@@ -87,8 +87,7 @@
 - Не создавать параллельный fetch-клиент и не перехватывать `window.fetch` для реального API.
 - Сохранять системные заголовки `HRP-Device-Type` и `X-HRP-Device-Type`, которые задаёт общий запросник.
 - Передавать `AbortSignal` в долгоживущие поисковые запросы и отменять устаревший запрос при смене query.
-- Локальный fetch-mock разрешён для PoC endpoints `/api/*` и точечно для `/api-web/globalsearch/api/v3/multiSearch`, чтобы сценарии `success/loading/empty/error` работали без внешнего стенда; остальные `/api-web/*` не перехватывать.
-- Дополнительно разрешён точечный mock `/api-mobile/smart-profile/web/widgets/data`, необходимый профилю внутри `src/Components/Adressbook/**`; остальные `/api-mobile/*` не перехватывать.
+- Существующий PoC fetch-mock обслуживает только исторические локальные endpoints `/api/*`; реальные `/api-web/*` и `/api-mobile/*` внутри переносимых папок не перехватывать.
 - Контракт запросника и текущая интеграция поиска описаны в `docs/HTTP-REQUESTS.md`.
 
 ## Правила Pulse UI

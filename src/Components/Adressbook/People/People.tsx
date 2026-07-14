@@ -11,12 +11,16 @@ type PeopleProps = {
   people: AdressbookPerson[];
   isLoading?: boolean;
   initialExpandedPersonId?: string | null;
+  favoritePersonIds?: string[];
+  onToggleFavorite?: (personId: string) => void;
 };
 
 export const People: FC<PeopleProps> = ({
   people: sourcePeople,
   isLoading = false,
   initialExpandedPersonId,
+  favoritePersonIds = [],
+  onToggleFavorite,
 }) => {
   const { people } = useGetPeople(sourcePeople, isLoading);
   const [expandedPersonId, setExpandedPersonId] = useState<string | null | undefined>(
@@ -36,7 +40,14 @@ export const People: FC<PeopleProps> = ({
           columns={columns}
           data={people || []}
           getRowKey={(u) => u.pid}
-          renderExpanded={(u) => <Profile person={u._profile} pid={u.pid} />}
+          renderExpanded={(u) => (
+            <Profile
+              person={u._profile}
+              pid={u.pid}
+              isFavorite={favoritePersonIds.includes(u.pid)}
+              onToggleFavorite={onToggleFavorite}
+            />
+          )}
           expandedRowKey={expandedPersonId}
           onRowClick={(_person, personId) => {
             setExpandedPersonId((currentPersonId) =>

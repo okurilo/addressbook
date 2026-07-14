@@ -12,6 +12,8 @@
 
 Токены находятся в `theme.tokens.current.core.*`. Уровень `core` обязателен; сплющённых групп непосредственно в `current` нет.
 
+Локальная песочница также повторяет исторические поля, которые уже предоставляет целевое окружение компоненту `Adressbook`: `theme.mode`, `tokens.current.colors.grey.solid.*` и `tokens.current.core.link.default`. Это только host-mock целевого контракта; дополнительного `ThemeProvider` внутри компонента нет.
+
 - `core.background.default`, `core.background.field`
 - `core.accent.primary`, `core.accent.secondary`, `core.accent.tertiary`, `core.accent.base`
 - `core.text.primary`, `core.text.secondary`, `core.text.tertiary`, `core.text.onColor`, `core.text.placeholder`, `core.text.error`
@@ -99,6 +101,7 @@ const theme = useTheme();
 - `mediaQueries.min*`, `mediaQueries.max*`, `mediaQueries.only*` для ширин 320–1920
 - `radii` — локально типизированы ключи `sm`, `md`, `lg`, `pill`
 - `screenSize`
+- `mode: 'light' | 'dark'`
 - `space: number[]` — deprecated в Pulse, не использовать как основу нового layout-кода
 - `zIndices.modal`, `tooltip`, `actionSheet`, `popover`, `pushNotifications`
 
