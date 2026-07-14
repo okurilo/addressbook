@@ -45,6 +45,12 @@ const Status = styled.span({
   bottom: 0,
 });
 
+const Image = styled.img({
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+});
+
 export type AvatarProps = {
   $type?: AvatarType;
   $icon?: ReactNode | string;
@@ -58,19 +64,29 @@ export type AvatarProps = {
   $fallbackType?: Omit<AvatarType, 'default'>;
 };
 
-export const Avatar = ({
-  $type = 'default',
-  $icon,
-  $size = 'l',
-  $shape = 'circle',
-  $text,
-  $status,
-}: AvatarProps): JSX.Element => {
-  const content = $type === 'initials' ? $text : $icon ?? $text;
+type ImportedRuntimeAvatarProps = AvatarProps & {
+  $src?: unknown;
+  $initials?: unknown;
+};
+
+export const Avatar = (props: AvatarProps): JSX.Element => {
+  const runtimeProps = props as ImportedRuntimeAvatarProps;
+  const {
+    $type = 'default',
+    $icon,
+    $size = 'l',
+    $shape = 'circle',
+    $text,
+    $status,
+  } = props;
+  const legacyInitials =
+    typeof runtimeProps.$initials === 'string' ? runtimeProps.$initials : undefined;
+  const content = $type === 'initials' ? $text : $icon ?? $text ?? legacyInitials;
+  const source = typeof runtimeProps.$src === 'string' ? runtimeProps.$src : undefined;
 
   return (
     <Circle $avatarSize={$size} $avatarShape={$shape}>
-      {content}
+      {source === undefined ? content : <Image src={source} alt="" />}
       {$status === undefined ? null : <Status>{$status}</Status>}
     </Circle>
   );

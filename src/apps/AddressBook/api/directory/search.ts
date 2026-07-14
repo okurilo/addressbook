@@ -35,7 +35,7 @@ type MultiSearchPosition = {
   shortName?: string | null;
 };
 
-type MultiSearchPerson = {
+export type MultiSearchPerson = {
   company?: string | null;
   jbadgeabsencevacation?: unknown;
   jbasic?: {
@@ -49,7 +49,7 @@ type MultiSearchPerson = {
   jcontactsinterofficetel?: MultiSearchContact | null;
   jcontactsmobile?: MultiSearchContact | null;
   jposition?: {
-    position?: MultiSearchPosition[] | null;
+    position?: Array<MultiSearchPosition & { funcBlock?: string | null }> | null;
   } | null;
   junit?: {
     unit?: MultiSearchUnit[] | null;
@@ -63,6 +63,13 @@ type MultiSearchPerson = {
   pcontactsexternalemail?: MultiSearchContact | null;
   pcontactsmobile?: MultiSearchContact | null;
   personUuid?: string | null;
+  pbasicphoto?: { url?: string | null } | null;
+  absence?: {
+    badge?: string | null;
+    period?: string | null;
+    icon_dark?: string | null;
+    icon_light?: string | null;
+  } | null;
 };
 
 type MultiSearchCategoryResponse = {

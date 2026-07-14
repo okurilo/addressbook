@@ -24,6 +24,7 @@
 | Import | Статус | Подтверждённый контракт |
 | --- | --- | --- |
 | `components/Text` | DS contract | обязательный `variant`, `ColorProps`, `SpaceProps` |
+| `components/Tabs` | DS contract | `$type`, `selectedIndex`, `onTabChange`; `Tab` использует `$isActive` |
 | `components/Avatar` | DS contract | `$type`, `$text`, `$size`, `$shape` и остальные props из `AvatarProps` |
 | `components/Button` | DS contract | `$type`, `$size`, `$state`, `$containsOnlyIcon`, `$fullWidth`, `$isLoading` |
 | `components/Loader` | DS contract | `isOnColor`, `size`, `wrapped`, `children` |
@@ -113,6 +114,10 @@ interface LoaderProps {
 
 В приложении используется только `Layout.Content` без дополнительных props. Явные типы выгрузки дополнительно описывают `Layout.Column.cols` и `Layout.Provider.offset`; не моделировать их локально до фактического использования.
 
+### Tabs
+
+`Tabs.$type` принимает `primary`, `secondary`, `tertiary` или `description`. Вертикальный режим доступен только для `tertiary`. Вложенный `Tab` использует `$isActive`, `$type`, `$state` и `onClick`. Локальная реализация повторяет этот публичный контракт и предоставляет runtime-значение `primary`, когда неизменяемый импортированный компонент не передаёт `$type`.
+
 ## Empty
 
 Выгрузка содержит `src/components/Empty/types.ts`. Для пустых состояний используется только импорт:
@@ -161,9 +166,8 @@ interface BaseProps {
 
 ## Неактивные компоненты
 
-Исторические неиспользуемые stubs `IconButton`, `Skeleton`, `Tabs`, `Spinner` и `LayoutGrid` удалены из локальной обвязки:
+Исторические неиспользуемые stubs `IconButton`, `Skeleton`, `Spinner` и `LayoutGrid` удалены из локальной обвязки:
 
-- старый `Tabs` имел API `items/activeKey/onChange`, которого нет в DS;
 - плоский `IconButton` не соответствовал подтверждённому `components/Button/IconButton`;
 - `Skeleton` не моделировал styled-system layout/space/color props;
 - `Spinner` отсутствует в предоставленной выгрузке;
@@ -179,6 +183,7 @@ interface BaseProps {
 - union типов, размеров и состояний `Button`;
 - props `Loader` и `Input`;
 - обязательность `Text.variant` и отсутствие `tone/weight`;
+- union `$type` у `Tabs` и `$isActive` у `Tab`;
 - наличие `Layout.Content`;
 - union `Empty.type`, обязательность `description` и отсутствие prop `illustration`.
 

@@ -4,12 +4,12 @@ import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
 import { Empty } from '@pulse/ui/components/Empty';
-import { fetchEmployees } from '../../api/directory/client';
-import type { Employee } from '../../api/directory/types';
+import { getSearchData } from '../../api/directory/search';
+import type { MultiSearchPerson } from '../../api/directory/search';
 import { getSearchHistory, selectSearchHistory } from '../../api/history/history';
 import { SearchContextEnum } from '../../api/history/types';
 import type { SearchHistoryItem, SearchHistoryPath } from '../../api/history/types';
-import { EmployeeTable } from '../../components/EmployeeTable';
+import { ImportedAdressbook } from '../../components/ImportedAdressbook';
 import { RetryState } from '../../components/RetryState';
 import { useDebouncedValue } from '../../components/useDebouncedValue';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
@@ -48,7 +48,7 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
   const personQuery = searchParams.get('personQuery') ?? '';
   const effectiveQuery = selectedPersonId === null ? query : personQuery;
   const debouncedQuery = useDebouncedValue(effectiveQuery, 280);
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [people, setPeople] = useState<MultiSearchPerson[]>([]);
   const [historyItems, setHistoryItems] = useState<SearchHistoryItem[]>([]);
   const [viewState, setViewState] = useState<ViewState>('idle');
   const [retryToken, setRetryToken] = useState(0);
@@ -68,38 +68,51 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
             return;
           }
 
-          setEmployees([]);
+          setPeople([]);
           setHistoryItems(nextHistoryItems);
           setViewState(nextHistoryItems.length === 0 ? 'empty' : 'success');
           return;
         }
 
         if (debouncedQuery.trim() === '') {
-          setEmployees([]);
+          setPeople([]);
           setHistoryItems([]);
           setViewState('empty');
           return;
         }
 
-        const foundEmployees = (await fetchEmployees(debouncedQuery, controller.signal)).items;
-        const nextEmployees =
+        const response = await getSearchData({
+          signal: controller.signal,
+          query: debouncedQuery,
+          page: 0,
+          size: 20,
+          categories: ['PERSONADDRESSBOOK'],
+          orgFilter: null,
+        });
+        const foundPeople = response.PERSONADDRESSBOOK?.data?.content;
+
+        if (!Array.isArray(foundPeople)) {
+          throw new Error('MultiSearch response does not contain PERSONADDRESSBOOK content');
+        }
+
+        const nextPeople =
           selectedPersonId === null
-            ? foundEmployees
-            : foundEmployees.filter((employee) => employee.id === selectedPersonId);
+            ? foundPeople
+            : foundPeople.filter((person) => person.personUuid === selectedPersonId);
 
         if (!isActive) {
           return;
         }
 
-        setEmployees(nextEmployees);
+        setPeople(nextPeople);
         setHistoryItems([]);
-        setViewState(nextEmployees.length === 0 ? 'empty' : 'success');
+        setViewState(nextPeople.length === 0 ? 'empty' : 'success');
       } catch {
         if (!isActive) {
           return;
         }
 
-        setEmployees([]);
+        setPeople([]);
         setHistoryItems([]);
         setViewState('error');
       }
@@ -189,12 +202,12 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
           </HistoryList>
         ) : null}
         {viewState === 'success' && !isHistoryMode ? (
-          <EmployeeTable
-            employees={employees}
+          <ImportedAdressbook
+            people={people}
             initialExpandedEmployeeId={selectedPersonId}
-            favoriteIds={favoriteIds}
-            onToggleFavorite={(employeeId) => {
-              ignorePromise(toggleFavorite(employeeId));
+            favoritePersonIds={favoriteIds}
+            onToggleFavorite={(personId) => {
+              ignorePromise(toggleFavorite(personId));
             }}
           />
         ) : null}

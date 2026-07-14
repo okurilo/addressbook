@@ -11,6 +11,7 @@ import { Input } from '@pulse/ui/components/Input';
 import { Content as LayoutContent } from '@pulse/ui/components/Layout';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
+import { Tab, Tabs } from '@pulse/ui/components/Tabs';
 import type { HostTheme, TypographyVariant } from './theme';
 
 type Equal<Left, Right> =
@@ -79,6 +80,13 @@ type _TextIncludesEveryThemeVariant = Assert<
 >;
 type _TextHasNoTone = Assert<Equal<'tone' extends keyof TextProps ? true : false, false>>;
 type _TextHasNoWeight = Assert<Equal<'weight' extends keyof TextProps ? true : false, false>>;
+
+type TabsProps = ComponentProps<typeof Tabs>;
+type _TabsType = Assert<
+  Equal<TabsProps['$type'], 'primary' | 'secondary' | 'tertiary' | 'description'>
+>;
+type TabProps = ComponentProps<typeof Tab>;
+type _TabActive = Assert<Equal<TabProps['$isActive'], boolean | undefined>>;
 
 type LayoutContentProps = ComponentProps<typeof LayoutContent>;
 type _LayoutAcceptsChildren = Assert<ReactNode extends LayoutContentProps['children'] ? true : false>;
