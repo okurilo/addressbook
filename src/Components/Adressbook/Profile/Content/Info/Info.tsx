@@ -1,9 +1,8 @@
-// TODO(addressbook-host): типизировать props Info после стабилизации Profile API.
-// @ts-nocheck
 import { useTheme } from 'styled-components';
 import { MainContainerStyled } from '../../../People/styled';
 import { Body1Regular, Body2Regular } from '../../../common/typography';
 import { RowStyled } from './styled';
+import type { ProfileViewData } from '../../hooks/types';
 
 const MONTHS_RU = [
   'января',
@@ -20,7 +19,11 @@ const MONTHS_RU = [
   'декабря',
 ];
 
-export const Info = ({ profile }) => {
+type InfoProps = {
+  profile: ProfileViewData;
+};
+
+export const Info = ({ profile }: InfoProps): JSX.Element => {
   const theme = useTheme();
   const { birthDate } = profile;
 

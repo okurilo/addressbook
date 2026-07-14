@@ -1,17 +1,21 @@
-// TODO(addressbook-host): типизировать props Breadcrumbs после стабилизации Profile API.
-// @ts-nocheck
 import { useTheme } from 'styled-components';
 import { SkeletonRect } from '@pulse/ui/components/Skeleton';
 import { MainContainerStyled } from './styled';
 import { Body1Regular } from '../../common/typography';
+import type { ProfileViewData } from '../hooks/types';
 
-export const Breadcrumbs = ({ profile, structureType }) => {
+type BreadcrumbsProps = {
+  profile: ProfileViewData;
+  structureType: 'agile' | 'linear';
+};
+
+export const Breadcrumbs = ({ profile, structureType }: BreadcrumbsProps): JSX.Element => {
   const theme = useTheme();
   const { agile, linear, isLoading } = profile;
 
   const isLinear = structureType === 'linear';
   const items = isLinear ? linear?.orgPath || [] : agile?.orgPath || [];
-  const position = isLinear ? (linear?.position as string) : (agile?.position as string);
+  const position = isLinear ? linear?.position : agile?.position;
 
   return (
     <MainContainerStyled>

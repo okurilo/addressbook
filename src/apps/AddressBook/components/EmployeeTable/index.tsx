@@ -1,8 +1,6 @@
 import type { Employee } from '../../api/directory/types';
-import { Table } from '../../../../Components/Adressbook/common/Table';
-import { useGetColumns } from '../../../../Components/Adressbook/People/hooks/useGetColumns';
-import { createPersonRows } from '../../../../Components/Adressbook/People/types';
-import { Profile } from '../../../../Components/Adressbook/Profile/Profile';
+import { AdressBook } from '../../../../Components/Adressbook';
+import type { AdressbookPerson } from '../../../../Components/Adressbook';
 
 type EmployeeTableProps = {
   employees: Employee[];
@@ -15,15 +13,34 @@ export const EmployeeTable = ({
   favoriteIds,
   onToggleFavorite,
 }: EmployeeTableProps): JSX.Element => {
-  const people = createPersonRows(employees, favoriteIds);
-  const columns = useGetColumns(onToggleFavorite);
+  const people: AdressbookPerson[] = employees.map((employee) => {
+    const nameParts = employee.fullName.trim().split(/\s+/u);
+
+    return {
+      personUuid: employee.id,
+      pbasic: {
+        fullName: employee.fullName,
+        firstName: nameParts[1] ?? nameParts[0],
+        lastName: nameParts[0],
+      },
+      jbasic: { employeeId: employee.employeeNumber },
+      jposition: {
+        position: [{ fullName: employee.position, funcBlock: employee.departmentName }],
+      },
+      junit: { unit: [{ balanceUnitName: employee.shortStructure }] },
+      jcontactsinterofficetel:
+        employee.phone === null ? undefined : { value: employee.phone },
+      jcontactsmobile:
+        employee.mobilePhone === null ? undefined : { value: employee.mobilePhone },
+      jcontactsinterofficeemail: employee.email === '' ? undefined : { value: employee.email },
+    };
+  });
 
   return (
-    <Table
-      columns={columns}
-      data={people}
-      getRowKey={(person) => person.pid}
-      renderExpanded={(person) => <Profile person={person._profile} pid={person.pid} />}
+    <AdressBook
+      people={people}
+      favoritePersonIds={favoriteIds}
+      onToggleFavorite={onToggleFavorite}
     />
   );
 };

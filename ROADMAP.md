@@ -563,3 +563,17 @@
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.
 - [ ] Проверить реальные ответы в целевом host-окружении.
+
+### Итерация 32. Бережное восстановление таблицы коллеги
+
+- [x] Принять переданный снимок из 69 файлов как источник истины для `src/Components/Adressbook/**`.
+- [x] Вернуть `AdressBook`, `People`, `useGetPeople`, `utils`, barrel-файл и styled-файл без удаления остальных исходников.
+- [x] Вернуть физические SVG-ассеты Profile и сохранить QR-модуль.
+- [x] Перевести `EmployeeTable` на верхнеуровневый `AdressBook` через адаптер `Employee → AdressbookPerson`.
+- [x] Удалить автоматическую установку fetch-mock из поставляемого `AddressBook`.
+- [x] Оставить включение моков только в host-обвязке по `VITE_ADDRESSBOOK_USE_MOCKS=true`.
+- [x] Устранить AddressBook-specific импорты `Settings/constants` за границами двух поставляемых каталогов.
+- [x] Зафиксировать самодостаточную границу поставки и запрет возврата с реальных API на моки.
+- [x] Сверить `ModalNew` с выгрузкой Pulse UI и убрать `@ts-nocheck` из всего Profile.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.

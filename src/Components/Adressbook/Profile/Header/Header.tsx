@@ -1,5 +1,3 @@
-// TODO(addressbook-host): типизировать props Header и заменить временную передачу ref в IconButton.
-// @ts-nocheck
 import styled, { useTheme } from 'styled-components';
 import { Content, Text } from '@pulse/ui/components/Snackbar';
 import { Success } from '@pulse/ui/components/Snackbar/icons';
@@ -24,6 +22,17 @@ import { IconButton } from '../../common/IconButton';
 import { QRCodeCore } from './QRCodeCore';
 import { fetchCustomGroups as loadCustomGroups } from '../../api/profile';
 import type { CustomGroup } from '../../api/profile';
+import type { AdressbookAbsence } from '../../types';
+
+type HeaderProps = {
+  name: string;
+  position: string;
+  employeeNumber: string;
+  photo: string;
+  initials: string;
+  absence?: AdressbookAbsence;
+  pid: string;
+};
 
 const PopoverContainer = styled('div')<{ $visible: boolean; $top?: boolean }>(
   ({ $visible, $top, theme }) => ({
@@ -53,7 +62,15 @@ const NoGroups = styled('div')(({ theme }) => ({
   color: theme.tokens.current.colors.grey.solid['70'],
 }));
 
-export const Header = ({ name, position, employeeNumber, photo, initials, absence, pid }) => {
+export const Header = ({
+  name,
+  position,
+  employeeNumber,
+  photo,
+  initials,
+  absence,
+  pid,
+}: HeaderProps): JSX.Element => {
   const { tokens } = useTheme();
   const [isOpenQRModal, setIsOpenQRModal] = useState(false);
   const [customGroups, setCustomGroups] = useState<CustomGroup[]>([]);
@@ -143,7 +160,6 @@ export const Header = ({ name, position, employeeNumber, photo, initials, absenc
           <ShareIcon />
         </IconButton>
         <div style={{ position: 'relative' }}>
-          {/* TODO(addressbook-host): перевести IconButton на forwardRef перед включением popover. */}
           <IconButton
             ref={starBtnRef}
             color={tokens.current.colors.grey.solid['60']}
@@ -165,9 +181,12 @@ export const Header = ({ name, position, employeeNumber, photo, initials, absenc
         </div>
       </ButtonsSectionStyled>
       {isOpenQRModal && (
-        <Modal type="default" onClose={() => setIsOpenQRModal(false)}>
-          <QRCodeCore value={profileUrl} size={300} />
-        </Modal>
+        <Modal
+          type="default"
+          title="QR-код профиля"
+          header={<QRCodeCore value={profileUrl} size={300} />}
+          onClose={() => setIsOpenQRModal(false)}
+        />
       )}
     </MainContainerStyled>
   );

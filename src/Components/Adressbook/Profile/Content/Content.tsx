@@ -1,10 +1,18 @@
-// TODO(addressbook-host): типизировать props Content после стабилизации Profile API.
-// @ts-nocheck
 import { MainContainerStyled } from './styled';
 import { Contacts } from './Contacts';
 import { Info } from './Info';
+import type { PersonProfile } from '../../People/types';
+import type { ProfileViewData } from '../hooks/types';
+import type { ProfileTabKey } from '../Tabs/constants';
 
-export const Content = ({ activeTab, person, pid, profile }) => {
+type ContentProps = {
+  activeTab: ProfileTabKey;
+  person: PersonProfile;
+  pid: string;
+  profile: ProfileViewData;
+};
+
+export const Content = ({ activeTab, person, pid, profile }: ContentProps): JSX.Element | null => {
   if (activeTab === 'contacts')
     return (
       <MainContainerStyled>
@@ -19,7 +27,7 @@ export const Content = ({ activeTab, person, pid, profile }) => {
   if (activeTab === 'info')
     return (
       <MainContainerStyled>
-        <Info profile={profile}/>
+        <Info profile={profile} />
       </MainContainerStyled>
     );
   return null;

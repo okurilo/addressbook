@@ -56,8 +56,7 @@ const CloseButton = styled.button(({ theme }) => ({
 }));
 
 export const Modal = (props: ModalProps): JSX.Element => {
-  const { onClose, defaultModalSize = 'l', dataTestId } = props;
-  const children = (props as ModalProps & { children?: ReactNode }).children;
+  const { onClose, defaultModalSize = 'l', dataTestId, header, title } = props;
 
   return (
     <Overlay data-testid={dataTestId} role="presentation">
@@ -65,7 +64,7 @@ export const Modal = (props: ModalProps): JSX.Element => {
         <CloseButton aria-label="Закрыть" onClick={onClose} type="button">
           ×
         </CloseButton>
-        {children}
+        {header ?? title}
       </Dialog>
     </Overlay>
   );

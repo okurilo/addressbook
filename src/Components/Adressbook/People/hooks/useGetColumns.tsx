@@ -6,7 +6,7 @@ import { StructureCell } from '../../common/StructureCell';
 import type { PersonRow } from '../types';
 
 export const useGetColumns = (
-  onToggleFavorite: (employeeId: string) => void
+  onToggleFavorite: ((employeeId: string) => void) | undefined
 ): Column<PersonRow>[] => [
   {
     key: 'name',
@@ -36,7 +36,7 @@ export const useGetColumns = (
         email={row.email}
         employeeId={row.pid}
         isFavorite={row.isFavorite}
-        onToggleFavorite={onToggleFavorite}
+        onToggleFavorite={onToggleFavorite ?? (() => undefined)}
         phone={row.phone}
       />
     ),

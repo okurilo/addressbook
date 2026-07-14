@@ -27,6 +27,7 @@
 | `components/Avatar` | DS contract | `$type`, `$text`, `$size`, `$shape` и остальные props из `AvatarProps` |
 | `components/Button` | DS contract | `$type`, `$size`, `$state`, `$containsOnlyIcon`, `$fullWidth`, `$isLoading` |
 | `components/Loader` | DS contract | `isOnColor`, `size`, `wrapped`, `children` |
+| `components/ModalNew` | DS contract | обязательные `title/onClose`, кастомный `header`, без `children` |
 | `components/Input` | DS contract | native input props, suggestions API, `placeWhereUsed` |
 | `components/Layout` | используемый экспорт | используется только `Content`; отдельного `Layout/types.ts` в выгрузке нет |
 | `components/Empty` | DS contract | обязательные `type`, `description`; встроенные действия через button props |
@@ -112,6 +113,10 @@ interface LoaderProps {
 ### Layout
 
 В приложении используется только `Layout.Content` без дополнительных props. Явные типы выгрузки дополнительно описывают `Layout.Column.cols` и `Layout.Provider.offset`; не моделировать их локально до фактического использования.
+
+### ModalNew
+
+`ModalProps` требует `title` и `onClose`. Произвольный React-контент передаётся через подтверждённый prop `header`; `children` в публичном контракте отсутствует и не добавляется в локальный stub.
 
 ## Empty
 

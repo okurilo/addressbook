@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { fetchProfileMainInfo } from '../../api/profile';
-import type { ProfileMainInfoV1Data } from './types';
+import type { ProfileMainInfoV1Data, ProfileViewData } from './types';
 
-export const useProfile = (pid?: string) => {
+export const useProfile = (pid?: string): ProfileViewData => {
   const [data, setData] = useState<ProfileMainInfoV1Data | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -35,7 +35,7 @@ export const useProfile = (pid?: string) => {
   }, [pid]);
 
   return {
-    ...data,
+    ...(data ?? {}),
     isLoading,
   };
 };

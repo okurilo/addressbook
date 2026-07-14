@@ -1,2 +1,2 @@
 export { useProfile } from './useProfile';
-export type { ProfileMainInfoV1Data } from './types';
+export type { ProfileMainInfoV1Data, ProfileViewData } from './types';
