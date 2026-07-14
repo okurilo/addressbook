@@ -21,6 +21,8 @@ import {
   FavoriteIcon,
 } from './styled';
 
+const SEARCH_DEBOUNCE_MS = 500;
+
 export const DirectorySearch = (): JSX.Element => {
   const theme = useTheme();
   const location = useLocation();
@@ -28,7 +30,7 @@ export const DirectorySearch = (): JSX.Element => {
   const searchParams = new URLSearchParams(location.search);
   const queryFromUrl = searchParams.get('q') ?? '';
   const [value, setValue] = useState(queryFromUrl);
-  const debouncedValue = useDebouncedValue(value, 280);
+  const debouncedValue = useDebouncedValue(value, SEARCH_DEBOUNCE_MS);
   const [suggestions, setSuggestions] = useState<Employee[]>([]);
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
   const [isSuggestionsLoading, setIsSuggestionsLoading] = useState(false);
