@@ -512,3 +512,11 @@
 - [x] Показывать общее число сотрудников из `totalElements` ответа `PERSONADDRESSBOOK`.
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.
+
+### Итерация 28. Перенос продуктовых запросов внутрь AddressBook
+
+- [x] Перенести реализацию `multiSearch` в `src/apps/AddressBook/api/directory/search.ts`.
+- [x] Оставить снаружи AddressBook только общий `src/http-requests/http.ts` и host-обвязку окружения.
+- [x] Зафиксировать правило размещения всех следующих API AddressBook внутри экспортируемого модуля.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.

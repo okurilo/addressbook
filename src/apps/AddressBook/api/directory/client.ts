@@ -1,5 +1,5 @@
 import type { Employee, EmployeeSearchResponse } from './types';
-import { fetchDirectoryEmployees } from '../../../../http-requests/directorySearch';
+import { fetchDirectoryEmployees } from './search';
 
 export class DirectoryApiError extends Error {
   public readonly status: number;

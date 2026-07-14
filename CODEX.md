@@ -54,7 +54,7 @@
 - Повторный аудит оставил в `src/stubs/pulse/ui` только реально используемые `Avatar`, `Button`, `Empty`, `Input`, `Layout`, `Loader`, `Text`; неподтверждённые или несовместимые исторические stubs удалены.
 - `src/host/pulseUiContractAudit.ts` компиляционно проверяет DS unions, обязательные props, отсутствие вымышленных Text props и разрешение всех активных Pulse import-path.
 - Общий запросник восстановлен в исходном пути `src/http-requests/http.ts`: `HttpRequest('/api-web/', httpRequestOptions)` задаёт обработку ошибок и системные device headers.
-- Поиск сотрудников выполняется функцией `getSearchData` через `http.get`, без глобального перехвата `window.fetch`; прежний `src/host/directorySearchApi.ts` удалён.
+- Поиск сотрудников выполняется функцией `getSearchData` из `src/apps/AddressBook/api/directory/search.ts` через внешний общий `http`, без глобального перехвата `window.fetch`.
 - `orgFilter` имеет тип `string | null`: при текущем значении `null` в URL явно передаётся `orgFilter=null`, а после выбора структуры передаётся её UUID.
 - Ответ `multiSearch` читается из `data.PERSONADDRESSBOOK.data.content` и типобезопасно нормализуется в контракт `Employee`; запрос получает `AbortSignal` и отменяется при смене query.
 - В локальной среде `@hrplatform/utils` и `@pulse/ui/theme` эмулируются host-stubs через одинаковые Vite/TypeScript aliases; в целевом окружении используются реальные пакеты.
@@ -65,3 +65,4 @@
 - Обязательный маршрут работы с DS: краткая памятка `docs/PULSE-UI.md` → поиск в `docs/pulse-ui-types/INDEX.md`/`EXPORTS.md` → чтение только точных generated-файлов и необходимых импортов; полные raw-файлы не загружаются без необходимости.
 - Для встраивания в host Reach Router AddressBook подключается как `path="/addressbook/*"`; wildcard удерживает модуль на дочерних URL, а внутренний `Router basepath="/"` не допускает удвоения `/platform/globalsearch/addressbook` у абсолютных routePaths.
 - До подключения `getGroupHierarchy` корневой экран кадровой структуры показывает сотрудников из `multiSearch`; `query` берётся из URL-параметра `q`, синхронизированного с верхним поиском, а в запросе явно передаётся `orgFilter=null`.
+- Весь продуктовый API-код AddressBook хранится внутри `src/apps/AddressBook/**` и переносится вместе с модулем; внешний `src/http-requests/http.ts`, host-stubs, proxy и прочая обвязка относятся только к локальной имитации окружения.

@@ -3,8 +3,8 @@ import type {
   EmployeeContact,
   EmployeeSearchResponse,
   EmployeeStatus,
-} from '../apps/AddressBook/api/directory/types';
-import { http } from './http';
+} from './types';
+import { http } from '../../../../http-requests/http';
 
 type JsonRecord = Record<string, unknown>;
 

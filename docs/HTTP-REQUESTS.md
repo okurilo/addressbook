@@ -55,7 +55,7 @@ export const loadData = async (signal?: AbortSignal): Promise<Response> =>
 
 ## Поиск сотрудников
 
-`src/http-requests/directorySearch.ts` формирует запрос через `http.get`:
+`src/apps/AddressBook/api/directory/search.ts` формирует запрос через `http.get`:
 
 ```text
 /api-web/globalsearch/api/v3/multiSearch

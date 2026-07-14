@@ -79,6 +79,8 @@ Mock-сценарии продолжают обслуживать недавни
 
 Поиск использует общий `http = new HttpRequest('/api-web/', httpRequestOptions)` и вызывает `http.get`:
 
+Продуктовая реализация запроса находится в `src/apps/AddressBook/api/directory/search.ts`; внешний `src/http-requests/http.ts` предоставляет только общий клиент окружения.
+
 ```text
 /api-web/globalsearch/api/v3/multiSearch
   ?query={query}
