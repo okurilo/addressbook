@@ -61,9 +61,17 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
   const [categoriesRetryToken, setCategoriesRetryToken] = useState(0);
   const [phonesRetryToken, setPhonesRetryToken] = useState(0);
   const categoryButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const categoryFromUrl = new URLSearchParams(location.search).get('categoryId') ?? '';
+  const searchParams = new URLSearchParams(location.search);
+  const categoryFromUrl = searchParams.get('categoryId') ?? '';
+  const query = searchParams.get('q') ?? '';
   const activeCategoryId = categoryFromUrl === '' ? categories[0]?.id ?? '' : categoryFromUrl;
   const activeCategory = categories.find((item) => item.id === activeCategoryId) ?? null;
+  const normalizedQuery = query.trim().toLocaleLowerCase('ru');
+  const filteredPhones = phones.filter((phone) =>
+    [phone.title, phone.responsibility, phone.phone ?? ''].some((value) =>
+      value.toLocaleLowerCase('ru').includes(normalizedQuery)
+    )
+  );
 
   useEffect(() => {
     let isActive = true;
@@ -82,8 +90,10 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
         setCategoriesState(nextCategories.length === 0 ? 'empty' : 'success');
 
         if (nextCategories.length > 0 && categoryFromUrl === '') {
+          const nextParams = new URLSearchParams(location.search);
+          nextParams.set('categoryId', nextCategories[0].id);
           ignorePromise(
-            navigate(`${routePaths.referencePhones}?categoryId=${nextCategories[0].id}`, {
+            navigate(`${routePaths.referencePhones}?${nextParams.toString()}`, {
               replace: true,
             })
           );
@@ -144,8 +154,10 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
   }, [activeCategoryId, categoriesState, phonesRetryToken]);
 
   const openCategory = (categoryId: string): void => {
+    const nextParams = new URLSearchParams(location.search);
+    nextParams.set('categoryId', categoryId);
     ignorePromise(
-      navigate(`${routePaths.referencePhones}?categoryId=${categoryId}`, { replace: true })
+      navigate(`${routePaths.referencePhones}?${nextParams.toString()}`, { replace: true })
     );
   };
 
@@ -261,7 +273,15 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
           />
         ) : null}
 
-        {phonesState === 'success' ? (
+        {phonesState === 'success' && filteredPhones.length === 0 ? (
+          <Empty
+            type="noResults"
+            title="Ничего не найдено"
+            description="В выбранной категории нет телефонов, подходящих под глобальный фильтр."
+          />
+        ) : null}
+
+        {phonesState === 'success' && filteredPhones.length > 0 ? (
           <Table>
             <colgroup>
               <col style={{ width: '30%' }} />
@@ -278,7 +298,7 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
               </tr>
             </thead>
             <tbody>
-              {phones.map((phone) => {
+              {filteredPhones.map((phone) => {
                 const directPhone = phone.phone;
 
                 return (

@@ -14,6 +14,7 @@ import { RetryState } from '../../components/RetryState';
 import { useDebouncedValue } from '../../components/useDebouncedValue';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { useLocation, useNavigate } from '@reach/router';
+import { getSelectedPersonPath } from '../../routes/getDirectoryNavigationPath';
 import { routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
 import {
@@ -44,7 +45,9 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('q') ?? '';
   const selectedPersonId = searchParams.get('personId');
-  const debouncedQuery = useDebouncedValue(query, 280);
+  const personQuery = searchParams.get('personQuery') ?? '';
+  const effectiveQuery = selectedPersonId === null ? query : personQuery;
+  const debouncedQuery = useDebouncedValue(effectiveQuery, 280);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [historyItems, setHistoryItems] = useState<SearchHistoryItem[]>([]);
   const [viewState, setViewState] = useState<ViewState>('idle');
@@ -58,7 +61,7 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
       setViewState('loading');
 
       try {
-        if (debouncedQuery.trim() === '') {
+        if (debouncedQuery.trim() === '' && selectedPersonId === null) {
           const nextHistoryItems = await getSearchHistory({ signal: controller.signal });
 
           if (!isActive) {
@@ -68,6 +71,13 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
           setEmployees([]);
           setHistoryItems(nextHistoryItems);
           setViewState(nextHistoryItems.length === 0 ? 'empty' : 'success');
+          return;
+        }
+
+        if (debouncedQuery.trim() === '') {
+          setEmployees([]);
+          setHistoryItems([]);
+          setViewState('empty');
           return;
         }
 
@@ -112,15 +122,14 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
   const isHistoryMode = query.trim() === '' && selectedPersonId === null;
 
   const openHistoryItem = (item: SearchHistoryItem): void => {
-    const nextParams = new URLSearchParams();
-    nextParams.set('q', item.text);
+    ignorePromise(selectSearchHistory(item.id));
 
     if (isPersonHistoryContext(item.key.context)) {
-      nextParams.set('personId', item.key.id);
+      ignorePromise(navigate(getSelectedPersonPath(item.key.id, item.text)));
+      return;
     }
 
-    ignorePromise(selectSearchHistory(item.id));
-    ignorePromise(navigate(`${routePaths.contacts}?${nextParams.toString()}`));
+    ignorePromise(navigate(routePaths.contacts));
   };
 
   return (

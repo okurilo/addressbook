@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from '@reach/router';
 import type { RouteComponentProps } from '@reach/router';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
@@ -13,8 +14,26 @@ import { Page, Header, FilterChip, Surface, CenteredState } from './styled';
 
 type ViewState = 'loading' | 'success' | 'empty' | 'error';
 
+const matchesQuery = (employee: Employee, query: string): boolean => {
+  const normalizedQuery = query.trim().toLocaleLowerCase('ru');
+
+  if (normalizedQuery === '') {
+    return true;
+  }
+
+  return [
+    employee.fullName,
+    employee.position,
+    employee.departmentName,
+    employee.shortStructure,
+    employee.subtitle,
+  ].some((value) => value.toLocaleLowerCase('ru').includes(normalizedQuery));
+};
+
 export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
+  const location = useLocation();
   const { favoriteIds, toggleFavorite, isReady } = useFavoriteEmployees();
+  const query = new URLSearchParams(location.search).get('q') ?? '';
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [viewState, setViewState] = useState<ViewState>('loading');
   const [retryToken, setRetryToken] = useState(0);
@@ -37,8 +56,10 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
           return;
         }
 
-        setEmployees(nextEmployees);
-        setViewState(nextEmployees.length === 0 ? 'empty' : 'success');
+        const filteredEmployees = nextEmployees.filter((employee) => matchesQuery(employee, query));
+
+        setEmployees(filteredEmployees);
+        setViewState(filteredEmployees.length === 0 ? 'empty' : 'success');
       } catch {
         if (!isActive) {
           return;
@@ -54,7 +75,7 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
     return () => {
       isActive = false;
     };
-  }, [favoriteIds, isReady, retryToken]);
+  }, [favoriteIds, isReady, query, retryToken]);
 
   return (
     <Page>
@@ -79,9 +100,13 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
         ) : null}
         {viewState === 'empty' ? (
           <Empty
-            type="noData"
-            title="Тут пока пусто"
-            description="Добавляйте полезные контакты в избранное"
+            type={query.trim() === '' ? 'noData' : 'noResults'}
+            title={query.trim() === '' ? 'Тут пока пусто' : 'Ничего не найдено'}
+            description={
+              query.trim() === ''
+                ? 'Добавляйте полезные контакты в избранное'
+                : 'В избранном нет сотрудников, подходящих под глобальный фильтр.'
+            }
           />
         ) : null}
         {viewState === 'success' ? (

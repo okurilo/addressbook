@@ -2,6 +2,11 @@ import { useEffect, useState } from 'react';
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
 import { SearchIcon, StarIcon } from '../icons';
+import {
+  getDirectoryNavigationPath,
+  getPeopleSearchPath,
+  getSelectedPersonPath,
+} from '../../routes/getDirectoryNavigationPath';
 import { routePaths } from '../../routes/routePaths';
 import { useLocation, useNavigate } from '@reach/router';
 import { fetchDirectoryEmployees } from '../../api/directory/search';
@@ -35,9 +40,6 @@ export const DirectorySearch = (): JSX.Element => {
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
   const [isSuggestionsLoading, setIsSuggestionsLoading] = useState(false);
   const isFavoritesRoute = location.pathname === routePaths.favorites;
-  const isStructureRoute =
-    location.pathname === routePaths.structure ||
-    location.pathname.startsWith(`${routePaths.structure}/`);
 
   useEffect(() => {
     setValue(queryFromUrl);
@@ -84,31 +86,16 @@ export const DirectorySearch = (): JSX.Element => {
   }, [debouncedValue, isSuggestionsOpen]);
 
   const submitPeopleSearch = (): void => {
-    const normalizedQuery = value.trim();
-    const nextParams = new URLSearchParams();
-
-    if (normalizedQuery !== '') {
-      nextParams.set('q', normalizedQuery);
-    }
-
-    const nextSearch = nextParams.toString();
-    const searchRoute = isStructureRoute ? routePaths.structure : routePaths.contacts;
-
     setIsSuggestionsOpen(false);
-    ignorePromise(navigate(`${searchRoute}${nextSearch === '' ? '' : `?${nextSearch}`}`));
+    ignorePromise(navigate(getPeopleSearchPath(location.pathname, location.search, value)));
   };
 
   const openEmployee = (employee: Employee): void => {
-    const nextParams = new URLSearchParams();
     const normalizedQuery = value.trim();
 
-    if (normalizedQuery !== '') {
-      nextParams.set('q', normalizedQuery);
-    }
-
-    nextParams.set('personId', employee.id);
+    setValue('');
     setIsSuggestionsOpen(false);
-    ignorePromise(navigate(`${routePaths.contacts}?${nextParams.toString()}`));
+    ignorePromise(navigate(getSelectedPersonPath(employee.id, normalizedQuery)));
   };
 
   return (
@@ -185,7 +172,9 @@ export const DirectorySearch = (): JSX.Element => {
         type="button"
         $active={isFavoritesRoute}
         onClick={() => {
-          ignorePromise(navigate(routePaths.favorites));
+          ignorePromise(
+            navigate(getDirectoryNavigationPath(routePaths.favorites, location.search))
+          );
         }}
       >
         <FavoriteIcon $active={isFavoritesRoute} aria-hidden="true">

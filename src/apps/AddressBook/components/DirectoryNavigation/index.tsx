@@ -1,6 +1,7 @@
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
 import { useLocation, useNavigate } from '@reach/router';
+import { getDirectoryNavigationPath } from '../../routes/getDirectoryNavigationPath';
 import { routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
 import { Nav, NavButton } from './styled';
@@ -52,7 +53,9 @@ export const DirectoryNavigation = (): JSX.Element => {
             $active={isActive}
             aria-current={isActive ? 'page' : undefined}
             onClick={() => {
-              ignorePromise(navigate(item.href));
+              ignorePromise(
+                navigate(getDirectoryNavigationPath(item.href, location.search))
+              );
             }}
           >
             <Text
