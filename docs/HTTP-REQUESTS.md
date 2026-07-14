@@ -65,7 +65,7 @@ export const loadData = async (signal?: AbortSignal): Promise<Response> =>
   &category=PERSONADDRESSBOOK
 ```
 
-`orgFilter` имеет тип `string | null`. При `null` в URL передаётся строковое значение `orgFilter=null`; после выбора структуры передаётся её UUID.
+`orgFilter` имеет тип `string | null`. При `null` параметр отсутствует в URL; после выбора структуры передаётся её UUID.
 
 Запрос принимает `AbortSignal`, поэтому предыдущий поиск отменяется при изменении строки или размонтировании экрана. Ответ читается из `data.PERSONADDRESSBOOK.data.content` и нормализуется в текущий контракт `Employee` без `any`.
 
