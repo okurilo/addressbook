@@ -7,7 +7,6 @@ import { ContactsPage } from './pages/ContactsPage';
 import { EmployeePage } from './pages/EmployeePage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { ReferencePhonesPage } from './pages/ReferencePhonesPage';
-import { StructureDepartmentPage } from './pages/StructureDepartmentPage';
 import { StructureRootPage } from './pages/StructureRootPage';
 import { routePaths } from './routes/routePaths';
 
@@ -25,7 +24,7 @@ export const App = (): JSX.Element => (
               <FavoritesPage path={routePaths.favorites} />
               <ReferencePhonesPage path={routePaths.referencePhones} />
               <StructureRootPage path={routePaths.structure} />
-              <StructureDepartmentPage path={routePaths.structureDepartment} />
+              <StructureRootPage path={routePaths.structureDepartment} />
               <ContactsPage default />
             </Router>
           </RouterContainer>

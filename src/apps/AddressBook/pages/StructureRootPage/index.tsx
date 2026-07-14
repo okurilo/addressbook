@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from '@reach/router';
+import { useLocation, useNavigate } from '@reach/router';
 import type { RouteComponentProps } from '@reach/router';
 import styled, { useTheme } from 'styled-components';
 import { Empty } from '@pulse/ui/components/Empty';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
 import { fetchStructureEmployees } from '../../api/directory/client';
+import { getGroupHierarchy } from '../../api/directory/groupHierarchy';
+import type { GroupHierarchy } from '../../api/directory/groupHierarchy';
 import type { Employee } from '../../api/directory/types';
 import { EmployeeTable } from '../../components/EmployeeTable';
 import { RetryState } from '../../components/RetryState';
 import { useDebouncedValue } from '../../components/useDebouncedValue';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { ignorePromise } from '../../utils/ignorePromise';
+import { getDepartmentPath } from '../../routes/routePaths';
+
+type StructureRootPageProps = RouteComponentProps & {
+  departmentId?: string;
+};
 
 const Page = styled.section({
   display: 'flex',
@@ -72,15 +79,34 @@ const StructureItem = styled.div(({ theme }) => ({
   },
 }));
 
+const StructureButton = styled.button<{ $active?: boolean }>(({ theme, $active = false }) => ({
+  border: 'none',
+  background: 'transparent',
+  padding: 0,
+  textAlign: 'left',
+  cursor: 'pointer',
+  color: $active
+    ? theme.tokens.current.core.text.primary
+    : theme.tokens.current.core.text.secondary,
+  ...($active ? theme.typography.body2Semibold : theme.typography.body2Regular),
+  '&:disabled': {
+    cursor: 'default',
+    color: theme.tokens.current.core.text.tertiary,
+  },
+}));
+
 type ViewState = 'loading' | 'success' | 'empty' | 'error';
 
-export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
+export const StructureRootPage = ({ departmentId }: StructureRootPageProps): JSX.Element => {
   const theme = useTheme();
   const location = useLocation();
+  const navigate = useNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const query = new URLSearchParams(location.search).get('q') ?? '';
   const debouncedQuery = useDebouncedValue(query, 280);
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [selectedGroup, setSelectedGroup] = useState<GroupHierarchy | null>(null);
+  const [childGroups, setChildGroups] = useState<GroupHierarchy[]>([]);
   const [totalEmployees, setTotalEmployees] = useState(0);
   const [viewState, setViewState] = useState<ViewState>('loading');
   const [retryToken, setRetryToken] = useState(0);
@@ -94,12 +120,35 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
       setViewState('loading');
 
       try {
-        const response = await fetchStructureEmployees(debouncedQuery, controller.signal);
+        if (isSearchMode) {
+          const response = await fetchStructureEmployees(debouncedQuery, controller.signal);
+
+          if (!isActive) {
+            return;
+          }
+
+          setSelectedGroup(null);
+          setChildGroups([]);
+          setEmployees(response.items);
+          setTotalEmployees(response.total);
+          setViewState(response.items.length === 0 ? 'empty' : 'success');
+          return;
+        }
+
+        const group = await getGroupHierarchy(departmentId, controller.signal);
+        const [children, response] = await Promise.all([
+          Promise.all(
+            group.children.map((childId) => getGroupHierarchy(childId, controller.signal))
+          ),
+          fetchStructureEmployees('', controller.signal, group.id),
+        ]);
 
         if (!isActive) {
           return;
         }
 
+        setSelectedGroup(group);
+        setChildGroups(children);
         setEmployees(response.items);
         setTotalEmployees(response.total);
         setViewState(response.items.length === 0 ? 'empty' : 'success');
@@ -109,6 +158,8 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
         }
 
         setEmployees([]);
+        setSelectedGroup(null);
+        setChildGroups([]);
         setTotalEmployees(0);
         setViewState('error');
       }
@@ -120,7 +171,7 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
       isActive = false;
       controller.abort();
     };
-  }, [debouncedQuery, retryToken]);
+  }, [debouncedQuery, departmentId, isSearchMode, retryToken]);
 
   const resultStructures = Array.from(
     employees.reduce<Map<string, string>>((structures, employee) => {
@@ -176,6 +227,10 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
     </Surface>
   );
 
+  const openGroup = (groupId: string): void => {
+    ignorePromise(navigate(getDepartmentPath(groupId)));
+  };
+
   return (
     <Page>
       <Header>
@@ -189,7 +244,7 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
         ) : (
           <>
             <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
-              Сотрудники организационной структуры
+              {selectedGroup?.name ?? 'Сотрудники организационной структуры'}
             </Text>
             <SummaryLine>
               <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
@@ -223,7 +278,45 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
           {resultsSurface}
         </SearchResultsLayout>
       ) : (
-        resultsSurface
+        <SearchResultsLayout>
+          <StructureList>
+            <StructureButton
+              type="button"
+              disabled={selectedGroup === null || selectedGroup.parentTree === ''}
+              onClick={() => {
+                if (selectedGroup === null || selectedGroup.parentTree === '') {
+                  return;
+                }
+
+                openGroup(selectedGroup.parentTree);
+              }}
+            >
+              ↑ Наверх
+            </StructureButton>
+            {selectedGroup !== null ? (
+              <StructureButton type="button" $active disabled>
+                {selectedGroup.name}
+              </StructureButton>
+            ) : null}
+            {childGroups.map((group) => (
+              <StructureButton
+                key={group.id}
+                type="button"
+                onClick={() => {
+                  openGroup(group.id);
+                }}
+              >
+                {group.name}
+              </StructureButton>
+            ))}
+            {selectedGroup !== null && childGroups.length === 0 ? (
+              <Text variant="body2Regular" color={theme.tokens.current.core.text.tertiary}>
+                Дочерних структур нет
+              </Text>
+            ) : null}
+          </StructureList>
+          {resultsSurface}
+        </SearchResultsLayout>
       )}
     </Page>
   );
