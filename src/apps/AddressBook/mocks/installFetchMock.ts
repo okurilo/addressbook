@@ -23,6 +23,8 @@ const SCENARIO_STORAGE_KEY = 'addressbook-mock-scenario';
 const FAVORITES_STORAGE_KEY = 'addressbook-favorite-employee-ids';
 const LOADING_DELAY_MS = 1200;
 const DEFAULT_DELAY_MS = 280;
+const PROFILE_WIDGETS_PATH = '/api-mobile/smart-profile/web/widgets/data';
+const GLOBAL_SEARCH_PATH = '/api-web/globalsearch/api/v3/multiSearch';
 
 const createJsonResponse = (status: number, body: unknown): Response =>
   new Response(JSON.stringify(body), {
@@ -31,6 +33,47 @@ const createJsonResponse = (status: number, body: unknown): Response =>
       'Content-Type': 'application/json',
     },
   });
+
+const getProfileWidgetsPayload = (userId: string | null): unknown => ({
+  data: [
+    {
+      code: 'mainInfo_v1',
+      data: {
+        contactsV2: {
+          workAddress: 'Москва, тестовый офис',
+          mails: {
+            sigma: { mail: 'employee@example.test' },
+            alpha: { mail: 'employee@example.test' },
+          },
+        },
+        schedule: { timezone: 'Московское время' },
+        linear: {
+          position: 'Сотрудник',
+          orgPath: [{ title: 'Тестовая структура' }],
+        },
+        birthDate: { day: 1, month: 1 },
+      },
+    },
+    {
+      code: 'about',
+      data: { socialNets: { sberchat: `@${userId ?? 'employee'}` } },
+    },
+    {
+      code: 'manager',
+      data: {
+        managers: [
+          {
+            isLinear: true,
+            lastName: 'Тестов',
+            firstName: 'Руководитель',
+            secondName: '',
+            userId: 'manager-1',
+          },
+        ],
+      },
+    },
+  ],
+});
 
 const wait = async (ms: number): Promise<void> =>
   new Promise((resolve) => {
@@ -106,6 +149,54 @@ const matchEmployees = (query: string): Employee[] => {
 
 const matchEmployeesByDepartment = (departmentId: string): Employee[] =>
   employeesFixture.filter((employee) => employee.departmentId === departmentId);
+
+const getGlobalSearchPayload = (query: string, isEmpty: boolean): unknown => {
+  const employees = isEmpty ? [] : matchEmployees(query);
+  const content = employees.map((employee) => {
+    const [firstName = '', lastName = ''] = employee.fullName.split(/\s+/u);
+
+    return {
+      personUuid: employee.id,
+      pbasic: {
+        fullName: employee.fullName,
+        firstName,
+        lastName,
+      },
+      jbasic: {
+        employeeId: employee.employeeNumber,
+        status: employee.status === 'offline' ? 'НЕАКТИВНЫЙ' : 'АКТИВНЫЙ',
+      },
+      jposition: { position: [{ fullName: employee.position }] },
+      junit: {
+        unit: [
+          {
+            unitId: employee.departmentId,
+            fullName: employee.departmentName,
+            balanceUnitName: employee.shortStructure,
+          },
+        ],
+      },
+      jcontactsinterofficetel:
+        employee.phone === null ? undefined : { value: employee.phone },
+      jcontactsmobile:
+        employee.mobilePhone === null ? undefined : { value: employee.mobilePhone },
+      jcontactsinterofficeemail: employee.email === '' ? undefined : { value: employee.email },
+      jbadgeabsencevacation: employee.status === 'vacation' ? {} : undefined,
+    };
+  });
+
+  return {
+    PERSONADDRESSBOOK: {
+      success: true,
+      data: {
+        content,
+        last: true,
+        totalElements: content.length,
+        totalPages: content.length === 0 ? 0 : 1,
+      },
+    },
+  };
+};
 
 const getSuccessPayload = (url: URL): unknown => {
   if (url.pathname === '/api/directory/departments/root') {
@@ -213,6 +304,25 @@ export const installFetchMock = (): void => {
       typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
 
     const url = new URL(requestUrl, window.location.origin);
+
+    if (url.pathname === PROFILE_WIDGETS_PATH) {
+      return createJsonResponse(200, getProfileWidgetsPayload(url.searchParams.get('userId')));
+    }
+
+    if (url.pathname === GLOBAL_SEARCH_PATH) {
+      const scenario = getScenario();
+
+      await wait(scenario === 'loading' ? LOADING_DELAY_MS : DEFAULT_DELAY_MS);
+
+      if (scenario === 'error') {
+        return createJsonResponse(500, { message: 'Mock error' });
+      }
+
+      return createJsonResponse(
+        200,
+        getGlobalSearchPayload(url.searchParams.get('query') ?? '', scenario === 'empty')
+      );
+    }
 
     if (!url.pathname.startsWith('/api/')) {
       return originalFetch(input, init);

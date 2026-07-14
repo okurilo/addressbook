@@ -51,7 +51,7 @@
 - Прямой маршрут `/employee/:employeeId` сохранён для deep-link, но таблицы контактов, избранного и подразделений его не используют для открытия карточки.
 - Полная выгрузка типов `@pulse/ui` является источником истины для DS-обвязки; вымышленные `Text.tone`, `Text.weight` и `Avatar.$initials` удалены.
 - Выгрузка `@pulse/ui` подтверждает `Empty` с обязательными `type/description`; `EmptyState` отсутствует и не поддерживается локальными aliases.
-- Повторный аудит оставил в `src/stubs/pulse/ui` только реально используемые `Avatar`, `Button`, `Empty`, `Input`, `Layout`, `Loader`, `Text`; неподтверждённые или несовместимые исторические stubs удалены.
+- Повторный аудит оставил в `src/stubs/pulse/ui` реально используемые `Avatar`, `Button`, `Empty`, `Input`, `Layout`, `Loader`, `Tabs`, `Text`; новый `Tabs` повторяет подтверждённый DS-контракт, а несовместимые исторические stubs удалены.
 - `src/host/pulseUiContractAudit.ts` компиляционно проверяет DS unions, обязательные props, отсутствие вымышленных Text props и разрешение всех активных Pulse import-path.
 - Общий запросник восстановлен в исходном пути `src/http-requests/http.ts`: `HttpRequest('/api-web/', httpRequestOptions)` задаёт обработку ошибок и системные device headers.
 - Поиск сотрудников выполняется функцией `getSearchData` из `src/apps/AddressBook/api/directory/search.ts` через внешний общий `http`, без глобального перехвата `window.fetch`.
@@ -80,3 +80,10 @@
 - Избранное загружается из кастомной группы: `GET srv/v7/people/teams` находит запись с `isCustom=true` и `name=Избранное`, после чего `GET srv/v7/people/teams/{id}?page=0&size=20&isCustom=true` загружает участников. Внешнее транспортное `data` снимает общий `http`.
 - Звезда сохраняет человека через кастомные группы: существующая «Избранное» обновляется через `POST srv/v7/people/custom-groups/update`; если группы нет, `POST srv/v7/people/custom-groups` создаёт её с первым человеком. Удаление использует тот же update-контракт с `personsToDelete`; локальное состояние звезды меняется только после успешного ответа API.
 - Кадровая структура загружает текущую оргединицу через `GET addressbook/groups`: без `id` API возвращает узел пользователя, с `id` — выбранный узел. Строковые `children` и `parentTree` трактуются как UUID узлов; дочерние узлы догружаются по их UUID, а сотрудники выбранного узла запрашиваются через `multiSearch` с `orgFilter` равным `id` узла.
+- Целевой компонент другого разработчика размещён напрямую в `src/Components/Adressbook`; отдельные vendor-пакет, manifest, импортёр, harness, глобальный search-context и дублирующий search-hook удалены.
+- В целевом компоненте минимально изменена только цепочка получения данных `AdressBook → People → useGetPeople`: готовый массив приходит через props, а `createRowData`, таблица, строки и профиль сохраняют исходную логику.
+- `src/apps/AddressBook/components/ImportedAdressbook` является единственным адаптером вызова и только преобразует текущий `Employee[]` в донорскую форму; тема приходит напрямую из целевого окружения без вложенного provider и fallback-токенов.
+- Адаптер загружает точку входа компонента через eager `import.meta.glob`: прямой TypeScript import включает strict-проверку всего донорского дерева и потребовал бы массово исправлять его исходные ошибки; runtime при этом остаётся обычным синхронно собранным компонентом.
+- `ContactsPage` сохраняет существующие сценарии загрузки, истории, empty и error, после чего передаёт успешный результат целевой таблице.
+- Локальный fetch-mock внутри `src/apps/AddressBook` обслуживает точные ручки `multiSearch` и профиля; недостающие SVG добавлены внутрь `src/Components/Adressbook`.
+- Переносимая граница реализации — только `src/apps/AddressBook` и `src/Components/Adressbook`; локальные Pulse/host/Vite stubs нужны лишь песочнице и не являются частью контракта копирования.

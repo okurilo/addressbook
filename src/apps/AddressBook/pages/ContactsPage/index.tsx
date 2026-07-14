@@ -9,10 +9,9 @@ import type { Employee } from '../../api/directory/types';
 import { getSearchHistory, selectSearchHistory } from '../../api/history/history';
 import { SearchContextEnum } from '../../api/history/types';
 import type { SearchHistoryItem, SearchHistoryPath } from '../../api/history/types';
-import { EmployeeTable } from '../../components/EmployeeTable';
+import { ImportedAdressbook } from '../../components/ImportedAdressbook';
 import { RetryState } from '../../components/RetryState';
 import { useDebouncedValue } from '../../components/useDebouncedValue';
-import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { useLocation, useNavigate } from '@reach/router';
 import { getSelectedPersonPath } from '../../routes/getDirectoryNavigationPath';
 import { routePaths } from '../../routes/routePaths';
@@ -41,7 +40,6 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
   const theme = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
-  const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('q') ?? '';
   const selectedPersonId = searchParams.get('personId');
@@ -189,13 +187,9 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
           </HistoryList>
         ) : null}
         {viewState === 'success' && !isHistoryMode ? (
-          <EmployeeTable
+          <ImportedAdressbook
             employees={employees}
             initialExpandedEmployeeId={selectedPersonId}
-            favoriteIds={favoriteIds}
-            onToggleFavorite={(employeeId) => {
-              ignorePromise(toggleFavorite(employeeId));
-            }}
           />
         ) : null}
       </Surface>

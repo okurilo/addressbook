@@ -1,7 +1,36 @@
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
+const importedAddressbookSvgPlugin = {
+  name: 'imported-addressbook-svg-mocks',
+  enforce: 'pre' as const,
+  resolveId(source: string, importer?: string): string | null {
+    if (
+      source.endsWith('.svg') &&
+      importer?.includes('/src/Components/Adressbook/') === true
+    ) {
+      return `\0imported-addressbook-svg:${source}`;
+    }
+
+    return null;
+  },
+  load(id: string): string | null {
+    if (!id.startsWith('\0imported-addressbook-svg:')) {
+      return null;
+    }
+
+    return [
+      "import { createElement } from 'react';",
+      'export const ReactComponent = (props) =>',
+      "  createElement('svg', { ...props, viewBox: '0 0 24 24', 'aria-hidden': true },",
+      "    createElement('circle', { cx: 12, cy: 12, r: 8, fill: 'currentColor' })",
+      '  );',
+    ].join('\n');
+  },
+};
+
 export const config = defineConfig({
+  plugins: [importedAddressbookSvgPlugin],
   server: {
     proxy: {
       '/api-web': {

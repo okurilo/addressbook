@@ -4,6 +4,22 @@ export type HttpRequestOptions = {
   headers?: Record<string, string>;
 };
 
+const localAvatar = encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" rx="20" fill="#e6f4ec"/><circle cx="20" cy="15" r="7" fill="#1f8f58"/><path d="M8 36c1-8 6-12 12-12s11 4 12 12" fill="#1f8f58"/></svg>'
+);
+
+export const getAvatarUrl = (personId?: string): string => {
+  if (personId === undefined || personId === '') {
+    return '';
+  }
+
+  if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') {
+    return `data:image/svg+xml,${localAvatar}`;
+  }
+
+  return `/api-web/cs/api/1/avatar/${encodeURIComponent(personId)}`;
+};
+
 export type HttpRequestCallOptions = {
   input?: RequestInit;
 };
