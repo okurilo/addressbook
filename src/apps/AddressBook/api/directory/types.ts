@@ -28,5 +28,5 @@ export type Employee = {
 export type EmployeeSearchResponse = {
   items: Employee[];
   query: string;
+  total: number;
 };
-

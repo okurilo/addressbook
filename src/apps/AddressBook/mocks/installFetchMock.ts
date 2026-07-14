@@ -169,9 +169,11 @@ const getSuccessPayload = (url: URL): unknown => {
       };
     }
 
+    const items = query.trim() === '' ? [] : matchEmployees(query);
     const response: EmployeeSearchResponse = {
-      items: query.trim() === '' ? [] : matchEmployees(query),
+      items,
       query,
+      total: items.length,
     };
 
     return response;
@@ -327,4 +329,3 @@ export const installFetchMock = (): void => {
     return createJsonResponse(200, getSuccessPayload(url));
   };
 };
-

@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
 import type { Employee } from '../../api/directory/types';
@@ -29,6 +29,7 @@ import {
 type EmployeeTableProps = {
   employees: Employee[];
   favoriteIds: string[];
+  initialExpandedEmployeeId?: string | null;
   onToggleFavorite: (employeeId: string) => void;
 };
 
@@ -158,9 +159,16 @@ const EmployeeDetails = ({ employee, onClose }: EmployeeDetailsProps): JSX.Eleme
 export const EmployeeTable = ({
   employees,
   favoriteIds,
+  initialExpandedEmployeeId = null,
   onToggleFavorite,
 }: EmployeeTableProps): JSX.Element => {
-  const [expandedEmployeeId, setExpandedEmployeeId] = useState<string | null>(null);
+  const [expandedEmployeeId, setExpandedEmployeeId] = useState<string | null>(
+    initialExpandedEmployeeId
+  );
+
+  useEffect(() => {
+    setExpandedEmployeeId(initialExpandedEmployeeId);
+  }, [initialExpandedEmployeeId]);
 
   return (
     <Table>

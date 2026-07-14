@@ -58,30 +58,16 @@ export const FavoriteEmployeesProvider = ({ children }: PropsWithChildren): JSX.
         const isFavorite = favoriteIds.includes(employeeId);
 
         if (isFavorite) {
+          await removeFavoriteEmployee(employeeId);
           setFavoriteIds((currentValue) => currentValue.filter((item) => item !== employeeId));
-
-          try {
-            await removeFavoriteEmployee(employeeId);
-          } catch (error) {
-            setFavoriteIds((currentValue) =>
-              currentValue.includes(employeeId) ? currentValue : [...currentValue, employeeId]
-            );
-            throw error;
-          }
 
           return;
         }
 
+        await addFavoriteEmployee(employeeId);
         setFavoriteIds((currentValue) =>
           currentValue.includes(employeeId) ? currentValue : [...currentValue, employeeId]
         );
-
-        try {
-          await addFavoriteEmployee(employeeId);
-        } catch (error) {
-          setFavoriteIds((currentValue) => currentValue.filter((item) => item !== employeeId));
-          throw error;
-        }
       },
     }),
     [favoriteIds, isReady]
@@ -101,4 +87,3 @@ export const useFavoriteEmployees = (): FavoriteEmployeesContextValue => {
 
   return context;
 };
-

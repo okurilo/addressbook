@@ -1,5 +1,11 @@
 import type { Employee, EmployeeSearchResponse } from './types';
-import { fetchDirectoryEmployees } from '../../../../http-requests/directorySearch';
+import { fetchDirectoryEmployees } from './search';
+
+export {
+  addFavoriteEmployee,
+  fetchFavoriteEmployees,
+  removeFavoriteEmployee,
+} from './favorites';
 
 export class DirectoryApiError extends Error {
   public readonly status: number;
@@ -30,29 +36,11 @@ export const fetchEmployees = async (
   signal?: AbortSignal
 ): Promise<EmployeeSearchResponse> => fetchDirectoryEmployees(query, signal);
 
+export const fetchStructureEmployees = async (
+  query: string,
+  signal?: AbortSignal,
+  orgFilter: string | null = null
+): Promise<EmployeeSearchResponse> => fetchDirectoryEmployees(query, signal, orgFilter);
+
 export const fetchEmployeeById = async (employeeId: string): Promise<Employee> =>
   fetchJson<Employee>(`/api/directory/employees/${encodeURIComponent(employeeId)}`);
-
-export const fetchFavoriteEmployees = async (): Promise<Employee[]> => {
-  const response = await fetchJson<{ items: Employee[] }>('/api/directory/favorites');
-  return response.items;
-};
-
-export const addFavoriteEmployee = async (employeeId: string): Promise<void> => {
-  await fetchJson<{ success: boolean }>(
-    `/api/directory/favorites/${encodeURIComponent(employeeId)}`,
-    {
-      method: 'POST',
-    }
-  );
-};
-
-export const removeFavoriteEmployee = async (employeeId: string): Promise<void> => {
-  const response = await fetch(`/api/directory/favorites/${encodeURIComponent(employeeId)}`, {
-    method: 'DELETE',
-  });
-
-  if (!response.ok) {
-    throw new DirectoryApiError(response.status, `Request failed with status ${response.status}`);
-  }
-};

@@ -27,7 +27,12 @@ export class HttpRequest {
     this.options = options;
   }
 
-  public async get<T>(path: string, options: HttpRequestCallOptions = {}): Promise<T> {
+  private async request<T>(
+    method: 'DELETE' | 'GET' | 'POST',
+    path: string,
+    options: HttpRequestCallOptions,
+    body?: unknown
+  ): Promise<T> {
     const requestHeaders = new Headers(this.options.headers);
     const inputHeaders = new Headers(options.input?.headers);
 
@@ -35,9 +40,14 @@ export class HttpRequest {
       requestHeaders.set(key, value);
     });
 
+    if (body !== undefined && !requestHeaders.has('Content-Type')) {
+      requestHeaders.set('Content-Type', 'application/json');
+    }
+
     const response = await fetch(this.resolvePath(path), {
       ...options.input,
-      method: 'GET',
+      method,
+      body: body === undefined ? undefined : JSON.stringify(body),
       credentials: options.input?.credentials ?? 'include',
       headers: requestHeaders,
     });
@@ -46,7 +56,35 @@ export class HttpRequest {
       throw new HttpRequestError(response.status, `Request failed with status ${response.status}`);
     }
 
-    return (await response.json()) as T;
+    const responseText = await response.text();
+
+    if (responseText === '') {
+      return undefined as T;
+    }
+
+    const payload = JSON.parse(responseText) as unknown;
+
+    if (typeof payload === 'object' && payload !== null && 'data' in payload) {
+      return payload.data as T;
+    }
+
+    return payload as T;
+  }
+
+  public async get<T>(path: string, options: HttpRequestCallOptions = {}): Promise<T> {
+    return this.request<T>('GET', path, options);
+  }
+
+  public async post<T>(
+    path: string,
+    body: unknown,
+    options: HttpRequestCallOptions = {}
+  ): Promise<T> {
+    return this.request<T>('POST', path, options, body);
+  }
+
+  public async delete<T>(path: string, options: HttpRequestCallOptions = {}): Promise<T> {
+    return this.request<T>('DELETE', path, options);
   }
 
   private resolvePath(path: string): string {

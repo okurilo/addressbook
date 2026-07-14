@@ -26,3 +26,32 @@ export const CenteredState = styled.div(({ theme }) => ({
   padding: 32,
 }));
 
+export const HistoryList = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '8px 0',
+});
+
+export const HistoryItemButton = styled.button(({ theme }) => ({
+  width: '100%',
+  minHeight: 64,
+  padding: '12px 24px',
+  border: 'none',
+  borderBottom: `1px solid ${theme.tokens.current.core.border.gentle}`,
+  background: 'transparent',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+  gap: 4,
+  textAlign: 'left',
+  color: theme.tokens.current.core.text.primary,
+  cursor: 'pointer',
+  '&:last-child': {
+    borderBottom: 'none',
+  },
+  '&:hover, &:focus-visible': {
+    background: theme.tokens.current.core.layer['02'],
+    outline: 'none',
+  },
+}));
