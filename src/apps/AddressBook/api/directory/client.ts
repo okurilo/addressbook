@@ -30,6 +30,11 @@ export const fetchEmployees = async (
   signal?: AbortSignal
 ): Promise<EmployeeSearchResponse> => fetchDirectoryEmployees(query, signal);
 
+export const fetchStructureEmployees = async (
+  query: string,
+  signal?: AbortSignal
+): Promise<EmployeeSearchResponse> => fetchDirectoryEmployees(query, signal, null);
+
 export const fetchEmployeeById = async (employeeId: string): Promise<Employee> =>
   fetchJson<Employee>(`/api/directory/employees/${encodeURIComponent(employeeId)}`);
 

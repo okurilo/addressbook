@@ -47,10 +47,11 @@ export const DirectorySearch = (): JSX.Element => {
             }
 
             const nextSearch = nextParams.toString();
-            const destination =
-              location.pathname === routePaths.contacts
-                ? `${routePaths.contacts}${nextSearch === '' ? '' : `?${nextSearch}`}`
-                : routePaths.contacts + (nextSearch === '' ? '' : `?${nextSearch}`);
+            const searchRoute =
+              location.pathname === routePaths.structure
+                ? routePaths.structure
+                : routePaths.contacts;
+            const destination = `${searchRoute}${nextSearch === '' ? '' : `?${nextSearch}`}`;
 
             ignorePromise(navigate(destination, { replace: true }));
           }}

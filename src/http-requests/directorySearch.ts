@@ -215,7 +215,8 @@ export const getSearchData = async ({
 
 export const fetchDirectoryEmployees = async (
   query: string,
-  signal?: AbortSignal
+  signal?: AbortSignal,
+  orgFilter: string | null = null
 ): Promise<EmployeeSearchResponse> => {
   const response = await getSearchData({
     signal,
@@ -223,7 +224,7 @@ export const fetchDirectoryEmployees = async (
     page: 0,
     size: 20,
     categories: [PERSON_CATEGORY],
-    orgFilter: null,
+    orgFilter,
   });
   const content = response.data?.PERSONADDRESSBOOK?.data?.content;
 
@@ -231,8 +232,11 @@ export const fetchDirectoryEmployees = async (
     throw new Error('MultiSearch response does not contain PERSONADDRESSBOOK content');
   }
 
+  const items = content.map(mapPerson).filter((employee): employee is Employee => employee !== null);
+
   return {
-    items: content.map(mapPerson).filter((employee): employee is Employee => employee !== null),
+    items,
     query,
+    total: response.data?.PERSONADDRESSBOOK?.data?.totalElements ?? items.length,
   };
 };

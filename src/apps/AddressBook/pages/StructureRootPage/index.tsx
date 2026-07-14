@@ -1,27 +1,29 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from '@reach/router';
 import type { RouteComponentProps } from '@reach/router';
 import styled, { useTheme } from 'styled-components';
+import { Empty } from '@pulse/ui/components/Empty';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
-import { Empty } from '@pulse/ui/components/Empty';
-import { fetchRootDepartments } from '../../api/directory/departmentsClient';
-import type { DepartmentSummary } from '../../api/directory/departments';
+import { fetchStructureEmployees } from '../../api/directory/client';
+import type { Employee } from '../../api/directory/types';
+import { EmployeeTable } from '../../components/EmployeeTable';
 import { RetryState } from '../../components/RetryState';
-import { useNavigate } from '@reach/router';
-import { getDepartmentPath } from '../../routes/routePaths';
+import { useDebouncedValue } from '../../components/useDebouncedValue';
+import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { ignorePromise } from '../../utils/ignorePromise';
 
-const Page = styled.section(({ theme }) => ({
+const Page = styled.section({
   display: 'flex',
   flexDirection: 'column',
   gap: 32,
-}));
+});
 
-const Header = styled.div(({ theme }) => ({
+const Header = styled.div({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
-}));
+});
 
 const SummaryLine = styled.div(({ theme }) => ({
   display: 'flex',
@@ -30,86 +32,75 @@ const SummaryLine = styled.div(({ theme }) => ({
   color: theme.tokens.current.core.text.secondary,
 }));
 
-const Grid = styled.div(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-  gap: 24,
-}));
-
-const CardButton = styled.button(({ theme }) => ({
-  minHeight: 136,
+const Surface = styled.div(({ theme }) => ({
   padding: 32,
   borderRadius: 20,
-  border: `1px solid ${theme.tokens.current.core.border.gentle}`,
-  background: '#edf1ed',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  justifyContent: 'space-between',
-  textAlign: 'left',
-  cursor: 'pointer',
+  background: theme.tokens.current.core.background.default,
 }));
 
-const CenteredState = styled.div(({ theme }) => ({
+const CenteredState = styled.div({
   minHeight: 280,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: theme.tokens.current.core.background.default,
-  borderRadius: 20,
   padding: 32,
-}));
+});
 
 type ViewState = 'loading' | 'success' | 'empty' | 'error';
 
 export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
   const theme = useTheme();
-  const navigate = useNavigate();
-  const [items, setItems] = useState<DepartmentSummary[]>([]);
+  const location = useLocation();
+  const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
+  const query = new URLSearchParams(location.search).get('q') ?? '';
+  const debouncedQuery = useDebouncedValue(query, 280);
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [totalEmployees, setTotalEmployees] = useState(0);
   const [viewState, setViewState] = useState<ViewState>('loading');
   const [retryToken, setRetryToken] = useState(0);
 
   useEffect(() => {
     let isActive = true;
+    const controller = new AbortController();
 
-    const loadDepartments = async (): Promise<void> => {
+    const loadEmployees = async (): Promise<void> => {
       setViewState('loading');
 
       try {
-        const response = await fetchRootDepartments();
+        const response = await fetchStructureEmployees(debouncedQuery, controller.signal);
 
         if (!isActive) {
           return;
         }
 
-        setItems(response.items);
-        setTotalEmployees(response.totalEmployees);
+        setEmployees(response.items);
+        setTotalEmployees(response.total);
         setViewState(response.items.length === 0 ? 'empty' : 'success');
       } catch {
         if (!isActive) {
           return;
         }
 
-        setItems([]);
+        setEmployees([]);
         setTotalEmployees(0);
         setViewState('error');
       }
     };
 
-    void loadDepartments();
+    void loadEmployees();
 
     return () => {
       isActive = false;
+      controller.abort();
     };
-  }, [retryToken]);
+  }, [debouncedQuery, retryToken]);
 
   return (
     <Page>
       <Header>
         <Text variant="h2Semibold">Кадровая структура</Text>
         <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
-          Организационно-штатная структура Банка
+          Сотрудники организационной структуры
         </Text>
         <SummaryLine>
           <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
@@ -122,50 +113,41 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
         </SummaryLine>
       </Header>
 
-      {viewState === 'loading' ? (
-        <CenteredState>
-          <Loader />
-        </CenteredState>
-      ) : null}
+      <Surface>
+        {viewState === 'loading' ? (
+          <CenteredState>
+            <Loader />
+          </CenteredState>
+        ) : null}
 
-      {viewState === 'error' ? (
-        <RetryState
-          title="Не удалось загрузить структуру"
-          description="Попробуйте переключить mock-сценарий или открыть экран позже."
-          onRetry={() => {
-            setRetryToken((currentValue) => currentValue + 1);
-          }}
-        />
-      ) : null}
+        {viewState === 'error' ? (
+          <RetryState
+            title="Не удалось загрузить сотрудников"
+            description="Попробуйте повторить запрос или открыть экран позже."
+            onRetry={() => {
+              setRetryToken((currentValue) => currentValue + 1);
+            }}
+          />
+        ) : null}
 
-      {viewState === 'empty' ? (
-        <Empty
-          type="noData"
-          title="Структура пока пуста"
-          description="Для текущего mock-сценария крупные подразделения не найдены."
-        />
-      ) : null}
+        {viewState === 'empty' ? (
+          <Empty
+            type="noData"
+            title="Сотрудники не найдены"
+            description="В выбранной структуре сотрудники отсутствуют."
+          />
+        ) : null}
 
-      {viewState === 'success' ? (
-        <Grid>
-          {items.map((department) => (
-            <CardButton
-              key={department.id}
-              type="button"
-              onClick={() => {
-                ignorePromise(
-                  navigate(getDepartmentPath(department.id))
-                );
-              }}
-            >
-              <Text variant="body1Semibold">{department.name}</Text>
-              <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
-                {department.employeeCount} сотрудников
-              </Text>
-            </CardButton>
-          ))}
-        </Grid>
-      ) : null}
+        {viewState === 'success' ? (
+          <EmployeeTable
+            employees={employees}
+            favoriteIds={favoriteIds}
+            onToggleFavorite={(employeeId) => {
+              ignorePromise(toggleFavorite(employeeId));
+            }}
+          />
+        ) : null}
+      </Surface>
     </Page>
   );
 };
