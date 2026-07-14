@@ -6,8 +6,6 @@ import type {
 } from './types';
 import { http } from '../../../../http-requests/http';
 
-type JsonRecord = Record<string, unknown>;
-
 export type MultiSearchParams = {
   signal?: AbortSignal;
   query: string;
@@ -17,133 +15,111 @@ export type MultiSearchParams = {
   orgFilter?: string | null;
 };
 
+type MultiSearchContact = {
+  value?: string | null;
+  hide?: boolean;
+  phoneHide?: boolean;
+};
+
+type MultiSearchUnit = {
+  balanceUnitName?: string | null;
+  city?: string | null;
+  fullName?: string | null;
+  shortName?: string | null;
+  state?: string | null;
+  unitId?: string | null;
+};
+
+type MultiSearchPosition = {
+  fullName?: string | null;
+  shortName?: string | null;
+};
+
+type MultiSearchPerson = {
+  company?: string | null;
+  jbadgeabsencevacation?: unknown;
+  jbasic?: {
+    employeeId?: string | null;
+    firedDate?: string | null;
+    status?: string | null;
+  } | null;
+  jcontactscompanyemail?: MultiSearchContact | null;
+  jcontactsexternalemail?: MultiSearchContact | null;
+  jcontactsinterofficeemail?: MultiSearchContact | null;
+  jcontactsinterofficetel?: MultiSearchContact | null;
+  jcontactsmobile?: MultiSearchContact | null;
+  jposition?: {
+    position?: MultiSearchPosition[] | null;
+  } | null;
+  junit?: {
+    unit?: MultiSearchUnit[] | null;
+  } | null;
+  pbasic?: {
+    firstName?: string | null;
+    fullName?: string | null;
+    lastName?: string | null;
+    midName?: string | null;
+  } | null;
+  pcontactsexternalemail?: MultiSearchContact | null;
+  pcontactsmobile?: MultiSearchContact | null;
+  personUuid?: string | null;
+};
+
 type MultiSearchCategoryResponse = {
   data?: {
-    content?: unknown[];
+    content?: MultiSearchPerson[];
     last?: boolean;
     totalElements?: number;
     totalPages?: number;
-    success?: boolean;
   };
   success?: boolean;
 };
 
-type MultiSearchResponse = {
-  data?: {
-    PERSONADDRESSBOOK?: MultiSearchCategoryResponse;
-  };
-  success?: boolean;
+export type MultiSearchResponse = {
+  PERSONADDRESSBOOK?: MultiSearchCategoryResponse;
 };
 
 const PERSON_CATEGORY = 'PERSONADDRESSBOOK';
 
-const isRecord = (value: unknown): value is JsonRecord =>
-  typeof value === 'object' && value !== null && !Array.isArray(value);
-
-const readRecord = (record: JsonRecord | null, key: string): JsonRecord | null => {
-  const value = record?.[key];
-
-  if (isRecord(value)) {
-    return value;
-  }
-
-  if (Array.isArray(value) && isRecord(value[0])) {
-    return value[0];
-  }
-
-  return null;
-};
-
-const readString = (record: JsonRecord | null, key: string): string | null => {
-  const value = record?.[key];
-  return typeof value === 'string' && value.trim() !== '' ? value : null;
-};
-
-const readBoolean = (record: JsonRecord | null, key: string): boolean | null => {
-  const value = record?.[key];
-  return typeof value === 'boolean' ? value : null;
-};
-
-const readFirstRecord = (record: JsonRecord | null, key: string): JsonRecord | null => {
-  const value = record?.[key];
-
-  if (isRecord(value)) {
-    return value;
-  }
-
-  if (Array.isArray(value) && isRecord(value[0])) {
-    return value[0];
-  }
-
-  return null;
-};
-
-const readContactValue = (person: JsonRecord, key: string): string | null => {
-  const contact = readRecord(person, key);
-
-  if (contact === null) {
-    return readString(person, key);
-  }
-
-  if (readBoolean(contact, 'hide') === true || readBoolean(contact, 'phoneHide') === true) {
+const getContactValue = (contact?: MultiSearchContact | null): string | null => {
+  if (
+    contact === null ||
+    contact === undefined ||
+    contact.hide === true ||
+    contact.phoneHide === true
+  ) {
     return null;
   }
 
-  return readString(contact, 'value');
+  return contact.value?.trim() || null;
 };
 
-const readFirstString = (record: JsonRecord | null, keys: string[]): string | null => {
-  for (const key of keys) {
-    const value = readString(record, key);
-
-    if (value !== null) {
-      return value;
-    }
-  }
-
-  return null;
-};
-
-const hasPersonFields = (record: JsonRecord): boolean =>
-  ['pbasic', 'jbasic', 'personUuid', 'employeeId', 'fullName', 'fio'].some(
-    (key) => record[key] !== undefined
+const getInitials = (
+  fullName: string,
+  firstName?: string | null,
+  lastName?: string | null
+): string => {
+  const names = [firstName, lastName].filter(
+    (value): value is string => typeof value === 'string' && value.trim() !== ''
   );
+  const source = names.length > 0 ? names : fullName.split(/\s+/u);
 
-const unwrapPerson = (record: JsonRecord): JsonRecord => {
-  if (hasPersonFields(record)) {
-    return record;
-  }
-
-  for (const key of ['data', 'source', '_source', 'person', 'payload']) {
-    const nestedRecord = readRecord(record, key);
-
-    if (nestedRecord !== null && hasPersonFields(nestedRecord)) {
-      return nestedRecord;
-    }
-  }
-
-  return record;
-};
-
-const getInitials = (fullName: string, firstName: string | null, lastName: string | null): string => {
-  const source = [firstName, lastName].filter((value): value is string => value !== null);
-  const names = source.length > 0 ? source : fullName.split(/\s+/u);
-
-  return names
+  return source
     .slice(0, 2)
     .map((name) => name.charAt(0).toLocaleUpperCase('ru'))
     .join('');
 };
 
-const getStatus = (person: JsonRecord, basic: JsonRecord | null): EmployeeStatus => {
+const getStatus = (person: MultiSearchPerson): EmployeeStatus => {
   if (person.jbadgeabsencevacation !== null && person.jbadgeabsencevacation !== undefined) {
     return 'vacation';
   }
 
-  const status = readString(basic, 'status')?.toLocaleUpperCase('ru');
-  const firedDate = readString(basic, 'firedDate');
+  const status = person.jbasic?.status?.toLocaleUpperCase('ru');
+  const hasFiredDate =
+    person.jbasic?.firedDate !== null && person.jbasic?.firedDate !== undefined;
 
-  if (firedDate !== null || (status !== null && status !== 'АКТИВНЫЙ')) {
+  if (hasFiredDate || (status !== undefined && status !== 'АКТИВНЫЙ')) {
     return 'offline';
   }
 
@@ -172,92 +148,54 @@ const createContacts = (
   return contacts;
 };
 
-const mapPerson = (value: unknown, index: number): Employee | null => {
-  if (!isRecord(value)) {
+const mapPerson = (person: MultiSearchPerson): Employee | null => {
+  const personalData = person.pbasic;
+  const employeeData = person.jbasic;
+  const unit = person.junit?.unit?.[0];
+  const position = person.jposition?.position?.[0];
+  const fullName =
+    personalData?.fullName?.trim() ||
+    [personalData?.lastName, personalData?.firstName, personalData?.midName]
+      .filter((value): value is string => typeof value === 'string' && value.trim() !== '')
+      .join(' ');
+  const employeeNumber = employeeData?.employeeId?.trim() || '';
+  const id = person.personUuid?.trim() || employeeNumber;
+
+  if (id === '' || fullName === '') {
     return null;
   }
 
-  const person = unwrapPerson(value);
-  const personalData = readRecord(person, 'pbasic');
-  const employeeData = readRecord(person, 'jbasic');
-  const unitData = readFirstRecord(readRecord(person, 'junit'), 'unit');
-  const positionData = readFirstRecord(readRecord(person, 'jposition'), 'position');
-  const firstName =
-    readFirstString(personalData, ['firstName', 'givenName']) ??
-    readFirstString(person, ['firstName', 'givenName']);
-  const lastName =
-    readFirstString(personalData, ['lastName', 'familyName']) ??
-    readFirstString(person, ['lastName', 'familyName']);
-  const middleName =
-    readFirstString(personalData, ['midName', 'middleName']) ??
-    readFirstString(person, ['midName', 'middleName']);
-  const composedName = [lastName, firstName, middleName]
-    .filter((item): item is string => item !== null)
-    .join(' ');
-  const fullName =
-    readFirstString(personalData, ['fullName', 'fio', 'displayName', 'name']) ??
-    readFirstString(person, ['fullName', 'fio', 'displayName', 'title', 'name']) ??
-    (composedName === '' ? 'Сотрудник' : composedName);
-  const employeeNumber =
-    readFirstString(employeeData, ['employeeId', 'employeeNumber', 'tabNumber']) ??
-    readFirstString(person, ['employeeId', 'employeeNumber', 'tabNumber']) ??
-    '';
-  const responseId =
-    readFirstString(person, ['personUuid', 'personUUID', 'personId', 'entityId', 'uuid', 'id']) ??
-    readFirstString(value, ['personUuid', 'personId', 'entityId', 'uuid', 'id']);
-  const id = responseId ?? (employeeNumber === '' ? `search-result-${index}` : employeeNumber);
-
-  const phone =
-    readContactValue(person, 'jcontactsinterofficetel') ??
-    readFirstString(person, ['phone', 'workPhone']);
+  const phone = getContactValue(person.jcontactsinterofficetel);
   const mobilePhone =
-    readContactValue(person, 'jcontactsmobile') ??
-    readContactValue(person, 'pcontactsmobile') ??
-    readFirstString(person, ['mobilePhone', 'mobile']);
+    getContactValue(person.jcontactsmobile) ?? getContactValue(person.pcontactsmobile);
   const email =
-    readContactValue(person, 'jcontactsinterofficeemail') ??
-    readContactValue(person, 'jcontactscompanyemail') ??
-    readContactValue(person, 'jcontactsexternalemail') ??
-    readContactValue(person, 'pcontactsexternalemail') ??
-    readFirstString(person, ['email', 'workEmail']) ??
+    getContactValue(person.jcontactsinterofficeemail) ??
+    getContactValue(person.jcontactscompanyemail) ??
+    getContactValue(person.jcontactsexternalemail) ??
+    getContactValue(person.pcontactsexternalemail) ??
     '';
-  const state = readString(unitData, 'state');
-  const city = readString(unitData, 'city');
-  const workplaceParts = [state, city].filter(
-    (item, index, items): item is string => item !== null && items.indexOf(item) === index
-  );
+  const workplace = [unit?.state, unit?.city]
+    .filter(
+      (value, index, values): value is string =>
+        typeof value === 'string' && value.trim() !== '' && values.indexOf(value) === index
+    )
+    .join(', ');
 
   return {
     id,
     fullName,
-    subtitle:
-      readString(unitData, 'balanceUnitName') ??
-      readFirstString(person, ['company', 'subtitle']) ??
-      '',
-    avatarInitials: getInitials(fullName, firstName, lastName),
-    status: getStatus(person, employeeData),
-    shortStructure:
-      readString(unitData, 'balanceUnitName') ??
-      readString(unitData, 'shortName') ??
-      readFirstString(person, ['shortStructure', 'structureName']) ??
-      '',
-    departmentId:
-      readString(unitData, 'unitId') ?? readFirstString(person, ['departmentId', 'unitId']) ?? '',
-    departmentName:
-      readString(unitData, 'fullName') ??
-      readString(unitData, 'shortName') ??
-      readFirstString(person, ['departmentName', 'unitName', 'department']) ??
-      '',
-    position:
-      readString(positionData, 'fullName') ??
-      readString(positionData, 'shortName') ??
-      readFirstString(person, ['positionName', 'position', 'jobTitle']) ??
-      '',
+    subtitle: unit?.balanceUnitName?.trim() || person.company?.trim() || '',
+    avatarInitials: getInitials(fullName, personalData?.firstName, personalData?.lastName),
+    status: getStatus(person),
+    shortStructure: unit?.balanceUnitName?.trim() || unit?.shortName?.trim() || '',
+    departmentId: unit?.unitId?.trim() || '',
+    departmentName: unit?.fullName?.trim() || unit?.shortName?.trim() || '',
+    position: position?.fullName?.trim() || position?.shortName?.trim() || '',
     employeeNumber,
     phone,
     mobilePhone,
     email,
-    workplace: workplaceParts.join(', '),
+    workplace,
     managerName: 'не указан',
     contacts: createContacts(phone, mobilePhone, email),
   };
@@ -291,6 +229,26 @@ export const getSearchData = async ({
   );
 };
 
+export const normalizeMultiSearchResponse = (
+  response: MultiSearchResponse,
+  query: string
+): EmployeeSearchResponse => {
+  const categoryData = response.PERSONADDRESSBOOK?.data;
+  const content = categoryData?.content;
+
+  if (!Array.isArray(content)) {
+    throw new Error('MultiSearch response does not contain PERSONADDRESSBOOK content');
+  }
+
+  const items = content.map(mapPerson).filter((employee): employee is Employee => employee !== null);
+
+  return {
+    items,
+    query,
+    total: categoryData?.totalElements ?? items.length,
+  };
+};
+
 export const fetchDirectoryEmployees = async (
   query: string,
   signal?: AbortSignal,
@@ -304,17 +262,6 @@ export const fetchDirectoryEmployees = async (
     categories: [PERSON_CATEGORY],
     orgFilter,
   });
-  const content = response.data?.PERSONADDRESSBOOK?.data?.content;
 
-  if (!Array.isArray(content)) {
-    throw new Error('MultiSearch response does not contain PERSONADDRESSBOOK content');
-  }
-
-  const items = content.map(mapPerson).filter((employee): employee is Employee => employee !== null);
-
-  return {
-    items,
-    query,
-    total: response.data?.PERSONADDRESSBOOK?.data?.totalElements ?? items.length,
-  };
+  return normalizeMultiSearchResponse(response, query);
 };

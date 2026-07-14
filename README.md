@@ -89,7 +89,7 @@ Mock-сценарии продолжают обслуживать недавни
   &category=PERSONADDRESSBOOK
 ```
 
-Общий запросник добавляет заголовки `HRP-Device-Type` и `X-HRP-Device-Type`. Результаты читаются из `data.PERSONADDRESSBOOK.data.content`. До выбора структуры `orgFilter` в запрос не добавляется.
+Общий запросник добавляет заголовки `HRP-Device-Type` и `X-HRP-Device-Type` и извлекает внешнее поле `data`. Feature-код читает `PERSONADDRESSBOOK.data.content`. До выбора структуры `orgFilter` в запрос не добавляется.
 
 ## Реализованный scope
 

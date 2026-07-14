@@ -46,7 +46,13 @@ export class HttpRequest {
       throw new HttpRequestError(response.status, `Request failed with status ${response.status}`);
     }
 
-    return (await response.json()) as T;
+    const payload = (await response.json()) as unknown;
+
+    if (typeof payload === 'object' && payload !== null && 'data' in payload) {
+      return payload.data as T;
+    }
+
+    return payload as T;
   }
 
   private resolvePath(path: string): string {

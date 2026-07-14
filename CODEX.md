@@ -56,7 +56,7 @@
 - Общий запросник восстановлен в исходном пути `src/http-requests/http.ts`: `HttpRequest('/api-web/', httpRequestOptions)` задаёт обработку ошибок и системные device headers.
 - Поиск сотрудников выполняется функцией `getSearchData` из `src/apps/AddressBook/api/directory/search.ts` через внешний общий `http`, без глобального перехвата `window.fetch`.
 - `orgFilter` имеет тип `string | null`: при текущем значении `null` параметр не добавляется в URL, а после выбора структуры передаётся её UUID.
-- Ответ `multiSearch` читается из `data.PERSONADDRESSBOOK.data.content` и типобезопасно нормализуется в контракт `Employee`; запрос получает `AbortSignal` и отменяется при смене query.
+- Общий `http.get` сам извлекает внешнее поле `data` сетевого ответа, поэтому результат `getSearchData` имеет корнем `PERSONADDRESSBOOK`, а сотрудники читаются из `PERSONADDRESSBOOK.data.content`.
 - В локальной среде `@hrplatform/utils` и `@pulse/ui/theme` эмулируются host-stubs через одинаковые Vite/TypeScript aliases; в целевом окружении используются реальные пакеты.
 - Локальный Vite dev-server проксирует `/api-web` на `https://hr-dev.sberbank.ru`; в host-окружении используется тот же относительный API path.
 - Правило общего запросника закреплено в `CODEX-RULES.MD`, `README.md` и `docs/HTTP-REQUESTS.md`: feature-код импортирует готовый `http`, не создаёт собственный `HttpRequest`, не дублирует device headers и не использует прямой `fetch` для продуктовых API.
@@ -65,5 +65,6 @@
 - Обязательный маршрут работы с DS: краткая памятка `docs/PULSE-UI.md` → поиск в `docs/pulse-ui-types/INDEX.md`/`EXPORTS.md` → чтение только точных generated-файлов и необходимых импортов; полные raw-файлы не загружаются без необходимости.
 - Для встраивания в host Reach Router AddressBook подключается как `path="/addressbook/*"`; wildcard удерживает модуль на дочерних URL, а внутренний `Router basepath="/"` не допускает удвоения `/platform/globalsearch/addressbook` у абсолютных routePaths.
 - До подключения `getGroupHierarchy` корневой экран кадровой структуры показывает сотрудников из `multiSearch`; `query` берётся из URL-параметра `q`, синхронизированного с верхним поиском, а `orgFilter=null` означает отсутствие параметра в URL.
-- Нормализация `multiSearch` поддерживает элементы `content` как с исходными `pbasic/jbasic`, так и с плоскими полями либо обёртками `data/source/_source/person/payload`; валидные объекты не отбрасываются только из-за отсутствия ожидаемого ID.
+- Нормализация `multiSearch` следует подтверждённому контракту `pbasic/jbasic/junit/jposition/personUuid` без альтернативных транспортных обёрток и вымышленных fallback-схем.
 - Весь продуктовый API-код AddressBook хранится внутри `src/apps/AddressBook/**` и переносится вместе с модулем; внешний `src/http-requests/http.ts`, host-stubs, proxy и прочая обвязка относятся только к локальной имитации окружения.
+- Фактическая форма `multiSearch` из контура закреплена тестом `api/directory/search.test.ts`: один элемент `PERSONADDRESSBOOK.data.content` нормализуется с UUID, ФИО, структурой, должностью, email, статусом, адресом и `totalElements`.
