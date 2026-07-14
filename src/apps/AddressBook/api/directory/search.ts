@@ -29,10 +29,7 @@ type MultiSearchCategoryResponse = {
 };
 
 type MultiSearchResponse = {
-  data?: {
-    PERSONADDRESSBOOK?: MultiSearchCategoryResponse;
-  };
-  success?: boolean;
+  PERSONADDRESSBOOK?: MultiSearchCategoryResponse;
 };
 
 const PERSON_CATEGORY = 'PERSONADDRESSBOOK';
@@ -226,7 +223,7 @@ export const fetchDirectoryEmployees = async (
     categories: [PERSON_CATEGORY],
     orgFilter,
   });
-  const content = response.data?.PERSONADDRESSBOOK?.data?.content;
+  const content = response.PERSONADDRESSBOOK?.data?.content;
 
   if (!Array.isArray(content)) {
     throw new Error('MultiSearch response does not contain PERSONADDRESSBOOK content');

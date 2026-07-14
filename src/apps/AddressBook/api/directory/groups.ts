@@ -9,11 +9,6 @@ export type GroupNode = {
   parentTree?: GroupNode;
 };
 
-type GroupsResponse = {
-  data: GroupNode;
-  success: boolean;
-};
-
 const GROUPS_PATH = 'posts/api/v1/addressbook/groups';
 
 export const fetchGroups = async (
@@ -23,15 +18,9 @@ export const fetchGroups = async (
   const path = id === undefined
     ? GROUPS_PATH
     : `${GROUPS_PATH}?id=${encodeURIComponent(id)}`;
-  const response = await http.get<GroupsResponse>(path, {
+  return http.get<GroupNode>(path, {
     input: { signal },
   });
-
-  if (!response.success) {
-    throw new Error('Groups request was not successful');
-  }
-
-  return response.data;
 };
 
 export const getGroupPath = (group: GroupNode): GroupNode[] => {

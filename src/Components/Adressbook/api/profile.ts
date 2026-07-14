@@ -72,11 +72,7 @@ type ProfileWidget = {
   data?: ProfileWidgetData;
 };
 
-type ProfileWidgetsResponse = {
-  data?: ProfileWidget[];
-};
-
-type CustomGroupsResponse = CustomGroup[] | { data?: CustomGroup[] };
+type ProfileWidgetsResponse = ProfileWidget[];
 
 const PROFILE_WIDGETS_PATH =
   'smart-profile/web/widgets/data?widgets=mainInfo_v1&widgets=about&widgets=manager';
@@ -100,9 +96,9 @@ export const fetchProfileMainInfo = async (
     `${PROFILE_WIDGETS_PATH}${userQuery}`,
     { input: { signal } }
   );
-  const mainInfo = response.data?.find((item) => item.code === 'mainInfo_v1')?.data;
-  const about = response.data?.find((item) => item.code === 'about')?.data;
-  const manager = response.data?.find((item) => item.code === 'manager')?.data;
+  const mainInfo = response.find((item) => item.code === 'mainInfo_v1')?.data;
+  const about = response.find((item) => item.code === 'about')?.data;
+  const manager = response.find((item) => item.code === 'manager')?.data;
   const linearManager = manager?.managers?.find((item) => item.isLinear === true);
   const managerName = [linearManager?.lastName, linearManager?.firstName, linearManager?.secondName]
     .filter((item): item is string => item !== undefined && item !== '')
@@ -128,9 +124,7 @@ export const fetchProfileMainInfo = async (
 };
 
 export const fetchCustomGroups = async (signal?: AbortSignal): Promise<CustomGroup[]> => {
-  const response = await http.get<CustomGroupsResponse>('srv/v7/people/teams', {
+  return http.get<CustomGroup[]>('srv/v7/people/teams', {
     input: { signal, headers: { Accept: 'application/json' } },
   });
-
-  return Array.isArray(response) ? response : response.data ?? [];
 };

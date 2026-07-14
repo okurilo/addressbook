@@ -18,7 +18,7 @@
 - Специфичный alias `@pulse/ui/components/*` направлен в `src/stubs/pulse/ui/*`, общий `@pulse/*` — в `src/stubs/pulse/*`; одинаковые правила разрешения поддерживаются в Vite и TypeScript.
 - Переключение mock-сценариев хранится в `localStorage` и применяется через перехват `window.fetch` только для запросов `/api/*`.
 - Итерация 1 держит `DirectoryLayout` выше `Router`, чтобы общий header и навигация не перемонтировались при переходах между дочерними страницами.
-- Итерация 2 использует глобальную строку поиска как источник `q` в URL, а сами запросы на экран контактов запускаются с debounce `280ms`.
+- Глобальная строка поиска хранит `q` в URL; suggestions и запрос результатов используют подтверждённый debounce `500ms`.
 - Итерация 4 переводит избранное на mock API `/api/directory/favorites` с хранением списка id в `localStorage`, чтобы состояние было общим для всех экранов.
 - Итерация 3 расширяет mock-сотрудников до единой модели для списка и визитки, а endpoint `/api/directory/employees/:employeeId` возвращает `404` для неизвестного id.
 - Возврат из визитки сначала использует browser history, а при прямом открытии URL возвращает на `/` с сохранением `location.search`, чтобы не терять поисковый запрос.
@@ -57,7 +57,7 @@
 - Общий запросник восстановлен в исходном пути `src/http-requests/http.ts`: `HttpRequest('/api-web/', httpRequestOptions)` задаёт обработку ошибок и системные device headers.
 - Поиск сотрудников выполняется функцией `getSearchData` через `http.get`, без глобального перехвата `window.fetch`; прежний `src/host/directorySearchApi.ts` удалён.
 - `orgFilter` имеет тип `string | null`: при текущем значении `null` параметр не добавляется в URL, UUID добавляется только для реально выбранной структуры.
-- Ответ `multiSearch` читается из `data.PERSONADDRESSBOOK.data.content` и типобезопасно нормализуется в контракт `Employee`; запрос получает `AbortSignal` и отменяется при смене query.
+- Общий `HttpRequest` снимает внешнюю транспортную оболочку `data`; поэтому feature-код `multiSearch` читает `PERSONADDRESSBOOK.data.content`, `groups` получает `GroupNode`, а Profile — массив widgets без повторного `response.data`.
 - В локальной среде `@hrplatform/utils` и `@pulse/ui/theme` эмулируются host-stubs через одинаковые Vite/TypeScript aliases; в целевом окружении используются реальные пакеты.
 - Локальный Vite dev-server проксирует `/api-web` на `https://hr-dev.sberbank.ru`; в host-окружении используется тот же относительный API path.
 - Правило общего запросника закреплено в `CODEX-RULES.MD`, `README.md` и `docs/HTTP-REQUESTS.md`: feature-код импортирует готовый `http`, не создаёт собственный `HttpRequest`, не дублирует device headers и не использует прямой `fetch` для продуктовых API.
@@ -76,3 +76,5 @@
 - Глобальная строка применяется по Enter на текущей вкладке и сохраняется в `q` при обычной навигации; выбор существующей подсказки человека или структуры завершает поиск, очищает строку и открывает соответствующий экран.
 - Граница поставки ограничена `src/Components/Adressbook` и `src/apps/AddressBook`: поиск и оргструктура размещены в `src/apps/AddressBook/api/directory`, Profile API — в `src/Components/Adressbook/api`; снаружи остаётся только общий `src/http-requests/http.ts`.
 - Ошибочный подход с feature-адаптерами `src/http-requests/directorySearch.ts`, `groups.ts` и `profile.ts` запрещён, потому что эти файлы теряются при копировании AddressBook в итоговый проект.
+- Экран «недавние» получает людей только из `globalsearch/api/v3/history` с `paths=persons&size=4`; mock `/api/directory/recent` в продуктовом сценарии не используется.
+- «Избранное» загружает `srv/v7/people/teams`, находит custom-группу «Избранное» и затем загружает `srv/v7/people/teams/{id}`; mock `/api/directory/favorites` не участвует в этом потоке.

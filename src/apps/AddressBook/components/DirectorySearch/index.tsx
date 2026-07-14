@@ -38,7 +38,7 @@ export const DirectorySearch = (): JSX.Element => {
   const queryFromUrl = searchParams.get('q') ?? '';
   const [value, setValue] = useState(queryFromUrl);
   const [suggestions, setSuggestions] = useState<DirectorySuggestion[]>([]);
-  const debouncedValue = useDebouncedValue(value, 280);
+  const debouncedValue = useDebouncedValue(value, 500);
   const isFavoritesRoute = location.pathname === routePaths.favorites;
 
   useEffect(() => {

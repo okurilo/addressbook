@@ -29,6 +29,8 @@ export const profileHttp = new HttpRequest('/api-mobile/', httpRequestOptions);
 
 В целевом окружении `HttpRequest` импортируется из `@hrplatform/utils`. Локальная песочница разрешает тот же import-path в типизированный `src/host/hrplatformUtils.ts`; продуктовый файл при этом не меняется.
 
+`HttpRequest` возвращает значение из одной внешней транспортной оболочки `data`. Generic в `http.get<T>()` описывает уже это внутреннее значение; feature-код не должен повторно обращаться к `response.data`.
+
 ## Обязательный способ использования
 
 API-функция импортирует готовый экземпляр `http` и передаёт ему только путь относительно `/api-web/`:
@@ -68,7 +70,7 @@ export const loadData = async (signal?: AbortSignal): Promise<Response> =>
 
 `orgFilter` имеет тип `string | null`. При `null` параметр отсутствует в URL; UUID добавляется только при реально выбранной структуре.
 
-Запрос принимает `AbortSignal`, поэтому предыдущий поиск отменяется при изменении строки или размонтировании экрана. Ответ читается из `data.PERSONADDRESSBOOK.data.content` и нормализуется в текущий контракт `Employee` без `any`.
+Запрос принимает `AbortSignal`, поэтому предыдущий поиск отменяется при изменении строки или размонтировании экрана. После снятия внешней оболочки ответ читается из `PERSONADDRESSBOOK.data.content` и нормализуется в текущий контракт `Employee` без `any`.
 
 Фактический вызов поиска должен сохранять форму проектного запросника:
 
@@ -90,6 +92,6 @@ return http.get<MultiSearchResponse>(
 - в `id` разрешено передавать только строковый UUID, но не объект группы;
 - один явный переход запускает не более одного запроса `groups`, а устаревший запрос отменяется через `AbortSignal`.
 
-Ответ имеет форму `{ data: GroupNode; success: boolean }`. Узел содержит `id`, `type`, `name`, `hasChild`, `children` и опциональный `parentTree`.
+Сервер оборачивает узел в `{ data: GroupNode; success: boolean }`, но `http.get<GroupNode>()` возвращает уже `GroupNode`. Узел содержит `id`, `type`, `name`, `hasChild`, `children` и опциональный `parentTree`.
 
 При пустом текстовом запросе выбранный `group.id` передаётся в `multiSearch` как `orgFilter`. Непустой поиск людей выполняется по всей компании без `orgFilter`.
