@@ -1,9 +1,19 @@
 import { http } from '../../../../http-requests/http';
+import { SearchContextEnum } from './types';
 import type {
   PutSearchHistoryBody,
   SearchHistoryItem,
   SearchHistoryPath,
 } from './types';
+
+const nonPersonContexts: SearchHistoryPath[] = [
+  SearchContextEnum.learningcatalog,
+  SearchContextEnum.service,
+  SearchContextEnum.supportfaq,
+  SearchContextEnum.landingsupport,
+  SearchContextEnum.orgstructure,
+  SearchContextEnum.reportsstatementscopies,
+];
 
 type GetSearchHistoryParams = {
   paths?: SearchHistoryPath;
@@ -12,7 +22,7 @@ type GetSearchHistoryParams = {
 };
 
 export const getSearchHistory = async ({
-  paths = 'all',
+  paths = SearchContextEnum.persons,
   signal,
   size = 4,
 }: GetSearchHistoryParams = {}): Promise<SearchHistoryItem[]> => {
@@ -20,17 +30,19 @@ export const getSearchHistory = async ({
   params.append('paths', paths);
   params.append('size', `${size}`);
 
-  return http.get<SearchHistoryItem[]>(
+  const history = await http.get<SearchHistoryItem[]>(
     `globalsearch/api/v3/history?${params.toString()}`,
     {
       input: { signal },
     }
   );
+
+  return history.filter((item) => !nonPersonContexts.includes(item.key.context));
 };
 
 export const putSearchHistory = async (
   body: PutSearchHistoryBody,
-  path: SearchHistoryPath = 'all'
+  path: SearchHistoryPath = SearchContextEnum.persons
 ): Promise<void> => {
   const params = new URLSearchParams();
   const pathsValue = path === 'all' ? 'all' : `${path},all`;

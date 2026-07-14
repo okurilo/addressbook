@@ -121,7 +121,7 @@ return http.get<MultiSearchResponse>(
 Раздел «Все контакты» при пустом `q` загружает недавние записи через:
 
 ```text
-/api-web/globalsearch/api/v3/history?paths=all&size=4
+/api-web/globalsearch/api/v3/history?paths=persons&size=4
 ```
 
-`http.get<SearchHistoryItem[]>` уже извлекает внешнее транспортное поле `data`, поэтому feature-код получает массив напрямую. При выборе записи вызывается `POST /globalsearch/api/v3/history/{id}?path=globalsearch:all`.
+`paths=persons` ограничивает историю поиском людей. Дополнительно feature-код отбрасывает известные неперсональные контексты, чтобы курсы, сервисы и оргструктуры не попадали в «Недавние», даже если backend вернёт смешанный массив. `http.get<SearchHistoryItem[]>` уже извлекает внешнее транспортное поле `data`, поэтому feature-код получает массив напрямую. При выборе записи вызывается `POST /globalsearch/api/v3/history/{id}?path=globalsearch:all`.
