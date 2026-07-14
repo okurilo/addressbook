@@ -92,7 +92,7 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
         {viewState === 'error' ? (
           <RetryState
             title="Не удалось загрузить избранное"
-            description="Попробуйте переключить mock-сценарий или открыть страницу позже."
+            description="Попробуйте повторить запрос или открыть раздел позже."
             onRetry={() => {
               setRetryToken((currentValue) => currentValue + 1);
             }}
