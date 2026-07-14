@@ -41,6 +41,40 @@ export const loadData = async (signal?: AbortSignal): Promise<Response> =>
   });
 ```
 
+## Разбор ответа всех методов http.*
+
+Правило одинаково для `http.get`, `http.post`, `http.put`, `http.patch`, `http.delete` и остальных методов общего запросника. Сетевой ответ приходит в транспортной форме:
+
+```ts
+type NetworkEnvelope<T> = {
+  data: T;
+  success?: boolean;
+};
+```
+
+Запросник извлекает только внешнее `data` до завершения `await`. Поэтому generic описывает внутренний результат:
+
+```ts
+type EmployeeResponse = {
+  items: Employee[];
+};
+
+const response = await http.get<EmployeeResponse>('/employees');
+
+response.items;
+```
+
+Feature-код не должен описывать тип как `{ data: EmployeeResponse }` и не должен читать `response.data.items`.
+
+Если внутри бизнес-контракта тоже есть поле `data`, оно сохраняется:
+
+```text
+сеть:    { data: { PERSONADDRESSBOOK: { data: { content: [...] } } } }
+http.*:  { PERSONADDRESSBOOK: { data: { content: [...] } } }
+```
+
+Нельзя добавлять рекурсивный поиск `data`, `body`, `response`, `result` или другие fallback-обёртки без подтверждённого исключения конкретной ручки.
+
 Обязательные правила:
 
 - не создавать новый `HttpRequest` в feature-коде;
@@ -49,7 +83,9 @@ export const loadData = async (signal?: AbortSignal): Promise<Response> =>
 - не использовать прямой `fetch`, axios или второй HTTP-клиент для продуктовых API;
 - не подменять `window.fetch` ради реальной интеграции;
 - передавать `AbortSignal`, если запрос может устареть при вводе, навигации или размонтировании;
-- тип ответа задавать generic-параметром `http.get<TResponse>` и не использовать `any`.
+- тип ответа задавать generic-параметром `http.get<TResponse>` и не использовать `any`;
+- generic-параметром описывать результат после извлечения внешнего `data`, а не сетевой envelope;
+- разбирать ответ каждого нового `http.*`-запроса согласно этому разделу и фиксировать подтверждённую внутреннюю структуру рядом с API-функцией.
 
 Прямой `fetch` допустим только внутри локального stub реализации `HttpRequest` и существующей PoC mock-инфраструктуры `/api/*`.
 

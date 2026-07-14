@@ -31,6 +31,7 @@ npm run build
 - Проверенные контракты компонентов Pulse UI, aliases и исключения описаны в [`docs/PULSE-UI.md`](docs/PULSE-UI.md).
 - Полная типизация Pulse UI, файловый индекс и инструкция для точечного чтения LLM находятся в [`docs/pulse-ui-types/README.md`](docs/pulse-ui-types/README.md).
 - Контракт общего запросника и поиск сотрудников описаны в [`docs/HTTP-REQUESTS.md`](docs/HTTP-REQUESTS.md).
+- Продуктовые переходы верхнего поиска зафиксированы в [`docs/SEARCH-SCENARIOS.md`](docs/SEARCH-SCENARIOS.md).
 
 Пустые состояния реализуются компонентом `@pulse/ui/components/Empty`. `EmptyState` в используемой версии DS отсутствует и локально не эмулируется.
 
@@ -90,6 +91,8 @@ Mock-сценарии продолжают обслуживать недавни
 ```
 
 Общий запросник добавляет заголовки `HRP-Device-Type` и `X-HRP-Device-Type` и извлекает внешнее поле `data`. Feature-код читает `PERSONADDRESSBOOK.data.content`. До выбора структуры `orgFilter` в запрос не добавляется.
+
+Это правило действует для всех методов `http.*`: generic описывает уже извлечённое внутреннее значение, повторно читать `response.data` в feature-коде нельзя. Вложенные бизнес-поля `data` сохраняются.
 
 ## Реализованный scope
 

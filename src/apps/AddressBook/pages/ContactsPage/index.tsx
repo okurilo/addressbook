@@ -20,7 +20,9 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
   const theme = useTheme();
   const location = useLocation();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
-  const query = new URLSearchParams(location.search).get('q') ?? '';
+  const searchParams = new URLSearchParams(location.search);
+  const query = searchParams.get('q') ?? '';
+  const selectedPersonId = searchParams.get('personId');
   const debouncedQuery = useDebouncedValue(query, 280);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [viewState, setViewState] = useState<ViewState>('idle');
@@ -34,10 +36,14 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
       setViewState('loading');
 
       try {
-        const nextEmployees =
+        const foundEmployees =
           debouncedQuery.trim() === ''
             ? await fetchRecentEmployees()
             : (await fetchEmployees(debouncedQuery, controller.signal)).items;
+        const nextEmployees =
+          selectedPersonId === null
+            ? foundEmployees
+            : foundEmployees.filter((employee) => employee.id === selectedPersonId);
 
         if (!isActive) {
           return;
@@ -61,9 +67,14 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
       isActive = false;
       controller.abort();
     };
-  }, [debouncedQuery, retryToken]);
+  }, [debouncedQuery, retryToken, selectedPersonId]);
 
-  const title = query.trim() === '' ? 'недавние' : 'результаты поиска';
+  const title =
+    selectedPersonId !== null
+      ? 'карточка сотрудника'
+      : query.trim() === ''
+      ? 'недавние'
+      : 'результаты поиска';
 
   return (
     <Section>
@@ -104,6 +115,7 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
         {viewState === 'success' ? (
           <EmployeeTable
             employees={employees}
+            initialExpandedEmployeeId={selectedPersonId}
             favoriteIds={favoriteIds}
             onToggleFavorite={(employeeId) => {
               ignorePromise(toggleFavorite(employeeId));
