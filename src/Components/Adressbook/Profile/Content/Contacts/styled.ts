@@ -19,8 +19,9 @@ export const RowStyled = styled('div')({
   gap: 8,
 });
 
-export const Link = styled.a(({ theme }) => ({
+export const Link = styled('a')<{ font?: object }>(({ font }) => ({
+  ...font,
   lineHeight: 'initial',
   margin: 0,
-  color: theme.tokens.current.core.link.default,
+  color: 'initial',
 }));

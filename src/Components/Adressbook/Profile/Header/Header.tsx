@@ -4,6 +4,7 @@ import { Success } from '@pulse/ui/components/Snackbar/icons';
 import { toast } from 'react-toastify';
 import { Modal } from '@pulse/ui/components/ModalNew';
 import { useState, useRef, useEffect, useCallback } from 'react';
+import type { ComponentType, PropsWithChildren } from 'react';
 import {
   AvatarSectionStyled,
   ButtonsSectionStyled,
@@ -20,19 +21,29 @@ import { ReactComponent as ShareIcon } from '../assets/share.svg';
 import { ReactComponent as StarIcon } from '../assets/star.svg';
 import { IconButton } from '../../common/IconButton';
 import { QRCodeCore } from './QRCodeCore';
-import { fetchCustomGroups as loadCustomGroups } from '../../api/profile';
-import type { CustomGroup } from '../../api/profile';
-import type { AdressbookAbsence } from '../../types';
+
+interface ICustomGroup {
+  id: string;
+  type: string;
+  typeOrder: number;
+  name: string;
+  isCustom: boolean;
+  structureLink?: string;
+}
 
 type HeaderProps = {
   name: string;
   position: string;
-  employeeNumber: string;
+  employeeNumber?: string;
   photo: string;
   initials: string;
-  absence?: AdressbookAbsence;
+  absence?: { badge?: string; period?: string; icon_dark?: string; icon_light?: string };
   pid: string;
 };
+
+const LegacyModal = Modal as ComponentType<
+  PropsWithChildren<{ type?: 'default'; onClose: () => void }>
+>;
 
 const PopoverContainer = styled('div')<{ $visible: boolean; $top?: boolean }>(
   ({ $visible, $top, theme }) => ({
@@ -70,18 +81,22 @@ export const Header = ({
   initials,
   absence,
   pid,
-}: HeaderProps): JSX.Element => {
+}: HeaderProps) => {
   const { tokens } = useTheme();
   const [isOpenQRModal, setIsOpenQRModal] = useState(false);
-  const [customGroups, setCustomGroups] = useState<CustomGroup[]>([]);
+  const [customGroups, setCustomGroups] = useState<ICustomGroup[]>([]);
   const [showPopover, setShowPopover] = useState(false);
-  const starBtnRef = useRef<HTMLButtonElement>(null);
+  const starBtnRef = useRef<HTMLDivElement>(null);
 
   const profileUrl = pid ? `${window.location.origin}/platform/profile/${pid}` : '';
 
   const fetchCustomGroups = useCallback(async () => {
     try {
-      const data = await loadCustomGroups();
+      const res = await fetch('/api-web/srv/v7/people/teams', {
+        headers: { Accept: 'application/json' },
+      });
+      const payload = (await res.json()) as ICustomGroup[] | { data?: ICustomGroup[] };
+      const data = Array.isArray(payload) ? payload : payload.data ?? [];
       const filtered = data.filter((group) => group.isCustom && group.type === 'группа');
       setCustomGroups(filtered);
     } catch (err) {
@@ -159,9 +174,8 @@ export const Header = ({
         >
           <ShareIcon />
         </IconButton>
-        <div style={{ position: 'relative' }}>
+        <div ref={starBtnRef} style={{ position: 'relative' }}>
           <IconButton
-            ref={starBtnRef}
             color={tokens.current.colors.grey.solid['60']}
             onClick={handleStarClick}
           >
@@ -181,12 +195,9 @@ export const Header = ({
         </div>
       </ButtonsSectionStyled>
       {isOpenQRModal && (
-        <Modal
-          type="default"
-          title="QR-код профиля"
-          header={<QRCodeCore value={profileUrl} size={300} />}
-          onClose={() => setIsOpenQRModal(false)}
-        />
+        <LegacyModal type="default" onClose={() => setIsOpenQRModal(false)}>
+          <QRCodeCore value={profileUrl} size={300} />
+        </LegacyModal>
       )}
     </MainContainerStyled>
   );

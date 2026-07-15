@@ -6,16 +6,16 @@ import type { ProfileViewData } from '../hooks/types';
 
 type BreadcrumbsProps = {
   profile: ProfileViewData;
-  structureType: 'agile' | 'linear';
+  structureType: 'linear' | 'agile';
 };
 
-export const Breadcrumbs = ({ profile, structureType }: BreadcrumbsProps): JSX.Element => {
+export const Breadcrumbs = ({ profile, structureType }: BreadcrumbsProps) => {
   const theme = useTheme();
   const { agile, linear, isLoading } = profile;
 
   const isLinear = structureType === 'linear';
   const items = isLinear ? linear?.orgPath || [] : agile?.orgPath || [];
-  const position = isLinear ? linear?.position : agile?.position;
+  const position = isLinear ? (linear?.position as string) : (agile?.position as string);
 
   return (
     <MainContainerStyled>

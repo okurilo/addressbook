@@ -1,5 +1,4 @@
-import { forwardRef } from 'react';
-import type { PropsWithChildren } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { ButtonStyled } from './styled';
 
 interface IIconButtonProps {
@@ -7,13 +6,14 @@ interface IIconButtonProps {
   color?: string;
 }
 
-export const IconButton = forwardRef<
-  HTMLButtonElement,
-  PropsWithChildren<IIconButtonProps>
->(({ onClick, color, children }, ref) => (
-    <ButtonStyled ref={ref} color={color} onClick={onClick}>
+export const IconButton: FC<PropsWithChildren<IIconButtonProps>> = ({
+  onClick,
+  color,
+  children,
+}) => {
+  return (
+    <ButtonStyled color={color} onClick={onClick}>
       {children}
     </ButtonStyled>
-  ));
-
-IconButton.displayName = 'IconButton';
+  );
+};

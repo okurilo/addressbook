@@ -1,55 +1,27 @@
-import { useEffect, useState } from 'react';
+import { FC } from 'react';
 import { Table } from '../common/Table';
 import { MainContainerStyled } from './styled';
 import { useGetPeople } from './hooks/useGetPeople';
 import { useGetColumns } from './hooks/useGetColumns';
 import { Profile } from '../Profile/Profile';
-import type { AdressbookPerson } from '../types';
 
-type PeopleProps = {
-  people: AdressbookPerson[];
-  isLoading?: boolean;
-  initialExpandedPersonId?: string | null;
-  favoritePersonIds?: string[];
-  onToggleFavorite?: (personId: string) => void;
-};
+// Сделать отдельный виджетом
+export const People: FC = () => {
+  const { people, isLoading } = useGetPeople();
 
-export const People = ({
-  people: sourcePeople,
-  isLoading = false,
-  initialExpandedPersonId,
-  favoritePersonIds = [],
-  onToggleFavorite,
-}: PeopleProps): JSX.Element | null => {
-  const { people } = useGetPeople(sourcePeople, isLoading, favoritePersonIds);
-  const [expandedPersonId, setExpandedPersonId] = useState<string | null | undefined>(
-    initialExpandedPersonId
-  );
+  const columns = useGetColumns();
 
-  useEffect(() => {
-    setExpandedPersonId(initialExpandedPersonId);
-  }, [initialExpandedPersonId]);
-
-  const columns = useGetColumns(onToggleFavorite);
-
-  if (isLoading) {
-    return null;
-  }
-
-  return (
-    <MainContainerStyled>
-      <Table
-        columns={columns}
-        data={people}
-        getRowKey={(person) => person.pid}
-        renderExpanded={(person) => <Profile person={person._profile} pid={person.pid} />}
-        expandedRowKey={expandedPersonId}
-        onRowClick={(_person, personId) => {
-          setExpandedPersonId((currentPersonId) =>
-            currentPersonId === personId ? null : String(personId)
-          );
-        }}
-      />
-    </MainContainerStyled>
-  );
+  if (!isLoading)
+    return (
+      <MainContainerStyled>
+        <Table
+          columns={columns}
+          data={people || []}
+          getRowKey={(u) => u.pid}
+          renderExpanded={(u) => <Profile person={u._profile} pid={u.pid} />}
+          onRowClick={(u) => {}}
+        />
+      </MainContainerStyled>
+    );
+  return null;
 };

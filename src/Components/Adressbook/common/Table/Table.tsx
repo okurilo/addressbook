@@ -66,19 +66,21 @@ export function Table<T>({
 
           return (
             <RowGroup key={key}>
-              <RowCells
-                $template={template}
-                $clickable={clickable}
-                $open={open}
-                role="row"
-                onClick={() => handleRowClick(row, key)}
-              >
-                {columns.map((col) => (
-                  <Cell key={col.key} $align={col.align} role="cell">
-                    {col.render(row)}
-                  </Cell>
-                ))}
-              </RowCells>
+              {!open && (
+                <RowCells
+                  $template={template}
+                  $clickable={clickable}
+                  $open={open}
+                  role="row"
+                  onClick={() => handleRowClick(row, key)}
+                >
+                  {columns.map((col) => (
+                    <Cell key={col.key} $align={col.align} role="cell">
+                      {col.render(row)}
+                    </Cell>
+                  ))}
+                </RowCells>
+              )}
 
               {open && renderExpanded && (
                 <ExpandedPanel role="region">{renderExpanded(row)}</ExpandedPanel>

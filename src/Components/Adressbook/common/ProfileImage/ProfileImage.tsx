@@ -1,27 +1,45 @@
-import type { ReactNode } from 'react';
 import { Avatar } from '@pulse/ui/components/Avatar';
+import { useMemo } from 'react';
+import type { ComponentType, ReactNode } from 'react';
+import { useTheme } from 'styled-components';
+import { getAvatarUrl, getIconUrl, StatusIcon } from '../../compat';
 
 type ProfileImageProps = {
-  absence?: unknown;
+  absence?: { badge?: string; icon_dark?: string; icon_light?: string };
   photo?: string;
   size: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
   pid?: string;
   initials: string;
 };
 
-export const ProfileImage = ({ photo, size, initials }: ProfileImageProps): JSX.Element => {
-  // TODO(addressbook-host): вернуть фото и badge отсутствия после подключения host avatar helpers.
-  const icon: ReactNode =
-    photo === undefined || photo === '' ? undefined : (
-      <img alt="" src={`/api-web/cs/api/1/${photo.replace(/^\//u, '')}`} />
-    );
+const LegacyAvatar = Avatar as ComponentType<{
+  $src: string;
+  $status?: ReactNode;
+  $initials: string;
+  $size: ProfileImageProps['size'];
+  'data-testid'?: string;
+}>;
 
+export const ProfileImage = ({ absence, photo, size, pid, initials }: ProfileImageProps) => {
+  const { mode } = useTheme() as { mode?: 'dark' | 'light' };
+  const statusIconSrc = useMemo(
+    () => (mode === 'dark' ? absence?.icon_dark : absence?.icon_light),
+    [absence, mode]
+  );
   return (
-    <Avatar
-      $icon={icon}
+    <LegacyAvatar
+      $src={photo ? `/api-web/cs/api/1/${photo.replace(/^\//, '')}` : getAvatarUrl(pid)}
+      $status={
+        statusIconSrc && (
+          <StatusIcon
+            data-testid={`avatar-status-icon-${absence?.badge}`}
+            src={getIconUrl(statusIconSrc)}
+          />
+        )
+      }
+      $initials={initials}
       $size={size}
-      $text={initials}
-      $type={icon === undefined ? 'initials' : 'default'}
+      data-testid="search-result_image"
     />
   );
 };

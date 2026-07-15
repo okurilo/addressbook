@@ -1,18 +1,20 @@
+import { useTheme } from 'styled-components';
 import { MainContainerStyled } from './styled';
 import { Body2Regular } from '../typography';
 import { ProfileImage } from '../ProfileImage';
+import type { AdressbookAbsence } from '../../types';
 
 type NameCellProps = {
   data: {
     name: string;
     photo: string;
-    absence?: unknown;
+    absence?: AdressbookAbsence;
     initials: string;
   };
   pid: string;
 };
 
-export const NameCell = ({ data, pid }: NameCellProps): JSX.Element => {
+export const NameCell = ({ data, pid }: NameCellProps) => {
   const { name, photo, absence, initials } = data;
   // const { tokens } = useTheme();
 

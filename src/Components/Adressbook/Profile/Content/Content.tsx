@@ -1,18 +1,17 @@
 import { MainContainerStyled } from './styled';
 import { Contacts } from './Contacts';
 import { Info } from './Info';
-import type { PersonProfile } from '../../People/types';
+import type { PersonProfile } from '../../types';
 import type { ProfileViewData } from '../hooks/types';
-import type { ProfileTabKey } from '../Tabs/constants';
 
 type ContentProps = {
-  activeTab: ProfileTabKey;
+  activeTab: string;
   person: PersonProfile;
   pid: string;
   profile: ProfileViewData;
 };
 
-export const Content = ({ activeTab, person, pid, profile }: ContentProps): JSX.Element | null => {
+export const Content = ({ activeTab, person, pid, profile }: ContentProps) => {
   if (activeTab === 'contacts')
     return (
       <MainContainerStyled>
@@ -27,7 +26,7 @@ export const Content = ({ activeTab, person, pid, profile }: ContentProps): JSX.
   if (activeTab === 'info')
     return (
       <MainContainerStyled>
-        <Info profile={profile} />
+        <Info profile={profile}/>
       </MainContainerStyled>
     );
   return null;

@@ -26,3 +26,30 @@ export type AdressbookPerson = {
   jcontactsexternalemail?: { value?: string };
   absence?: AdressbookAbsence;
 };
+
+export type PersonProfile = {
+  name: string;
+  photo: string;
+  employeeNumber?: string;
+  position: string;
+  initials: string;
+  internalPhone?: string;
+  personalPhone?: string;
+  internalMail?: string;
+  externalEmail?: string;
+  absence?: AdressbookAbsence;
+};
+
+export type PersonRow = {
+  nameCell: {
+    name: string;
+    photo: string;
+    absence?: AdressbookAbsence;
+    initials: string;
+  };
+  position: string;
+  block: string;
+  unit: string;
+  pid: string;
+  _profile: PersonProfile;
+};

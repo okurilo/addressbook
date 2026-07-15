@@ -7,14 +7,14 @@ import { MainContainerStyled, RowStyled, SectionStyled } from './styled';
 import { ReactComponent as PhoneIcon } from '../../assets/phone.svg';
 import { ReactComponent as MailIcon } from '../../assets/mail.svg';
 import { ReactComponent as SberchatIcon } from '../../assets/sberchat.svg';
-import type { ProfileMainInfoV1Data } from '../../hooks';
+import type { ProfileViewData } from '../../hooks/types';
 
 
 interface IContactsProps {
   internalPhone: string | undefined;
   personalPhone: string | undefined;
   pid: string;
-  profile: ProfileMainInfoV1Data & { isLoading: boolean };
+  profile: ProfileViewData;
 }
 export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, profile }) => {
   const handleCopyPhone = (phone: string) => {

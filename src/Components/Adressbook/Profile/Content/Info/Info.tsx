@@ -19,11 +19,7 @@ const MONTHS_RU = [
   'декабря',
 ];
 
-type InfoProps = {
-  profile: ProfileViewData;
-};
-
-export const Info = ({ profile }: InfoProps): JSX.Element => {
+export const Info = ({ profile }: { profile: ProfileViewData }) => {
   const theme = useTheme();
   const { birthDate } = profile;
 

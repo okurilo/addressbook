@@ -1,6 +1,7 @@
 import type { Employee } from '../../api/directory/types';
-import { AdressBook } from '../../../../Components/Adressbook';
+import { AdressBook, AdressbookProvider } from '../../../../Components/Adressbook';
 import type { AdressbookPerson } from '../../../../Components/Adressbook';
+import { EmployeeActions } from '../EmployeeActions';
 
 type EmployeeTableProps = {
   employees: Employee[];
@@ -36,11 +37,27 @@ export const EmployeeTable = ({
     };
   });
 
+  const employeesById = new Map(employees.map((employee) => [employee.id, employee]));
+
   return (
-    <AdressBook
+    <AdressbookProvider
       people={people}
-      favoritePersonIds={favoriteIds}
-      onToggleFavorite={onToggleFavorite}
-    />
+      renderActions={(personId) => {
+        const employee = employeesById.get(personId);
+
+        return employee === undefined ? null : (
+          <EmployeeActions
+            email={employee.email}
+            isFavorite={favoriteIds.includes(personId)}
+            onToggleFavorite={() => {
+              onToggleFavorite(personId);
+            }}
+            phone={employee.phone}
+          />
+        );
+      }}
+    >
+      <AdressBook />
+    </AdressbookProvider>
   );
 };
