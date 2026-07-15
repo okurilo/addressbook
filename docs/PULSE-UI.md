@@ -31,6 +31,7 @@
 | `components/Input` | DS contract | native input props, suggestions API, `placeWhereUsed` |
 | `components/Layout` | используемый экспорт | используется только `Content`; отдельного `Layout/types.ts` в выгрузке нет |
 | `components/Empty` | DS contract | обязательные `type`, `description`; встроенные действия через button props |
+| `components/Empty/Page` | локальный path-adapter | реэкспорт подтверждённого контракта `components/Empty` |
 
 ## Используемые компоненты
 
@@ -125,6 +126,9 @@ interface LoaderProps {
 ```tsx
 import { Empty } from '@pulse/ui/components/Empty';
 ```
+
+Переданный AddressBook также использует path `@pulse/ui/components/Empty/Page`. В локальной
+песочнице этот path является тонким реэкспортом того же `Empty` и не расширяет его props.
 
 Подтверждённые базовые props:
 
