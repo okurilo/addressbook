@@ -1,10 +1,7 @@
 import type { Employee, EmployeeSearchResponse } from './types';
 import { fetchDirectoryEmployees } from './search';
-export {
-  addFavoriteEmployee,
-  fetchFavoriteEmployees,
-  removeFavoriteEmployee,
-} from './favorites';
+
+export { addFavoriteEmployee, fetchFavoriteEmployees, removeFavoriteEmployee } from './favorites';
 
 export class DirectoryApiError extends Error {
   public readonly status: number;
@@ -33,3 +30,4 @@ export const fetchEmployees = async (
 
 export const fetchEmployeeById = async (employeeId: string): Promise<Employee> =>
   fetchJson<Employee>(`/api/directory/employees/${encodeURIComponent(employeeId)}`);
+

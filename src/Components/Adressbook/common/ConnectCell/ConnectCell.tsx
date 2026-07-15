@@ -6,3 +6,4 @@ export const ConnectCell = ({ personId }: { personId: string }) => {
 
   return <MainContainerStyled>{renderActions?.(personId)}</MainContainerStyled>;
 };
+

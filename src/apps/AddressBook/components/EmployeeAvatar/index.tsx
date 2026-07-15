@@ -8,9 +8,14 @@ type EmployeeAvatarProps = {
   size?: 'm' | 'l';
 };
 
-export const EmployeeAvatar = ({ initials, status, size = 'm' }: EmployeeAvatarProps): JSX.Element => (
+export const EmployeeAvatar = ({
+  initials,
+  status,
+  size = 'm',
+}: EmployeeAvatarProps): JSX.Element => (
   <Wrapper $size={size}>
     <Avatar $type="initials" $size={size} $text={initials} />
     <StatusDot $status={status} />
   </Wrapper>
 );
+

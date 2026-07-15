@@ -1,9 +1,4 @@
-import type {
-  Employee,
-  EmployeeContact,
-  EmployeeSearchResponse,
-  EmployeeStatus,
-} from './types';
+import type { Employee, EmployeeContact, EmployeeSearchResponse, EmployeeStatus } from './types';
 import { http } from '../../../../http-requests/http';
 
 type JsonRecord = Record<string, unknown>;
@@ -77,7 +72,11 @@ const readContactValue = (person: JsonRecord, key: string): string | null => {
   return readString(contact, 'value');
 };
 
-const getInitials = (fullName: string, firstName: string | null, lastName: string | null): string => {
+const getInitials = (
+  fullName: string,
+  firstName: string | null,
+  lastName: string | null
+): string => {
   const source = [firstName, lastName].filter((value): value is string => value !== null);
   const names = source.length > 0 ? source : fullName.split(/\s+/u);
 
@@ -203,7 +202,9 @@ export const getSearchData = async ({
   }
 
   return http.get<MultiSearchResponse>(
-    `/globalsearch/api/v3/multiSearch?query=${encodeURIComponent(query)}&${searchParams.toString()}`,
+    `/globalsearch/api/v3/multiSearch?query=${encodeURIComponent(
+      query
+    )}&${searchParams.toString()}`,
     {
       input: { signal },
     }
@@ -234,3 +235,4 @@ export const fetchDirectoryEmployees = async (
     query,
   };
 };
+

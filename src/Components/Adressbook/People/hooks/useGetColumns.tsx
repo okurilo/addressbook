@@ -30,3 +30,4 @@ export const useGetColumns = (): Column<PersonRow>[] => {
     },
   ];
 };
+

@@ -33,3 +33,4 @@ export const Profile = ({ person, pid }: ProfileProps) => {
     </MainContainerStyled>
   );
 };
+

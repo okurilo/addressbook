@@ -19,3 +19,4 @@ export const PagePlaceholder = ({ title, description }: PagePlaceholderProps): J
     </Wrapper>
   );
 };
+

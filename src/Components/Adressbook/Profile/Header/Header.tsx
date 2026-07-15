@@ -175,10 +175,7 @@ export const Header = ({
           <ShareIcon />
         </IconButton>
         <div ref={starBtnRef} style={{ position: 'relative' }}>
-          <IconButton
-            color={tokens.current.colors.grey.solid['60']}
-            onClick={handleStarClick}
-          >
+          <IconButton color={tokens.current.colors.grey.solid['60']} onClick={handleStarClick}>
             <StarIcon />
           </IconButton>
           {/* <PopoverContainer $visible={showPopover}>
@@ -202,3 +199,4 @@ export const Header = ({
     </MainContainerStyled>
   );
 };
+

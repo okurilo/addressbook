@@ -25,3 +25,4 @@ export const StatusDot = styled.span<{ $status: EmployeeStatus }>(({ $status }) 
   background: statusColorMap[$status],
   border: '2px solid #ffffff',
 }));
+

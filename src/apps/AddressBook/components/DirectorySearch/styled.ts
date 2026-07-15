@@ -125,3 +125,4 @@ export const FavoriteIcon = styled.span<{ $active: boolean }>(({ theme, $active 
   alignItems: 'center',
   justifyContent: 'center',
 }));
+

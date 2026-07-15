@@ -41,3 +41,4 @@ export const Info = ({ profile }: { profile: ProfileViewData }) => {
     </MainContainerStyled>
   );
 };
+

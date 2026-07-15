@@ -3,14 +3,14 @@ import { useTheme } from 'styled-components';
 import type { RouteComponentProps } from '@reach/router';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
-import { Empty } from '@pulse/ui/components/Empty';
+import { Empty } from '@pulse/ui/components/Empty/Page';
+import { useLocation, useNavigate } from '@reach/router';
 import {
   fetchReferencePhoneCategories,
   fetchReferencePhones,
 } from '../../api/directory/referencePhonesClient';
 import type { ReferencePhone, ReferencePhoneCategory } from '../../api/directory/referencePhones';
 import { RetryState } from '../../components/RetryState';
-import { useLocation, useNavigate } from '@reach/router';
 import { routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
 import {
@@ -353,3 +353,4 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
     </Page>
   );
 };
+

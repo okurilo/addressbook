@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
+import { useLocation, useNavigate } from '@reach/router';
 import { CloseIcon, SearchIcon, StarIcon } from '../icons';
 import { getDepartmentPath, getEmployeePath, routePaths } from '../../routes/routePaths';
-import { useLocation, useNavigate } from '@reach/router';
 import { ignorePromise } from '../../utils/ignorePromise';
 import { fetchEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
@@ -157,9 +157,11 @@ export const DirectorySearch = (): JSX.Element => {
     const pathname = isStructureRoute ? location.pathname : routePaths.contacts;
     const nextSearch = nextParams.toString();
     setIsSuggestionsOpen(false);
-    ignorePromise(navigate(`${pathname}${nextSearch === '' ? '' : `?${nextSearch}`}`, {
-      replace: true,
-    }));
+    ignorePromise(
+      navigate(`${pathname}${nextSearch === '' ? '' : `?${nextSearch}`}`, {
+        replace: true,
+      })
+    );
   };
 
   return (
@@ -279,3 +281,4 @@ export const DirectorySearch = (): JSX.Element => {
     </SearchRow>
   );
 };
+

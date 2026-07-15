@@ -9,7 +9,6 @@ import { ReactComponent as MailIcon } from '../../assets/mail.svg';
 import { ReactComponent as SberchatIcon } from '../../assets/sberchat.svg';
 import type { ProfileViewData } from '../../hooks/types';
 
-
 interface IContactsProps {
   internalPhone: string | undefined;
   personalPhone: string | undefined;
@@ -117,3 +116,4 @@ export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, pro
     </MainContainerStyled>
   );
 };
+

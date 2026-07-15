@@ -1,10 +1,6 @@
 import { http } from '../../../../http-requests/http';
 import { SearchContextEnum } from './types';
-import type {
-  PutSearchHistoryBody,
-  SearchHistoryItem,
-  SearchHistoryPath,
-} from './types';
+import type { PutSearchHistoryBody, SearchHistoryItem, SearchHistoryPath } from './types';
 
 const nonPersonContexts: SearchHistoryPath[] = [
   SearchContextEnum.learningcatalog,
@@ -55,3 +51,4 @@ export const selectSearchHistory = async (id: string): Promise<void> =>
     `globalsearch/api/v3/history/${encodeURIComponent(id)}?path=globalsearch:all`,
     {}
   );
+

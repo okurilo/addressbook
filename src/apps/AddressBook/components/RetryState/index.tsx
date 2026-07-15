@@ -1,4 +1,4 @@
-import { Empty } from '@pulse/ui/components/Empty';
+import { Empty } from '@pulse/ui/components/Empty/Page';
 
 type RetryStateProps = {
   title: string;
@@ -15,3 +15,4 @@ export const RetryState = ({ title, description, onRetry }: RetryStateProps): JS
     onClick={onRetry}
   />
 );
+

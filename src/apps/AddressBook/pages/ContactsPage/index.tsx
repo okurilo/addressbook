@@ -3,7 +3,8 @@ import type { RouteComponentProps } from '@reach/router';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
-import { Empty } from '@pulse/ui/components/Empty';
+import { Empty } from '@pulse/ui/components/Empty/Page';
+import { useLocation, useNavigate } from '@reach/router';
 import { fetchEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
 import { getSearchHistory, selectSearchHistory } from '../../api/history/history';
@@ -13,7 +14,6 @@ import { EmployeeTable } from '../../components/EmployeeTable';
 import { RetryState } from '../../components/RetryState';
 import { useDebouncedValue } from '../../components/useDebouncedValue';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
-import { useLocation, useNavigate } from '@reach/router';
 import { getEmployeePath, routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
 import {
@@ -137,7 +137,9 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
         ) : null}
         {viewState === 'error' ? (
           <RetryState
-            title={isHistoryMode ? 'Не удалось загрузить недавние' : 'Не удалось загрузить сотрудников'}
+            title={
+              isHistoryMode ? 'Не удалось загрузить недавние' : 'Не удалось загрузить сотрудников'
+            }
             description="Попробуйте повторить запрос или открыть раздел позже."
             onRetry={() => {
               setRetryToken((currentValue) => currentValue + 1);
@@ -188,3 +190,4 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
     </Section>
   );
 };
+

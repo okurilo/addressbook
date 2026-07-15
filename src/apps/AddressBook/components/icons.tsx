@@ -47,3 +47,4 @@ export const StarIcon = ({ size = 18 }: IconProps): JSX.Element => (
     />
   </IconBase>
 );
+

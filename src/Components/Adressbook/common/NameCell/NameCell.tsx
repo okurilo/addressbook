@@ -27,3 +27,4 @@ export const NameCell = ({ data, pid }: NameCellProps) => {
     </MainContainerStyled>
   );
 };
+

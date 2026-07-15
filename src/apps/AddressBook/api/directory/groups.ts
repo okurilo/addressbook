@@ -11,13 +11,8 @@ export type GroupNode = {
 
 const GROUPS_PATH = 'posts/api/v1/addressbook/groups';
 
-export const fetchGroups = async (
-  id?: string,
-  signal?: AbortSignal
-): Promise<GroupNode> => {
-  const path = id === undefined
-    ? GROUPS_PATH
-    : `${GROUPS_PATH}?id=${encodeURIComponent(id)}`;
+export const fetchGroups = async (id?: string, signal?: AbortSignal): Promise<GroupNode> => {
+  const path = id === undefined ? GROUPS_PATH : `${GROUPS_PATH}?id=${encodeURIComponent(id)}`;
   return http.get<GroupNode>(path, {
     input: { signal },
   });
@@ -49,3 +44,4 @@ export const getGroupPath = (group: GroupNode): GroupNode[] => {
 
 export const getVisibleGroups = (root: GroupNode): GroupNode[] =>
   root.children.length > 0 ? root.children : [root];
+

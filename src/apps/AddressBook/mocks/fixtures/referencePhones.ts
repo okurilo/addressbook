@@ -73,3 +73,4 @@ export const referencePhonesFixture: ReferencePhone[] = [
     accentColor: '#c95e72',
   },
 ];
+

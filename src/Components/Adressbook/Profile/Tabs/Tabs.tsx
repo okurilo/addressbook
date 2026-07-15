@@ -26,3 +26,4 @@ export const Tabs = ({ activeTab, setActiveTab }: TabsProps) => {
     </MainContainerStyled>
   );
 };
+

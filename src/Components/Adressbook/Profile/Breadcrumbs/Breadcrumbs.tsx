@@ -31,3 +31,4 @@ export const Breadcrumbs = ({ profile, structureType }: BreadcrumbsProps) => {
     </MainContainerStyled>
   );
 };
+

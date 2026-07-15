@@ -18,13 +18,9 @@ export const Sidebar = styled.aside(({ theme }) => ({
 
 export const SidebarButton = styled.button<{ $active: boolean }>(({ theme, $active }) => ({
   minHeight: 48,
-  border: `1px solid ${
-    $active ? theme.tokens.current.core.border.interactive : 'transparent'
-  }`,
+  border: `1px solid ${$active ? theme.tokens.current.core.border.interactive : 'transparent'}`,
   borderRadius: theme.radii.md,
-  background: $active
-    ? theme.tokens.current.core.accent.secondary
-    : 'transparent',
+  background: $active ? theme.tokens.current.core.accent.secondary : 'transparent',
   padding: '12px 16px',
   textAlign: 'left',
   cursor: 'pointer',
@@ -130,3 +126,4 @@ export const CenteredState = styled.div(({ theme }) => ({
   borderRadius: theme.radii.lg,
   padding: 32,
 }));
+

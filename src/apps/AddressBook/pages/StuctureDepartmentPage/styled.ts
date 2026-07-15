@@ -16,18 +16,18 @@ export const Sidebar = styled.aside(({ theme }) => ({
   gap: 16,
 }));
 
-export const SidebarButton = styled.button<{ $active?: boolean }>(
-  ({ theme, $active = false }) => ({
-    border: 'none',
-    background: 'transparent',
-    padding: 0,
-    textAlign: 'left',
-    cursor: 'pointer',
-    color: $active ? theme.tokens.current.core.text.primary : theme.tokens.current.core.text.secondary,
-    fontWeight: $active ? 600 : 400,
-    lineHeight: 1.45,
-  })
-);
+export const SidebarButton = styled.button<{ $active?: boolean }>(({ theme, $active = false }) => ({
+  border: 'none',
+  background: 'transparent',
+  padding: 0,
+  textAlign: 'left',
+  cursor: 'pointer',
+  color: $active
+    ? theme.tokens.current.core.text.primary
+    : theme.tokens.current.core.text.secondary,
+  fontWeight: $active ? 600 : 400,
+  lineHeight: 1.45,
+}));
 
 export const Content = styled.section(({ theme }) => ({
   background: theme.tokens.current.core.background.default,

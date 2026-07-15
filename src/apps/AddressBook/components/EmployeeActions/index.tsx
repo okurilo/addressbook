@@ -29,37 +29,38 @@ export const EmployeeActions = ({
 
   return (
     <Actions
-    onClick={(event) => {
-      event.stopPropagation();
-    }}
-  >
-    {phone === null ? (
-      <Text variant="body2Regular" color={theme.tokens.current.core.text.tertiary}>
-        не указан
-      </Text>
-    ) : (
-      <ActionLink href={`tel:${phone}`}>{phone}</ActionLink>
-    )}
-    <ActionLink href={`mailto:${email}`}>{emailLabel}</ActionLink>
-    <ActionButton
-      type="button"
-      $active={isFavorite}
-      aria-label={isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}
-      onClick={onToggleFavorite}
+      onClick={(event) => {
+        event.stopPropagation();
+      }}
     >
-      <StarIcon />
-    </ActionButton>
-    {extraActions.map((action) => (
+      {phone === null ? (
+        <Text variant="body2Regular" color={theme.tokens.current.core.text.tertiary}>
+          не указан
+        </Text>
+      ) : (
+        <ActionLink href={`tel:${phone}`}>{phone}</ActionLink>
+      )}
+      <ActionLink href={`mailto:${email}`}>{emailLabel}</ActionLink>
       <ActionButton
-        key={action.label}
         type="button"
-        onClick={() => {
-          action.onClick();
-        }}
+        $active={isFavorite}
+        aria-label={isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}
+        onClick={onToggleFavorite}
       >
-        {action.label}
+        <StarIcon />
       </ActionButton>
-    ))}
+      {extraActions.map((action) => (
+        <ActionButton
+          key={action.label}
+          type="button"
+          onClick={() => {
+            action.onClick();
+          }}
+        >
+          {action.label}
+        </ActionButton>
+      ))}
     </Actions>
   );
 };
+

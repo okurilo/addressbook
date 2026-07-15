@@ -92,3 +92,4 @@ export function Table<T>({
     </TableRoot>
   );
 }
+

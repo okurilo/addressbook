@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import type { ProfileMainInfoV1Data, ProfileViewData } from './types';
 
 type WidgetData = Record<string, unknown> & {
-  contactsV2?: { workAddress?: string; mails?: { sigma?: { mail?: string }; alpha?: { mail?: string } } };
+  contactsV2?: {
+    workAddress?: string;
+    mails?: { sigma?: { mail?: string }; alpha?: { mail?: string } };
+  };
   contacts?: { workAddress?: string; mails?: { sigma?: string; alpha?: string } };
   socialNets?: { sberchat?: string };
   schedule?: { timezone?: string };
@@ -35,9 +38,7 @@ export const useProfile = (pid?: string): ProfileViewData => {
       .then((response) => {
         if (cancelled) return;
 
-        const items = response?.data as
-          | Array<{ code: string; data: WidgetData }>
-          | undefined;
+        const items = response?.data as Array<{ code: string; data: WidgetData }> | undefined;
         const mainInfoItem = items?.find((i) => i?.code === 'mainInfo_v1');
         const aboutItem = items?.find((i) => i?.code === 'about');
         const managerItem = items?.find((i) => i?.code === 'manager');
@@ -45,9 +46,7 @@ export const useProfile = (pid?: string): ProfileViewData => {
         const aboutData = aboutItem?.data || {};
 
         const managers = managerItem?.data?.managers;
-        const linearManager = managers?.find(
-          (m) => m?.isLinear
-        );
+        const linearManager = managers?.find((m) => m?.isLinear);
 
         setData({
           workAddress:
@@ -101,3 +100,4 @@ export const useProfile = (pid?: string): ProfileViewData => {
     isLoading,
   };
 };
+

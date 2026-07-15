@@ -15,3 +15,4 @@ export const getEmployeePath = (employeeId: string): string =>
 
 export const getDepartmentPath = (departmentId: string): string =>
   routePaths.structureDepartment.replace(':departmentId', encodeURIComponent(departmentId));
+

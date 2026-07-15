@@ -13,3 +13,4 @@ export type ProfileMainInfoV1Data = {
 };
 
 export type ProfileViewData = ProfileMainInfoV1Data & { isLoading: boolean };
+

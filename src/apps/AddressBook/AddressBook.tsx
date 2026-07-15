@@ -9,3 +9,4 @@ export const AddressBook = (): JSX.Element => (
     </LayoutContent>
   </Suspense>
 );
+

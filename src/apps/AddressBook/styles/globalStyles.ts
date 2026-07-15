@@ -36,3 +36,4 @@ export const GlobalStyles = createGlobalStyle`
     outline-offset: 2px;
   }
 `;
+

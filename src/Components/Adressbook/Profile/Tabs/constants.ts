@@ -5,4 +5,5 @@ export const TABS = [
   { key: 'comment', label: 'комментарий' },
 ] as const;
 
-export type ProfileTabKey = (typeof TABS)[number]['key'];
+export type ProfileTabKey = typeof TABS[number]['key'];
+

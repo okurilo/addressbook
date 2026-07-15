@@ -40,3 +40,4 @@ export type PutSearchHistoryBody = {
   key: SearchHistoryKey;
   tags: string[];
 };
+

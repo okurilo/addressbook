@@ -34,3 +34,4 @@ export const App = (): JSX.Element => (
     </LocationProvider>
   </>
 );
+

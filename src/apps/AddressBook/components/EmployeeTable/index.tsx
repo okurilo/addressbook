@@ -29,10 +29,8 @@ export const EmployeeTable = ({
         position: [{ fullName: employee.position, funcBlock: employee.departmentName }],
       },
       junit: { unit: [{ balanceUnitName: employee.shortStructure }] },
-      jcontactsinterofficetel:
-        employee.phone === null ? undefined : { value: employee.phone },
-      jcontactsmobile:
-        employee.mobilePhone === null ? undefined : { value: employee.mobilePhone },
+      jcontactsinterofficetel: employee.phone === null ? undefined : { value: employee.phone },
+      jcontactsmobile: employee.mobilePhone === null ? undefined : { value: employee.mobilePhone },
       jcontactsinterofficeemail: employee.email === '' ? undefined : { value: employee.email },
     };
   });
@@ -61,3 +59,4 @@ export const EmployeeTable = ({
     </AdressbookProvider>
   );
 };
+

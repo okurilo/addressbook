@@ -3,7 +3,7 @@ import type { RouteComponentProps } from '@reach/router';
 import { useLocation, useNavigate } from '@reach/router';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
-import { Empty } from '@pulse/ui/components/Empty';
+import { Empty } from '@pulse/ui/components/Empty/Page';
 import { useTheme } from 'styled-components';
 import { fetchEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
@@ -12,11 +12,7 @@ import { RetryState } from '../../components/RetryState';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { getDepartmentPath, routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
-import {
-  fetchGroups,
-  getGroupPath,
-  getVisibleGroups,
-} from '../../api/directory/groups';
+import { fetchGroups, getGroupPath, getVisibleGroups } from '../../api/directory/groups';
 import type { GroupNode } from '../../api/directory/groups';
 import {
   Breadcrumbs,
@@ -199,9 +195,7 @@ export const StructureDepartmentPage = ({
           </Breadcrumbs>
         ) : null}
 
-        <Text variant="h2Semibold">
-          {isGlobalSearch ? 'результаты поиска' : group.name}
-        </Text>
+        <Text variant="h2Semibold">{isGlobalSearch ? 'результаты поиска' : group.name}</Text>
         {isGlobalSearch ? (
           <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
             по запросу: {query}
@@ -227,3 +221,4 @@ export const StructureDepartmentPage = ({
     </Page>
   );
 };
+

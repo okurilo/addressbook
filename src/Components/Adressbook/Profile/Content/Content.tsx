@@ -26,8 +26,9 @@ export const Content = ({ activeTab, person, pid, profile }: ContentProps) => {
   if (activeTab === 'info')
     return (
       <MainContainerStyled>
-        <Info profile={profile}/>
+        <Info profile={profile} />
       </MainContainerStyled>
     );
   return null;
 };
+

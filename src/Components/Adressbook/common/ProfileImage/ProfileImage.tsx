@@ -43,3 +43,4 @@ export const ProfileImage = ({ absence, photo, size, pid, initials }: ProfileIma
     />
   );
 };
+

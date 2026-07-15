@@ -3,7 +3,7 @@ import { useLocation } from '@reach/router';
 import type { RouteComponentProps } from '@reach/router';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
-import { Empty } from '@pulse/ui/components/Empty';
+import { Empty } from '@pulse/ui/components/Empty/Page';
 import { fetchFavoriteEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
 import { EmployeeTable } from '../../components/EmployeeTable';
@@ -117,3 +117,4 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
     </Page>
   );
 };
+

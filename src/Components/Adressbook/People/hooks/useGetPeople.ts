@@ -6,3 +6,4 @@ export const useGetPeople = () => {
 
   return { people: createRowData(people), isLoading };
 };
+

@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from '@reach/router';
 import styled, { useTheme } from 'styled-components';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
-import { Empty } from '@pulse/ui/components/Empty';
+import { Empty } from '@pulse/ui/components/Empty/Page';
 import { fetchEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
 import { EmployeeTable } from '../../components/EmployeeTable';
@@ -104,9 +104,8 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
       try {
         const root = await fetchGroups(undefined, controller.signal);
         const nextGroups = getVisibleGroups(root);
-        const nextEmployees = query.trim() === ''
-          ? []
-          : (await fetchEmployees(query, controller.signal, null)).items;
+        const nextEmployees =
+          query.trim() === '' ? [] : (await fetchEmployees(query, controller.signal, null)).items;
 
         if (!isActive) {
           return;
@@ -224,3 +223,4 @@ export const StructureRootPage = (_props: RouteComponentProps): JSX.Element => {
     </Page>
   );
 };
+

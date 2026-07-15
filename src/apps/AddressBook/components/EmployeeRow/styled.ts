@@ -23,3 +23,4 @@ export const PositionCell = styled.div(({ theme }) => ({
   flexDirection: 'column',
   gap: 4,
 }));
+

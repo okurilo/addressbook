@@ -5,7 +5,7 @@ import { Button } from '@pulse/ui/components/Button';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
-import { Empty } from '@pulse/ui/components/Empty';
+import { Empty } from '@pulse/ui/components/Empty/Page';
 import { DirectoryApiError, fetchEmployeeById } from '../../api/directory/client';
 import type { Employee, EmployeeStatus } from '../../api/directory/types';
 import { EmployeeAvatar } from '../../components/EmployeeAvatar';
@@ -38,9 +38,9 @@ const getEmployeeFromLocationState = (state: unknown): Employee | null => {
     return null;
   }
 
-  const employee = state.employee;
+  const { employee } = state;
   return typeof employee === 'object' && employee !== null && 'id' in employee
-    ? employee as Employee
+    ? (employee as Employee)
     : null;
 };
 
@@ -187,3 +187,4 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
     </Page>
   );
 };
+

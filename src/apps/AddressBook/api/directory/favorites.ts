@@ -123,8 +123,7 @@ const normalizeTeamMember = (member: TeamMember): Employee | null => {
 
 export const findFavoritesTeam = (teams: PeopleTeam[]): PeopleTeam | null =>
   teams.find(
-    (team) =>
-      team.isCustom && team.name.trim().toLocaleLowerCase('ru') === FAVORITES_TEAM_NAME
+    (team) => team.isCustom && team.name.trim().toLocaleLowerCase('ru') === FAVORITES_TEAM_NAME
   ) ?? null;
 
 export const normalizeTeamMembers = (response: TeamMembersPage): Employee[] => {
@@ -201,3 +200,4 @@ export const removeFavoriteEmployee = async (employeeId: string): Promise<void> 
 
   await http.post<void>(UPDATE_CUSTOM_GROUP_PATH, body);
 };
+
