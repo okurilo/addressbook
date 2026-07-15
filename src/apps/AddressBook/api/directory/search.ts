@@ -28,7 +28,7 @@ type MultiSearchResponse = {
 };
 
 const PERSON_CATEGORY = 'PERSONADDRESSBOOK';
-const ORGSTRUCTURE_CATEGORY = 'ORGSTRUCTURE_CATEGORY';
+const ORGSTRUCTURE_CATEGORY = 'ORGSTRUCTURE';
 
 const isRecord = (value: unknown): value is JsonRecord =>
   typeof value === 'object' && value !== null && !Array.isArray(value);

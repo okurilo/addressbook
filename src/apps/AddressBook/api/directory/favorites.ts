@@ -36,6 +36,12 @@ export type TeamMembersPage = {
   content?: TeamMember[];
 };
 
+export type CustomPeopleGroup = {
+  id: string;
+  name: string;
+  employees: Employee[];
+};
+
 type CreateCustomGroupBody = {
   name: string;
   persons: string[];
@@ -138,8 +144,37 @@ export const normalizeTeamMembers = (response: TeamMembersPage): Employee[] => {
     .filter((employee): employee is Employee => employee !== null);
 };
 
-const fetchPeopleTeams = async (): Promise<PeopleTeam[]> =>
-  http.get<PeopleTeam[]>(PEOPLE_TEAMS_PATH);
+const fetchPeopleTeams = async (signal?: AbortSignal): Promise<PeopleTeam[]> =>
+  http.get<PeopleTeam[]>(PEOPLE_TEAMS_PATH, { input: { signal } });
+
+const fetchTeamEmployees = async (teamId: string, signal?: AbortSignal): Promise<Employee[]> => {
+  const searchParams = new URLSearchParams({
+    page: '0',
+    size: `${FAVORITES_PAGE_SIZE}`,
+    isCustom: 'true',
+  });
+  const response = await http.get<TeamMembersPage>(
+    `/srv/v7/people/teams/${encodeURIComponent(teamId)}?${searchParams.toString()}`,
+    { input: { signal } }
+  );
+
+  return normalizeTeamMembers(response);
+};
+
+export const fetchCustomPeopleGroups = async (
+  signal?: AbortSignal
+): Promise<CustomPeopleGroup[]> => {
+  const teams = await fetchPeopleTeams(signal);
+  const customTeams = teams.filter((team) => team.isCustom);
+
+  return Promise.all(
+    customTeams.map(async (team) => ({
+      id: team.id,
+      name: team.name,
+      employees: await fetchTeamEmployees(team.id, signal),
+    }))
+  );
+};
 
 export const fetchFavoriteEmployees = async (): Promise<Employee[]> => {
   const teams = await fetchPeopleTeams();
@@ -149,16 +184,7 @@ export const fetchFavoriteEmployees = async (): Promise<Employee[]> => {
     return [];
   }
 
-  const searchParams = new URLSearchParams({
-    page: '0',
-    size: `${FAVORITES_PAGE_SIZE}`,
-    isCustom: 'true',
-  });
-  const response = await http.get<TeamMembersPage>(
-    `/srv/v7/people/teams/${encodeURIComponent(favoritesTeam.id)}?${searchParams.toString()}`
-  );
-
-  return normalizeTeamMembers(response);
+  return fetchTeamEmployees(favoritesTeam.id);
 };
 
 export const addFavoriteEmployee = async (employeeId: string): Promise<void> => {

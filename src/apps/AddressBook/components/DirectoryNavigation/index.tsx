@@ -12,26 +12,41 @@ type NavigationItem = {
   matches: (pathname: string) => boolean;
 };
 
+const normalizePathname = (pathname: string): string => pathname.replace(/\/+$/u, '') || '/';
+
 const navigationItems: NavigationItem[] = [
   {
     key: 'contacts',
     label: 'все контакты',
     href: routePaths.contacts,
-    matches: (pathname) =>
-      pathname === routePaths.contacts || pathname.startsWith(`${routePaths.contacts}/employee/`),
+    matches: (pathname) => {
+      const normalizedPathname = normalizePathname(pathname);
+
+      return (
+        normalizedPathname === routePaths.contacts ||
+        normalizedPathname === routePaths.favorites ||
+        normalizedPathname.startsWith(`${routePaths.contacts}/employee/`)
+      );
+    },
   },
   {
     key: 'structure',
     label: 'кадровая структура',
     href: routePaths.structure,
-    matches: (pathname) =>
-      pathname === routePaths.structure || pathname.startsWith(`${routePaths.structure}/`),
+    matches: (pathname) => {
+      const normalizedPathname = normalizePathname(pathname);
+
+      return (
+        normalizedPathname === routePaths.structure ||
+        normalizedPathname.startsWith(`${routePaths.structure}/`)
+      );
+    },
   },
   {
     key: 'referencePhones',
     label: 'справочные телефоны',
     href: routePaths.referencePhones,
-    matches: (pathname) => pathname === routePaths.referencePhones,
+    matches: (pathname) => normalizePathname(pathname) === routePaths.referencePhones,
   },
 ];
 
@@ -69,4 +84,3 @@ export const DirectoryNavigation = (): JSX.Element => {
     </Nav>
   );
 };
-

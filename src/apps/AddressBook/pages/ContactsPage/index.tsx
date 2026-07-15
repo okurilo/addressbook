@@ -4,47 +4,27 @@ import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
 import { Empty } from '@pulse/ui/components/Empty/Page';
-import { useLocation, useNavigate } from '@reach/router';
+import { useLocation } from '@reach/router';
 import { fetchEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
 import { getSearchHistory, selectSearchHistory } from '../../api/history/history';
-import { SearchContextEnum } from '../../api/history/types';
-import type { SearchHistoryItem, SearchHistoryPath } from '../../api/history/types';
 import { EmployeeTable } from '../../components/EmployeeTable';
 import { RetryState } from '../../components/RetryState';
 import { useDebouncedValue } from '../../components/useDebouncedValue';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
-import { getEmployeePath, routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
-import {
-  Section,
-  SectionHeader,
-  Surface,
-  CenteredState,
-  HistoryList,
-  HistoryItemButton,
-} from './styled';
+import { Section, SectionHeader, Surface, CenteredState } from './styled';
 
 type ViewState = 'idle' | 'loading' | 'success' | 'empty' | 'error';
-
-const personHistoryContexts: SearchHistoryPath[] = [
-  SearchContextEnum.persons,
-  SearchContextEnum.employee,
-  SearchContextEnum.sberpeople,
-];
-
-const isPersonHistoryContext = (context: SearchHistoryPath): boolean =>
-  personHistoryContexts.includes(context);
 
 export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
   const theme = useTheme();
   const location = useLocation();
-  const navigate = useNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const query = new URLSearchParams(location.search).get('q') ?? '';
   const debouncedQuery = useDebouncedValue(query, 500);
   const [employees, setEmployees] = useState<Employee[]>([]);
-  const [historyItems, setHistoryItems] = useState<SearchHistoryItem[]>([]);
+  const [historyIdsByEmployeeId, setHistoryIdsByEmployeeId] = useState<Record<string, string>>({});
   const [viewState, setViewState] = useState<ViewState>('idle');
   const [retryToken, setRetryToken] = useState(0);
 
@@ -58,14 +38,39 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
       try {
         if (debouncedQuery.trim() === '') {
           const nextHistoryItems = await getSearchHistory({ signal: controller.signal });
+          const employeeResults = await Promise.allSettled(
+            nextHistoryItems.map(async (historyItem) => {
+              const response = await fetchEmployees(historyItem.text, controller.signal);
+              const employee = response.items.find((item) => item.id === historyItem.key.id);
+
+              return employee === undefined ? null : { employee, historyId: historyItem.id };
+            })
+          );
 
           if (!isActive) {
             return;
           }
 
-          setEmployees([]);
-          setHistoryItems(nextHistoryItems);
-          setViewState(nextHistoryItems.length === 0 ? 'empty' : 'success');
+          const recentEmployeesById = new Map<string, Employee>();
+          const nextHistoryIdsByEmployeeId: Record<string, string> = {};
+
+          employeeResults.forEach((result) => {
+            if (result.status !== 'fulfilled' || result.value === null) {
+              return;
+            }
+
+            const { employee, historyId } = result.value;
+
+            if (!recentEmployeesById.has(employee.id)) {
+              recentEmployeesById.set(employee.id, employee);
+              nextHistoryIdsByEmployeeId[employee.id] = historyId;
+            }
+          });
+
+          const nextEmployees = Array.from(recentEmployeesById.values());
+          setEmployees(nextEmployees);
+          setHistoryIdsByEmployeeId(nextHistoryIdsByEmployeeId);
+          setViewState(nextEmployees.length === 0 ? 'empty' : 'success');
           return;
         }
 
@@ -76,7 +81,7 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
         }
 
         setEmployees(nextEmployees);
-        setHistoryItems([]);
+        setHistoryIdsByEmployeeId({});
         setViewState(nextEmployees.length === 0 ? 'empty' : 'success');
       } catch {
         if (!isActive) {
@@ -84,7 +89,7 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
         }
 
         setEmployees([]);
-        setHistoryItems([]);
+        setHistoryIdsByEmployeeId({});
         setViewState('error');
       }
     };
@@ -99,25 +104,6 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
 
   const title = query.trim() === '' ? 'недавние' : 'результаты поиска';
   const isHistoryMode = query.trim() === '';
-
-  const openHistoryItem = async (item: SearchHistoryItem): Promise<void> => {
-    await selectSearchHistory(item.id);
-
-    if (!isPersonHistoryContext(item.key.context)) {
-      await navigate(routePaths.contacts);
-      return;
-    }
-
-    const response = await fetchEmployees(item.text);
-    const employee = response.items.find((itemEmployee) => itemEmployee.id === item.key.id);
-
-    if (employee === undefined) {
-      await navigate(routePaths.contacts);
-      return;
-    }
-
-    await navigate(getEmployeePath(employee.id), { state: { employee } });
-  };
 
   return (
     <Section>
@@ -157,30 +143,21 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
             }
           />
         ) : null}
-        {viewState === 'success' && isHistoryMode ? (
-          <HistoryList>
-            {historyItems.map((item) => (
-              <HistoryItemButton
-                key={item.id}
-                type="button"
-                onClick={() => {
-                  ignorePromise(openHistoryItem(item));
-                }}
-              >
-                <Text variant="body1Semibold">{item.text}</Text>
-                <Text variant="caption1Regular" color={theme.tokens.current.core.text.secondary}>
-                  {isPersonHistoryContext(item.key.context)
-                    ? 'Недавний контакт'
-                    : 'Недавний запрос'}
-                </Text>
-              </HistoryItemButton>
-            ))}
-          </HistoryList>
-        ) : null}
-        {viewState === 'success' && !isHistoryMode ? (
+        {viewState === 'success' ? (
           <EmployeeTable
             employees={employees}
             favoriteIds={favoriteIds}
+            onEmployeeOpen={
+              isHistoryMode
+                ? (employeeId) => {
+                    const historyId = historyIdsByEmployeeId[employeeId];
+
+                    if (historyId !== undefined) {
+                      ignorePromise(selectSearchHistory(historyId));
+                    }
+                  }
+                : undefined
+            }
             onToggleFavorite={(employeeId) => {
               ignorePromise(toggleFavorite(employeeId));
             }}
@@ -190,4 +167,3 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
     </Section>
   );
 };
-

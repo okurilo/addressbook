@@ -6,12 +6,14 @@ import { EmployeeActions } from '../EmployeeActions';
 type EmployeeTableProps = {
   employees: Employee[];
   favoriteIds: string[];
+  onEmployeeOpen?: (employeeId: string) => void;
   onToggleFavorite: (employeeId: string) => void;
 };
 
 export const EmployeeTable = ({
   employees,
   favoriteIds,
+  onEmployeeOpen,
   onToggleFavorite,
 }: EmployeeTableProps): JSX.Element => {
   const people: AdressbookPerson[] = employees.map((employee) => {
@@ -48,6 +50,7 @@ export const EmployeeTable = ({
   return (
     <AdressbookProvider
       people={people}
+      onPersonOpen={onEmployeeOpen}
       renderActions={(personId) => {
         const employee = employeesById.get(personId);
 

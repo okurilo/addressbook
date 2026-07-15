@@ -4,10 +4,12 @@ import { MainContainerStyled } from './styled';
 import { useGetPeople } from './hooks/useGetPeople';
 import { useGetColumns } from './hooks/useGetColumns';
 import { Profile } from '../Profile/Profile';
+import { useAdressbookContext } from '../provider';
 
 // Сделать отдельный виджетом
 export const People: FC = () => {
   const { people, isLoading } = useGetPeople();
+  const { onPersonOpen } = useAdressbookContext();
 
   const columns = useGetColumns();
 
@@ -19,10 +21,9 @@ export const People: FC = () => {
           data={people || []}
           getRowKey={(u) => u.pid}
           renderExpanded={(u) => <Profile person={u._profile} pid={u.pid} />}
-          onRowClick={(u) => {}}
+          onRowClick={(person) => onPersonOpen?.(person.pid)}
         />
       </MainContainerStyled>
     );
   return null;
 };
-

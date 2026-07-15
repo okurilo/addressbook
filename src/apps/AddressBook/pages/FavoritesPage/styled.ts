@@ -12,16 +12,30 @@ export const Header = styled.div(({ theme }) => ({
   gap: 16,
 }));
 
-export const FilterChip = styled.div(({ theme }) => ({
+export const GroupTabs = styled.div(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: 8,
+}));
+
+export const GroupTab = styled.button<{ $active: boolean }>(({ theme, $active }) => ({
   minHeight: 32,
   width: 'fit-content',
   padding: `0 ${16}px`,
-  borderRadius: 999,
-  background: theme.tokens.current.core.accent.secondary,
-  color: theme.tokens.current.core.accent.primary,
+  borderRadius: theme.radii.pill,
+  border: `1px solid ${
+    $active ? theme.tokens.current.core.accent.primary : theme.tokens.current.core.border.gentle
+  }`,
+  background: $active
+    ? theme.tokens.current.core.accent.secondary
+    : theme.tokens.current.core.layer['01'],
+  color: $active
+    ? theme.tokens.current.core.accent.primary
+    : theme.tokens.current.core.text.secondary,
   display: 'inline-flex',
   alignItems: 'center',
-  fontWeight: 600,
+  cursor: 'pointer',
+  ...theme.typography.body2Semibold,
 }));
 
 export const Surface = styled.div(({ theme }) => ({
@@ -36,4 +50,3 @@ export const CenteredState = styled.div(({ theme }) => ({
   justifyContent: 'center',
   padding: 32,
 }));
-
