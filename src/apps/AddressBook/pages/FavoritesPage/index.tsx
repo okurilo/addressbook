@@ -32,7 +32,7 @@ const matchesQuery = (employee: Employee, query: string): boolean => {
 
 export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
   const location = useLocation();
-  const { favoriteIds, toggleFavorite, isReady } = useFavoriteEmployees();
+  const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const query = new URLSearchParams(location.search).get('q') ?? '';
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [viewState, setViewState] = useState<ViewState>('loading');
@@ -40,11 +40,6 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
 
   useEffect(() => {
     let isActive = true;
-
-    if (!isReady) {
-      setViewState('loading');
-      return undefined;
-    }
 
     const loadFavorites = async (): Promise<void> => {
       setViewState('loading');
@@ -75,7 +70,7 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
     return () => {
       isActive = false;
     };
-  }, [favoriteIds, isReady, query, retryToken]);
+  }, [favoriteIds, query, retryToken]);
 
   return (
     <Page>

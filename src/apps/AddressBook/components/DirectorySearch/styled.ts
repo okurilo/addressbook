@@ -17,7 +17,7 @@ export const SearchField = styled.div(({ theme }) => ({
 
 export const SearchInput = styled(Input)(({ theme }) => ({
   minHeight: 56,
-  padding: `0 ${32 + 16}px 0 ${24}px`,
+  padding: `0 ${88}px 0 ${24}px`,
   borderRadius: 20,
   border: `1px solid ${theme.tokens.current.core.border.gentle}`,
   boxShadow: 'none',
@@ -29,6 +29,67 @@ export const SearchAdornment = styled.span(({ theme }) => ({
   right: 24,
   color: theme.tokens.current.core.text.secondary,
   pointerEvents: 'none',
+}));
+
+export const ClearButton = styled.button(({ theme }) => ({
+  position: 'absolute',
+  right: 52,
+  width: 28,
+  height: 28,
+  padding: 0,
+  border: 0,
+  borderRadius: theme.radii.pill,
+  background: 'transparent',
+  color: theme.tokens.current.core.icon.secondary,
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  cursor: 'pointer',
+  '&:hover, &:focus-visible': {
+    background: theme.tokens.current.core.layer['02'],
+    outline: 'none',
+  },
+}));
+
+export const Suggestions = styled.div(({ theme }) => ({
+  position: 'absolute',
+  zIndex: theme.zIndices.popover,
+  top: 'calc(100% + 8px)',
+  right: 0,
+  left: 0,
+  maxHeight: 420,
+  overflowY: 'auto',
+  padding: 8,
+  border: `1px solid ${theme.tokens.current.core.border.gentle}`,
+  borderRadius: 20,
+  background: theme.tokens.current.core.background.default,
+  boxShadow: '0 12px 32px rgba(0, 0, 0, 0.14)',
+}));
+
+export const SuggestionButton = styled.button(({ theme }) => ({
+  width: '100%',
+  padding: '12px 16px',
+  border: 'none',
+  borderRadius: 12,
+  background: 'transparent',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  gap: 4,
+  textAlign: 'left',
+  color: theme.tokens.current.core.text.primary,
+  cursor: 'pointer',
+  '&:hover, &:focus-visible': {
+    background: theme.tokens.current.core.layer['02'],
+    outline: 'none',
+  },
+}));
+
+export const SuggestionMeta = styled.span({ minWidth: 0 });
+
+export const SuggestionState = styled.div(({ theme }) => ({
+  padding: 16,
+  color: theme.tokens.current.core.text.secondary,
 }));
 
 export const FavoriteButton = styled.button<{ $active: boolean }>(({ theme, $active }) => ({
@@ -64,4 +125,3 @@ export const FavoriteIcon = styled.span<{ $active: boolean }>(({ theme, $active 
   alignItems: 'center',
   justifyContent: 'center',
 }));
-

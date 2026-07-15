@@ -1,12 +1,11 @@
 import { http } from '../../../../http-requests/http';
 import type { Employee, EmployeeContact } from './types';
 
-const FAVORITES_TEAM_NAME = 'избранное';
+const FAVORITES_TEAM_NAME = 'избранные';
 const FAVORITES_PAGE_SIZE = 20;
 const PEOPLE_TEAMS_PATH = '/srv/v7/people/teams';
 const CUSTOM_GROUPS_PATH = '/srv/v7/people/custom-groups';
 const UPDATE_CUSTOM_GROUP_PATH = `${CUSTOM_GROUPS_PATH}/update`;
-let favoriteEmployeesRequest: Promise<Employee[]> | null = null;
 
 export type PeopleTeam = {
   id: string;
@@ -141,7 +140,7 @@ export const normalizeTeamMembers = (response: TeamMembersPage): Employee[] => {
 const fetchPeopleTeams = async (): Promise<PeopleTeam[]> =>
   http.get<PeopleTeam[]>(PEOPLE_TEAMS_PATH);
 
-const loadFavoriteEmployees = async (): Promise<Employee[]> => {
+export const fetchFavoriteEmployees = async (): Promise<Employee[]> => {
   const teams = await fetchPeopleTeams();
   const favoritesTeam = findFavoritesTeam(teams);
 
@@ -161,17 +160,6 @@ const loadFavoriteEmployees = async (): Promise<Employee[]> => {
   return normalizeTeamMembers(response);
 };
 
-export const fetchFavoriteEmployees = (): Promise<Employee[]> => {
-  if (favoriteEmployeesRequest === null) {
-    favoriteEmployeesRequest = loadFavoriteEmployees().catch((error: unknown) => {
-      favoriteEmployeesRequest = null;
-      throw error;
-    });
-  }
-
-  return favoriteEmployeesRequest;
-};
-
 export const addFavoriteEmployee = async (employeeId: string): Promise<void> => {
   const teams = await fetchPeopleTeams();
   const favoritesTeam = findFavoritesTeam(teams);
@@ -183,7 +171,6 @@ export const addFavoriteEmployee = async (employeeId: string): Promise<void> => 
     };
 
     await http.post<void>(CUSTOM_GROUPS_PATH, body);
-    favoriteEmployeesRequest = null;
     return;
   }
 
@@ -195,7 +182,6 @@ export const addFavoriteEmployee = async (employeeId: string): Promise<void> => 
   };
 
   await http.post<void>(UPDATE_CUSTOM_GROUP_PATH, body);
-  favoriteEmployeesRequest = null;
 };
 
 export const removeFavoriteEmployee = async (employeeId: string): Promise<void> => {
@@ -214,5 +200,4 @@ export const removeFavoriteEmployee = async (employeeId: string): Promise<void> 
   };
 
   await http.post<void>(UPDATE_CUSTOM_GROUP_PATH, body);
-  favoriteEmployeesRequest = null;
 };

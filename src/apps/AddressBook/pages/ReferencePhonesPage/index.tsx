@@ -61,9 +61,17 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
   const [categoriesRetryToken, setCategoriesRetryToken] = useState(0);
   const [phonesRetryToken, setPhonesRetryToken] = useState(0);
   const categoryButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const categoryFromUrl = new URLSearchParams(location.search).get('categoryId') ?? '';
+  const searchParams = new URLSearchParams(location.search);
+  const categoryFromUrl = searchParams.get('categoryId') ?? '';
+  const query = searchParams.get('q') ?? '';
   const activeCategoryId = categoryFromUrl === '' ? categories[0]?.id ?? '' : categoryFromUrl;
   const activeCategory = categories.find((item) => item.id === activeCategoryId) ?? null;
+  const normalizedQuery = query.trim().toLocaleLowerCase('ru');
+  const filteredPhones = phones.filter((phone) =>
+    [phone.title, phone.responsibility, phone.phone ?? ''].some((value) =>
+      value.toLocaleLowerCase('ru').includes(normalizedQuery)
+    )
+  );
 
   useEffect(() => {
     let isActive = true;
@@ -82,8 +90,10 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
         setCategoriesState(nextCategories.length === 0 ? 'empty' : 'success');
 
         if (nextCategories.length > 0 && categoryFromUrl === '') {
+          const nextParams = new URLSearchParams(location.search);
+          nextParams.set('categoryId', nextCategories[0].id);
           ignorePromise(
-            navigate(`${routePaths.referencePhones}?categoryId=${nextCategories[0].id}`, {
+            navigate(`${routePaths.referencePhones}?${nextParams.toString()}`, {
               replace: true,
             })
           );
@@ -144,8 +154,10 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
   }, [activeCategoryId, categoriesState, phonesRetryToken]);
 
   const openCategory = (categoryId: string): void => {
+    const nextParams = new URLSearchParams(location.search);
+    nextParams.set('categoryId', categoryId);
     ignorePromise(
-      navigate(`${routePaths.referencePhones}?categoryId=${categoryId}`, { replace: true })
+      navigate(`${routePaths.referencePhones}?${nextParams.toString()}`, { replace: true })
     );
   };
 
@@ -172,7 +184,7 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
     return (
       <RetryState
         title="Не удалось загрузить категории"
-        description="Попробуйте переключить mock-сценарий или открыть экран позже."
+        description="Попробуйте повторить запрос или открыть экран позже."
         onRetry={() => {
           setCategoriesRetryToken((currentValue) => currentValue + 1);
         }}
@@ -185,7 +197,7 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
       <Empty
         type="noData"
         title="Категории не найдены"
-        description="Для текущего mock-сценария справочные телефоны отсутствуют."
+        description="Справочные телефоны пока отсутствуют."
       />
     );
   }
@@ -246,7 +258,7 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
         {phonesState === 'error' ? (
           <RetryState
             title="Не удалось загрузить службы"
-            description="Попробуйте переключить mock-сценарий или открыть категорию позже."
+            description="Попробуйте повторить запрос или открыть категорию позже."
             onRetry={() => {
               setPhonesRetryToken((currentValue) => currentValue + 1);
             }}
@@ -257,11 +269,19 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
           <Empty
             type="noResults"
             title="Список служб пуст"
-            description="Для выбранной категории службы в текущем mock-сценарии отсутствуют."
+            description="Для выбранной категории службы отсутствуют."
           />
         ) : null}
 
-        {phonesState === 'success' ? (
+        {phonesState === 'success' && filteredPhones.length === 0 ? (
+          <Empty
+            type="noResults"
+            title="Ничего не найдено"
+            description="В выбранной категории нет телефонов, подходящих под глобальный фильтр."
+          />
+        ) : null}
+
+        {phonesState === 'success' && filteredPhones.length > 0 ? (
           <Table>
             <colgroup>
               <col style={{ width: '30%' }} />
@@ -278,7 +298,7 @@ export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element =>
               </tr>
             </thead>
             <tbody>
-              {phones.map((phone) => {
+              {filteredPhones.map((phone) => {
                 const directPhone = phone.phone;
 
                 return (
