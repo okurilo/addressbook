@@ -1,4 +1,11 @@
-import type { Employee, EmployeeContact, EmployeeSearchResponse, EmployeeStatus } from './types';
+import type {
+  DirectorySearchResponse,
+  Employee,
+  EmployeeContact,
+  EmployeeSearchResponse,
+  EmployeeStatus,
+  OrganizationSearchResult,
+} from './types';
 import { http } from '../../../../http-requests/http';
 
 type JsonRecord = Record<string, unknown>;
@@ -25,6 +32,7 @@ type MultiSearchCategoryResponse = {
 
 type MultiSearchResponse = {
   PERSONADDRESSBOOK?: MultiSearchCategoryResponse;
+  ORGSTRUCTURE?: MultiSearchCategoryResponse;
 };
 
 const PERSON_CATEGORY = 'PERSONADDRESSBOOK';
@@ -206,6 +214,27 @@ const mapPerson = (value: unknown): Employee | null => {
   };
 };
 
+const mapOrganization = (value: unknown): OrganizationSearchResult | null => {
+  if (!isRecord(value)) {
+    return null;
+  }
+
+  const id = readString(value, 'id');
+  const fullName = readString(value, 'fullName');
+
+  if (id === null || fullName === null) {
+    return null;
+  }
+
+  return {
+    id,
+    fullName,
+    typeName: readString(value, 'typeName') ?? undefined,
+    layer: readString(value, 'layer') ?? undefined,
+    layerName: readString(value, 'layerName') ?? undefined,
+  };
+};
+
 export const getSearchData = async ({
   signal,
   query,
@@ -246,7 +275,7 @@ export const fetchDirectoryEmployees = async (
     query,
     page: 0,
     size: 20,
-    categories: [PERSON_CATEGORY, ORGSTRUCTURE_CATEGORY],
+    categories: [PERSON_CATEGORY],
     orgFilter,
   });
   const content = response.PERSONADDRESSBOOK?.data?.content;
@@ -257,6 +286,38 @@ export const fetchDirectoryEmployees = async (
 
   return {
     items: content.map(mapPerson).filter((employee): employee is Employee => employee !== null),
+    query,
+  };
+};
+
+export const fetchDirectorySuggestions = async (
+  query: string,
+  signal?: AbortSignal
+): Promise<DirectorySearchResponse> => {
+  const response = await getSearchData({
+    signal,
+    query,
+    page: 0,
+    size: 20,
+    categories: [PERSON_CATEGORY, ORGSTRUCTURE_CATEGORY],
+    orgFilter: null,
+  });
+  const peopleContent = response.PERSONADDRESSBOOK?.data?.content;
+  const organizationContent = response.ORGSTRUCTURE?.data?.content;
+
+  if (!Array.isArray(peopleContent) && !Array.isArray(organizationContent)) {
+    throw new Error('MultiSearch response does not contain directory search content');
+  }
+
+  return {
+    items: Array.isArray(peopleContent)
+      ? peopleContent.map(mapPerson).filter((employee): employee is Employee => employee !== null)
+      : [],
+    organizations: Array.isArray(organizationContent)
+      ? organizationContent
+          .map(mapOrganization)
+          .filter((organization): organization is OrganizationSearchResult => organization !== null)
+      : [],
     query,
   };
 };

@@ -5,9 +5,8 @@ import { useLocation, useNavigate } from '@reach/router';
 import { CloseIcon, SearchIcon, StarIcon } from '../icons';
 import { getDepartmentPath, getEmployeePath, routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
-import { fetchEmployees } from '../../api/directory/client';
+import { fetchSearchSuggestions } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
-import { fetchGroups, getVisibleGroups } from '../../api/directory/groups';
 import { useDebouncedValue } from '../useDebouncedValue';
 import {
   SearchRow,
@@ -29,6 +28,7 @@ type DirectorySuggestion = {
   kind: 'person' | 'group';
   targetId: string;
   employee?: Employee;
+  meta?: string;
 };
 
 export const DirectorySearch = (): JSX.Element => {
@@ -64,40 +64,33 @@ export const DirectorySearch = (): JSX.Element => {
       setIsSuggestionsLoading(true);
 
       try {
-        const [peopleResult, groupsResult] = await Promise.allSettled([
-          fetchEmployees(normalizedQuery, controller.signal, null),
-          fetchGroups(undefined, controller.signal),
-        ]);
+        const result = await fetchSearchSuggestions(normalizedQuery, controller.signal);
 
         if (!isActive) {
           return;
         }
 
-        const peopleSuggestions: DirectorySuggestion[] =
-          peopleResult.status === 'fulfilled'
-            ? peopleResult.value.items.slice(0, 6).map((employee) => ({
-                key: `person:${employee.id}`,
-                value: employee.fullName,
-                kind: 'person',
-                targetId: employee.id,
-                employee,
-              }))
-            : [];
-        const normalizedGroupQuery = normalizedQuery.toLocaleLowerCase('ru');
-        const groupSuggestions: DirectorySuggestion[] =
-          groupsResult.status === 'fulfilled'
-            ? getVisibleGroups(groupsResult.value)
-                .filter((group) =>
-                  group.name.toLocaleLowerCase('ru').includes(normalizedGroupQuery)
-                )
-                .slice(0, 6)
-                .map((group) => ({
-                  key: `group:${group.id}`,
-                  value: group.name,
-                  kind: 'group',
-                  targetId: group.id,
-                }))
-            : [];
+        const peopleSuggestions: DirectorySuggestion[] = result.items
+          .slice(0, 6)
+          .map((employee) => ({
+            key: `person:${employee.id}`,
+            value: employee.fullName,
+            kind: 'person',
+            targetId: employee.id,
+            employee,
+          }));
+        const groupSuggestions: DirectorySuggestion[] = result.organizations
+          .slice(0, 6)
+          .map((organization) => ({
+            key: `group:${organization.id}`,
+            value: organization.fullName,
+            kind: 'group',
+            targetId: organization.id,
+            meta:
+              [organization.typeName, organization.layerName]
+                .filter((item): item is string => item !== undefined && item !== '')
+                .join(' · ') || 'Подразделение',
+          }));
 
         setSuggestions([...peopleSuggestions, ...groupSuggestions]);
       } catch {
@@ -246,7 +239,7 @@ export const DirectorySearch = (): JSX.Element => {
                           ? [suggestion.employee?.shortStructure, suggestion.employee?.position]
                               .filter((item): item is string => item !== undefined && item !== '')
                               .join(' · ')
-                          : 'Подразделение'}
+                          : suggestion.meta}
                       </Text>
                     </SuggestionMeta>
                   </SuggestionButton>

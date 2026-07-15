@@ -19,6 +19,10 @@ import {
   BreadcrumbButton,
   CenteredState,
   Content,
+  HierarchyCard,
+  HierarchyGrid,
+  HierarchyHeader,
+  HierarchyRoot,
   Page,
   Sidebar,
   SidebarButton,
@@ -28,7 +32,7 @@ type StructureDepartmentPageProps = RouteComponentProps & {
   departmentId?: string;
 };
 
-type ViewState = 'loading' | 'success' | 'notFound' | 'error';
+type ViewState = 'loading' | 'success' | 'error';
 
 export const StructureDepartmentPage = ({
   departmentId,
@@ -48,14 +52,6 @@ export const StructureDepartmentPage = ({
     const controller = new AbortController();
     let isActive = true;
 
-    if (departmentId === undefined) {
-      setViewState('notFound');
-      setGroup(null);
-      setEmployees([]);
-      setNavItems([]);
-      return () => controller.abort();
-    }
-
     const loadDepartment = async (): Promise<void> => {
       setViewState('loading');
 
@@ -65,13 +61,17 @@ export const StructureDepartmentPage = ({
           isGlobalSearch ? undefined : departmentId,
           controller.signal
         );
-        const nextEmployees = (
-          await fetchEmployees(
-            isGlobalSearch ? query : '',
-            controller.signal,
-            isGlobalSearch ? null : departmentId
-          )
-        ).items;
+        const isHierarchyRoot = nextGroup.parentTree?.id === nextGroup.id;
+        const nextEmployees =
+          !isGlobalSearch && isHierarchyRoot
+            ? []
+            : (
+                await fetchEmployees(
+                  isGlobalSearch ? query : '',
+                  controller.signal,
+                  isGlobalSearch ? null : nextGroup.id
+                )
+              ).items;
 
         if (!isActive) {
           return;
@@ -111,16 +111,6 @@ export const StructureDepartmentPage = ({
     );
   }
 
-  if (viewState === 'notFound') {
-    return (
-      <Empty
-        type="noResults"
-        title="Подразделение не найдено"
-        description="Проверьте ссылку или вернитесь к корневой структуре."
-      />
-    );
-  }
-
   if (viewState === 'error' || group === null) {
     return (
       <RetryState
@@ -134,30 +124,53 @@ export const StructureDepartmentPage = ({
   }
 
   const isGlobalSearch = query.trim() !== '';
+  const isHierarchyRoot = !isGlobalSearch && group.parentTree?.id === group.id;
   const groupPath = isGlobalSearch ? [] : getGroupPath(group);
   const parentGroup = groupPath.length > 1 ? groupPath[groupPath.length - 2] : null;
+
+  if (isHierarchyRoot) {
+    return (
+      <HierarchyRoot>
+        <HierarchyHeader>
+          <Text variant="h2Semibold">Кадровая структура</Text>
+          <Text variant="body1Regular" color={theme.tokens.current.core.text.secondary}>
+            {group.name}
+          </Text>
+        </HierarchyHeader>
+        {group.children.length === 0 ? (
+          <Empty
+            type="noData"
+            title="Структура пока пуста"
+            description="Вложенные подразделения не найдены."
+          />
+        ) : (
+          <HierarchyGrid>
+            {group.children.map((child) => (
+              <HierarchyCard key={child.id} type="button" onClick={() => openGroup(child.id)}>
+                <Text variant="body1Semibold">{child.name}</Text>
+              </HierarchyCard>
+            ))}
+          </HierarchyGrid>
+        )}
+      </HierarchyRoot>
+    );
+  }
 
   return (
     <Page>
       <Sidebar>
-        <SidebarButton
-          type="button"
-          onClick={() => {
-            if (isGlobalSearch || parentGroup === null) {
-              ignorePromise(navigate(routePaths.structure + location.search));
-              return;
-            }
-
-            openGroup(parentGroup.id);
-          }}
-        >
-          ↑ Наверх
-        </SidebarButton>
+        {!isGlobalSearch && parentGroup !== null ? (
+          <SidebarButton type="button" onClick={() => openGroup(parentGroup.id)}>
+            ↑ Наверх
+          </SidebarButton>
+        ) : null}
         {!isGlobalSearch ? (
           <SidebarButton type="button" $active>
             {group.name}
           </SidebarButton>
-        ) : null}
+        ) : (
+          <Text variant="body1Semibold">кадровая структура</Text>
+        )}
         {navItems.map((item) => (
           <SidebarButton key={item.id} type="button" onClick={() => openGroup(item.id)}>
             {item.name}
@@ -221,4 +234,3 @@ export const StructureDepartmentPage = ({
     </Page>
   );
 };
-

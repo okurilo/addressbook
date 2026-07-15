@@ -7,6 +7,36 @@ export const Page = styled.section(({ theme }) => ({
   alignItems: 'start',
 }));
 
+export const HierarchyRoot = styled.section(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 32,
+}));
+
+export const HierarchyHeader = styled.div(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
+}));
+
+export const HierarchyGrid = styled.div(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+  gap: 24,
+}));
+
+export const HierarchyCard = styled.button(({ theme }) => ({
+  minHeight: 136,
+  padding: 32,
+  borderRadius: 20,
+  border: `1px solid ${theme.tokens.current.core.border.gentle}`,
+  background: theme.tokens.current.core.layer['02'],
+  display: 'flex',
+  alignItems: 'flex-start',
+  textAlign: 'left',
+  cursor: 'pointer',
+}));
+
 export const Sidebar = styled.aside(({ theme }) => ({
   background: theme.tokens.current.core.layer['01'],
   borderRadius: 20,
@@ -72,4 +102,3 @@ export const CenteredState = styled.div(({ theme }) => ({
   borderRadius: 20,
   padding: 32,
 }));
-

@@ -39,3 +39,15 @@ export type EmployeeSearchResponse = {
   items: Employee[];
   query: string;
 };
+
+export type OrganizationSearchResult = {
+  id: string;
+  fullName: string;
+  typeName?: string;
+  layer?: string;
+  layerName?: string;
+};
+
+export type DirectorySearchResponse = EmployeeSearchResponse & {
+  organizations: OrganizationSearchResult[];
+};
