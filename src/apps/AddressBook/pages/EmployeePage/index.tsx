@@ -118,13 +118,13 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
         pid={employee.id}
         person={{
           name: employee.fullName,
-          photo: '',
+          photo: employee.photoUrl ?? '',
           employeeNumber: employee.employeeNumber,
           position: employee.position,
           initials: employee.avatarInitials,
           internalPhone: employee.phone ?? undefined,
           personalPhone: employee.mobilePhone ?? undefined,
-          internalMail: employee.email === '' ? undefined : employee.email,
+          absence: employee.absence,
         }}
       />
     </Page>

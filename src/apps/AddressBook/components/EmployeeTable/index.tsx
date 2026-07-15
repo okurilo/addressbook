@@ -16,22 +16,30 @@ export const EmployeeTable = ({
 }: EmployeeTableProps): JSX.Element => {
   const people: AdressbookPerson[] = employees.map((employee) => {
     const nameParts = employee.fullName.trim().split(/\s+/u);
+    const firstName = employee.firstName ?? nameParts[1] ?? nameParts[0];
+    const lastName = employee.lastName ?? nameParts[0];
 
     return {
       personUuid: employee.id,
       pbasic: {
         fullName: employee.fullName,
-        firstName: nameParts[1] ?? nameParts[0],
-        lastName: nameParts[0],
+        firstName,
+        lastName,
       },
+      pbasicphoto: employee.photoUrl === undefined ? undefined : { url: employee.photoUrl },
       jbasic: { employeeId: employee.employeeNumber },
       jposition: {
-        position: [{ fullName: employee.position, funcBlock: employee.departmentName }],
+        position: [
+          {
+            fullName: employee.position,
+            funcBlock: employee.functionalBlock ?? employee.departmentName,
+          },
+        ],
       },
       junit: { unit: [{ balanceUnitName: employee.shortStructure }] },
       jcontactsinterofficetel: employee.phone === null ? undefined : { value: employee.phone },
       jcontactsmobile: employee.mobilePhone === null ? undefined : { value: employee.mobilePhone },
-      jcontactsinterofficeemail: employee.email === '' ? undefined : { value: employee.email },
+      absence: employee.absence,
     };
   });
 
@@ -59,4 +67,3 @@ export const EmployeeTable = ({
     </AdressbookProvider>
   );
 };
-

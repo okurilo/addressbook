@@ -72,6 +72,23 @@ const readContactValue = (person: JsonRecord, key: string): string | null => {
   return readString(contact, 'value');
 };
 
+const readAbsence = (person: JsonRecord): Employee['absence'] => {
+  const source = readRecord(person, 'absence') ?? readRecord(person, 'jbadgeabsencevacation');
+
+  if (source === null) {
+    return undefined;
+  }
+
+  const absence = {
+    badge: readString(source, 'badge') ?? undefined,
+    period: readString(source, 'period') ?? undefined,
+    icon_dark: readString(source, 'icon_dark') ?? undefined,
+    icon_light: readString(source, 'icon_light') ?? undefined,
+  };
+
+  return Object.values(absence).some((value) => value !== undefined) ? absence : undefined;
+};
+
 const getInitials = (
   fullName: string,
   firstName: string | null,
@@ -148,12 +165,14 @@ const mapPerson = (value: unknown): Employee | null => {
   const phone = readContactValue(value, 'jcontactsinterofficetel');
   const mobilePhone =
     readContactValue(value, 'jcontactsmobile') ?? readContactValue(value, 'pcontactsmobile');
-  const email =
+  const internalEmail =
     readContactValue(value, 'jcontactsinterofficeemail') ??
-    readContactValue(value, 'jcontactscompanyemail') ??
+    readContactValue(value, 'jcontactscompanyemail');
+  const externalEmail =
     readContactValue(value, 'jcontactsexternalemail') ??
-    readContactValue(value, 'pcontactsexternalemail') ??
-    '';
+    readContactValue(value, 'pcontactsexternalemail');
+  const email = internalEmail ?? externalEmail ?? '';
+  const photoUrl = readString(readRecord(value, 'pbasicphoto'), 'url');
   const state = readString(unitData, 'state');
   const city = readString(unitData, 'city');
   const workplaceParts = [state, city].filter(
@@ -163,6 +182,9 @@ const mapPerson = (value: unknown): Employee | null => {
   return {
     id,
     fullName,
+    firstName: firstName ?? undefined,
+    lastName: lastName ?? undefined,
+    photoUrl: photoUrl ?? undefined,
     subtitle: readString(unitData, 'balanceUnitName') ?? readString(value, 'company') ?? '',
     avatarInitials: getInitials(fullName, firstName, lastName),
     status: getStatus(value, employeeData),
@@ -171,10 +193,12 @@ const mapPerson = (value: unknown): Employee | null => {
     departmentId: readString(unitData, 'unitId') ?? '',
     departmentName: readString(unitData, 'fullName') ?? readString(unitData, 'shortName') ?? '',
     position: readString(positionData, 'fullName') ?? readString(positionData, 'shortName') ?? '',
+    functionalBlock: readString(positionData, 'funcBlock') ?? undefined,
     employeeNumber,
     phone,
     mobilePhone,
     email,
+    absence: readAbsence(value),
     workplace: workplaceParts.join(', '),
     managerName: 'не указан',
     contacts: createContacts(phone, mobilePhone, email),
@@ -235,4 +259,3 @@ export const fetchDirectoryEmployees = async (
     query,
   };
 };
-

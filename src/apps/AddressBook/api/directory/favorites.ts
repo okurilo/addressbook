@@ -104,6 +104,8 @@ const normalizeTeamMember = (member: TeamMember): Employee | null => {
   return {
     id,
     fullName,
+    firstName: firstName || undefined,
+    lastName: lastName || undefined,
     subtitle: '',
     avatarInitials: getInitials(fullName, firstName, lastName),
     status: 'available',
@@ -200,4 +202,3 @@ export const removeFavoriteEmployee = async (employeeId: string): Promise<void> 
 
   await http.post<void>(UPDATE_CUSTOM_GROUP_PATH, body);
 };
-

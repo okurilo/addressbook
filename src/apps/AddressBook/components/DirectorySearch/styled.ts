@@ -112,17 +112,24 @@ export const FavoriteButton = styled.button<{ $active: boolean }>(({ theme, $act
 }));
 
 export const FavoriteIcon = styled.span<{ $active: boolean }>(({ theme, $active }) => ({
-  width: 36,
-  height: 36,
-  borderRadius: 999,
-  border: `1px solid ${
-    $active ? theme.tokens.current.core.accent.primary : theme.tokens.current.core.border.gentle
-  }`,
-  background: $active
-    ? theme.tokens.current.core.layer['01']
-    : theme.tokens.current.core.layer['02'],
+  width: 32,
+  height: 32,
+  borderRadius: theme.radii.pill,
+  background: theme.tokens.current.core.accent.secondary,
+  color: theme.tokens.current.core.accent.primary,
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
+  flexShrink: 0,
+  transition: 'transform 160ms ease, background-color 160ms ease',
+  '& svg': {
+    width: 20,
+    height: 20,
+  },
+  '& path': {
+    fill: $active ? 'currentColor' : 'none',
+  },
+  [`${FavoriteButton}:hover &`]: {
+    transform: 'scale(1.06)',
+  },
 }));
-
