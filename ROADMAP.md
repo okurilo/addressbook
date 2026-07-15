@@ -593,3 +593,12 @@
 - [x] Добавить локальный реэкспорт `@pulse/ui/components/Empty/Page` без расширения DS-контракта.
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.
+
+### Итерация 35. Profile в основном поисковом flow
+
+- [x] Сохранить переход выбранного сотрудника на вкладку «Все контакты».
+- [x] Заменить самописную карточку employee-route на `src/Components/Adressbook/Profile`.
+- [x] Передать Profile базовые данные результата поиска и `pid` для внутренней загрузки подробностей.
+- [x] Не менять исходные файлы `src/Components/Adressbook/**`.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
