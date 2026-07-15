@@ -2,13 +2,10 @@ import { http } from '../../../../http-requests/http';
 import { SearchContextEnum } from './types';
 import type { PutSearchHistoryBody, SearchHistoryItem, SearchHistoryPath } from './types';
 
-const nonPersonContexts: SearchHistoryPath[] = [
-  SearchContextEnum.learningcatalog,
-  SearchContextEnum.service,
-  SearchContextEnum.supportfaq,
-  SearchContextEnum.landingsupport,
-  SearchContextEnum.orgstructure,
-  SearchContextEnum.reportsstatementscopies,
+const personContexts: SearchHistoryPath[] = [
+  SearchContextEnum.persons,
+  SearchContextEnum.employee,
+  SearchContextEnum.sberpeople,
 ];
 
 type GetSearchHistoryParams = {
@@ -32,7 +29,7 @@ export const getSearchHistory = async ({
     }
   );
 
-  return history.filter((item) => !nonPersonContexts.includes(item.key.context));
+  return history.filter((item) => personContexts.includes(item.key.context));
 };
 
 export const putSearchHistory = async (
@@ -51,4 +48,3 @@ export const selectSearchHistory = async (id: string): Promise<void> =>
     `globalsearch/api/v3/history/${encodeURIComponent(id)}?path=globalsearch:all`,
     {}
   );
-

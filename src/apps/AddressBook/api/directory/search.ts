@@ -28,6 +28,7 @@ type MultiSearchResponse = {
 };
 
 const PERSON_CATEGORY = 'PERSONADDRESSBOOK';
+const ORGSTRUCTURE_CATEGORY = 'ORGSTRUCTURE_CATEGORY';
 
 const isRecord = (value: unknown): value is JsonRecord =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -245,7 +246,7 @@ export const fetchDirectoryEmployees = async (
     query,
     page: 0,
     size: 20,
-    categories: [PERSON_CATEGORY],
+    categories: [PERSON_CATEGORY, ORGSTRUCTURE_CATEGORY],
     orgFilter,
   });
   const content = response.PERSONADDRESSBOOK?.data?.content;

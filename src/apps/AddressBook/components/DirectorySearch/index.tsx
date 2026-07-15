@@ -151,10 +151,8 @@ export const DirectorySearch = (): JSX.Element => {
       nextParams.set('q', normalizedValue);
     }
 
-    const isStructureRoute =
-      location.pathname === routePaths.structure ||
-      location.pathname.startsWith(`${routePaths.structure}/`);
-    const pathname = isStructureRoute ? location.pathname : routePaths.contacts;
+    const isEmployeeRoute = location.pathname.startsWith(`${routePaths.contacts}/employee/`);
+    const pathname = isEmployeeRoute ? routePaths.contacts : location.pathname;
     const nextSearch = nextParams.toString();
     setIsSuggestionsOpen(false);
     ignorePromise(
@@ -281,4 +279,3 @@ export const DirectorySearch = (): JSX.Element => {
     </SearchRow>
   );
 };
-

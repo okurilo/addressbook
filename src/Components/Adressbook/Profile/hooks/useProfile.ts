@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { ProfileMainInfoV1Data, ProfileViewData } from './types';
+import { profileHttp } from '../../../../http-requests/http';
 
 type WidgetData = Record<string, unknown> & {
   contactsV2?: {
@@ -22,7 +23,12 @@ type WidgetData = Record<string, unknown> & {
 };
 
 const API_PATH =
-  '/api-mobile/smart-profile/web/widgets/data?widgets=mainInfo_v1&widgets=about&widgets=manager';
+  'smart-profile/web/widgets/data?widgets=mainInfo_v1&widgets=about&widgets=manager';
+
+type ProfileWidget = {
+  code: string;
+  data: WidgetData;
+};
 
 export const useProfile = (pid?: string): ProfileViewData => {
   const [data, setData] = useState<ProfileMainInfoV1Data | null>(null);
@@ -30,15 +36,15 @@ export const useProfile = (pid?: string): ProfileViewData => {
 
   useEffect(() => {
     let cancelled = false;
+    const controller = new AbortController();
 
     const url = pid ? `${API_PATH}&userId=${pid}` : API_PATH;
 
-    fetch(url)
-      .then((res) => res.json())
-      .then((response) => {
+    profileHttp
+      .get<ProfileWidget[]>(url, { input: { signal: controller.signal } })
+      .then((items) => {
         if (cancelled) return;
 
-        const items = response?.data as Array<{ code: string; data: WidgetData }> | undefined;
         const mainInfoItem = items?.find((i) => i?.code === 'mainInfo_v1');
         const aboutItem = items?.find((i) => i?.code === 'about');
         const managerItem = items?.find((i) => i?.code === 'manager');
@@ -92,6 +98,7 @@ export const useProfile = (pid?: string): ProfileViewData => {
 
     return () => {
       cancelled = true;
+      controller.abort();
     };
   }, [pid]);
 
@@ -100,4 +107,3 @@ export const useProfile = (pid?: string): ProfileViewData => {
     isLoading,
   };
 };
-
