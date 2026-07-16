@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { Modal } from '@pulse/ui/components/ModalNew';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import type { ComponentType, PropsWithChildren } from 'react';
+import { SkeletonRect } from '@pulse/ui/components/Skeleton';
 import {
   AvatarSectionStyled,
   ButtonsSectionStyled,
@@ -40,39 +41,12 @@ type HeaderProps = {
   initials: string;
   absence?: { badge?: string; period?: string; icon_dark?: string; icon_light?: string };
   pid: string;
+  isLoading?: boolean;
 };
 
 const LegacyModal = Modal as ComponentType<
   PropsWithChildren<{ type?: 'default'; onClose: () => void }>
 >;
-
-const PopoverContainer = styled('div')<{ $visible: boolean; $top?: boolean }>(
-  ({ $visible, $top, theme }) => ({
-    position: 'absolute',
-    top: $top ? 'calc(100% + 8px)' : 'auto',
-    bottom: $top ? 'auto' : 'calc(100% + 8px)',
-    right: 0,
-    background: theme.tokens.current.core.background.default,
-    border: `1px solid ${theme.tokens.current.core.border.gentle}`,
-    borderRadius: '6px',
-    padding: '8px 0',
-    minWidth: 180,
-    zIndex: 1000,
-    display: $visible ? 'block' : 'none',
-    boxShadow: theme.tokens.current.shadows.small,
-    cursor: 'pointer',
-  })
-);
-
-const PopoverItem = styled('div')(({ theme }) => ({
-  padding: '8px 16px',
-  cursor: 'pointer',
-}));
-
-const NoGroups = styled('div')(({ theme }) => ({
-  padding: '12px 16px',
-  color: theme.tokens.current.colors.grey.solid['70'],
-}));
 
 export const Header = ({
   name,
@@ -82,10 +56,10 @@ export const Header = ({
   initials,
   absence,
   pid,
+  isLoading,
 }: HeaderProps) => {
   const { tokens } = useTheme();
   const [isOpenQRModal, setIsOpenQRModal] = useState(false);
- 
 
   const profileUrl = pid ? `${window.location.origin}/platform/profile/${pid}` : '';
 
@@ -97,14 +71,24 @@ export const Header = ({
       <InfoSectionStyled>
         <NameSectionStyled>
           <Header4Semibold>{name}</Header4Semibold>
-          <Body1Regular color={tokens.current.core.text.secondary}>{position}</Body1Regular>
+          {!position && isLoading ? (
+            <SkeletonRect height={20} width="70%" />
+          ) : (
+            <Body1Regular color={tokens.current.core.text.secondary}>{position}</Body1Regular>
+          )}
         </NameSectionStyled>
         <EmployeeNumberContainerStyled>
           <EmployeeNumberStyled>
-            <Body2Regular color={tokens.current.core.text.secondary}>
-              Табельный номер:{` `}
-            </Body2Regular>
-            <Body2Regular> {employeeNumber}</Body2Regular>
+            {!employeeNumber && isLoading ? (
+              <SkeletonRect height={20} width="70%" />
+            ) : (
+              <>
+                <Body2Regular color={tokens.current.core.text.secondary}>
+                  Табельный номер:{` `}
+                </Body2Regular>
+                <Body2Regular> {employeeNumber}</Body2Regular>
+              </>
+            )}
           </EmployeeNumberStyled>
         </EmployeeNumberContainerStyled>
         <EmployeeNumberContainerStyled>

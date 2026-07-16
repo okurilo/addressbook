@@ -11,11 +11,7 @@ type GroupActionsProps = {
 
 const getRecipients = (employees: Employee[]): string[] =>
   Array.from(
-    new Set(
-      employees
-        .map((employee) => employee.email.trim())
-        .filter((email) => email !== '')
-    )
+    new Set(employees.map((employee) => employee.email.trim()).filter((email) => email !== ''))
   );
 
 const escapeIcsText = (value: string): string =>
@@ -147,3 +143,4 @@ export const GroupActions = ({
     </Actions>
   );
 };
+

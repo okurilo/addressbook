@@ -1,1 +1,2 @@
 export { Star } from './Star';
+

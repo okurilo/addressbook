@@ -7,6 +7,9 @@ import { MainContainerStyled, RowStyled, SectionStyled } from './styled';
 import { ReactComponent as PhoneIcon } from '../../assets/phone.svg';
 import { ReactComponent as MailIcon } from '../../assets/mail.svg';
 import { ReactComponent as SberchatIcon } from '../../assets/sberchat.svg';
+import { Content, Text } from '@pulse/ui/components/Snackbar';
+import { Success } from '@pulse/ui/components/Snackbar/icons';
+import { toast } from 'react-toastify';
 import type { ProfileViewData } from '../../hooks/types';
 
 interface IContactsProps {
@@ -15,11 +18,21 @@ interface IContactsProps {
   pid: string;
   profile: ProfileViewData;
 }
-export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, profile }) => {
-  const handleCopyPhone = (phone: string) => {
-    navigator.clipboard.writeText(phone);
-  };
 
+const showToast = (message: string) => {
+  toast(
+    <Content compact>
+      <Text>{message}</Text>
+    </Content>,
+    { icon: <Success />, closeOnClick: true }
+  );
+};
+
+const copyToClipboard = (value: string, message: string) => {
+  navigator.clipboard.writeText(value);
+  showToast(message);
+};
+export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, profile }) => {
   const { workAddress, mailSigma, mailAlpha, sberchat, timezone, linearManager, isLoading } =
     profile;
   const { tokens } = useTheme();
@@ -33,7 +46,7 @@ export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, pro
             {internalPhone && (
               <RowStyled>
                 <Body1Regular>внутренний:</Body1Regular>
-                <Chip text={internalPhone} onClick={() => handleCopyPhone(internalPhone)}>
+                <Chip text={internalPhone} onClick={() => copyToClipboard(internalPhone, 'Номер скопирован')}>
                   <PhoneIcon />
                 </Chip>
               </RowStyled>
@@ -42,7 +55,7 @@ export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, pro
             {personalPhone && (
               <RowStyled>
                 <Body1Regular>мобильный:</Body1Regular>
-                <Chip text={personalPhone} onClick={() => handleCopyPhone(personalPhone)}>
+                <Chip text={personalPhone} onClick={() => copyToClipboard(personalPhone, 'Номер скопирован')}>
                   <PhoneIcon />
                 </Chip>
               </RowStyled>
@@ -51,7 +64,7 @@ export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, pro
         )}
       </SectionStyled>
       {isLoading ? (
-        <SkeletonRect height={64} width="70%" />
+        <SkeletonRect height="64" width="70%" />
       ) : (
         <>
           <SectionStyled>
@@ -61,7 +74,7 @@ export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, pro
                 {mailSigma && (
                   <RowStyled>
                     <Body1Regular>sigma:</Body1Regular>
-                    <Chip text={mailSigma} onClick={() => handleCopyPhone(mailSigma)}>
+                    <Chip text={mailSigma} onClick={() => copyToClipboard(mailSigma, 'Почта скопирована')}>
                       <MailIcon />
                     </Chip>
                   </RowStyled>
@@ -69,7 +82,7 @@ export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, pro
                 {mailAlpha && (
                   <RowStyled>
                     <Body1Regular>omega:</Body1Regular>
-                    <Chip text={mailAlpha} onClick={() => handleCopyPhone(mailAlpha)}>
+                    <Chip text={mailAlpha} onClick={() => copyToClipboard(mailAlpha, 'Почта скопирована')}>
                       <MailIcon />
                     </Chip>
                   </RowStyled>
@@ -83,7 +96,7 @@ export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, pro
                 <Header4Semibold>мессенджеры</Header4Semibold>
                 <RowStyled>
                   <Body1Regular>сберчат:</Body1Regular>
-                  <Chip text={sberchat} onClick={() => handleCopyPhone(sberchat)}>
+                  <Chip text={sberchat} onClick={() => copyToClipboard(sberchat, 'СберЧат скопирован')}>
                     <SberchatIcon />
                   </Chip>
                 </RowStyled>

@@ -56,3 +56,4 @@ export type OrganizationSearchResult = {
 export type DirectorySearchResponse = EmployeeSearchResponse & {
   organizations: OrganizationSearchResult[];
 };
+

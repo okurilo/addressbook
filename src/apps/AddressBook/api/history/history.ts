@@ -48,3 +48,4 @@ export const selectSearchHistory = async (id: string): Promise<void> =>
     `globalsearch/api/v3/history/${encodeURIComponent(id)}?path=globalsearch:all`,
     {}
   );
+

@@ -15,3 +15,4 @@ export const ButtonStyled = styled('button')(({ theme, color }) => ({
   border: 'none',
   color: color || 'initial',
 }));
+

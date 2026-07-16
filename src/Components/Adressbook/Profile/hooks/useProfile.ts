@@ -75,14 +75,16 @@ export const useProfile = (pid?: string): ProfileViewData => {
           })(),
           timezone: mainInfo?.schedule?.timezone,
           linearManager: {
-            name: `${linearManager?.lastName || ''} ${linearManager?.firstName || ''} ${linearManager?.secondName || ''
-              }`,
+            name: `${linearManager?.lastName || ''} ${linearManager?.firstName || ''} ${
+              linearManager?.secondName || ''
+            }`,
             url: `/platform/profile/${linearManager?.userId}/`,
           },
           managers,
           agile: mainInfo?.agile,
           linear: mainInfo?.linear,
           birthDate: mainInfo?.birthDate,
+          tabNumber: mainInfo?.tabNumber,
         });
       })
       .catch(() => {
@@ -107,3 +109,4 @@ export const useProfile = (pid?: string): ProfileViewData => {
     isLoading,
   };
 };
+

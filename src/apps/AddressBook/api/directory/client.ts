@@ -1,5 +1,4 @@
-import type { Employee, EmployeeSearchResponse } from './types';
-import type { DirectorySearchResponse } from './types';
+import type { Employee, EmployeeSearchResponse, DirectorySearchResponse } from './types';
 import { fetchDirectoryEmployees, fetchDirectorySuggestions } from './search';
 
 export {
@@ -42,8 +41,8 @@ export const fetchSearchSuggestions = async (
   query: string,
   signal?: AbortSignal,
   category: 'people' | 'organizations' = 'people'
-): Promise<DirectorySearchResponse> =>
-  fetchDirectorySuggestions(query, signal, category);
+): Promise<DirectorySearchResponse> => fetchDirectorySuggestions(query, signal, category);
 
 export const fetchEmployeeById = async (employeeId: string): Promise<Employee> =>
   fetchJson<Employee>(`/api/directory/employees/${encodeURIComponent(employeeId)}`);
+

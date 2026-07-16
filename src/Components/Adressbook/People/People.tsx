@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Table } from '../common/Table';
 import { MainContainerStyled } from './styled';
 import { useGetPeople } from './hooks/useGetPeople';
@@ -14,6 +14,7 @@ export const People: FC = () => {
   const { onPersonOpen, setFavoritePersons, setFavoriteGroupId } = useAdressbookContext();
 
   const columns = useGetColumns();
+  const [expandedRowKey, setExpandedRowKey] = useState<string | number | null>(null);
 
   // Fetch favorite group + members once
   useEffect(() => {
@@ -72,10 +73,14 @@ export const People: FC = () => {
           columns={columns}
           data={people || []}
           getRowKey={(u) => u.pid}
-          renderExpanded={(u) => <Profile person={u._profile} pid={u.pid} />}
-          onRowClick={(person) => onPersonOpen?.(person.pid)}
+          expandedRowKey={expandedRowKey}
+          onRowClick={(person) => setExpandedRowKey(person.pid)}
+          renderExpanded={(u) => (
+            <Profile person={u._profile} pid={u.pid} onClose={() => setExpandedRowKey(null)} />
+          )}
         />
       </MainContainerStyled>
     );
   return null;
 };
+

@@ -34,3 +34,4 @@ export const NoGroups = styled('div')(({ theme }) => ({
 export const AddedText = styled('span')(() => ({
   fontSize: '12px',
 }));
+

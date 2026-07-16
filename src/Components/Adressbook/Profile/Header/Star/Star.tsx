@@ -160,3 +160,4 @@ export const Star = ({ pid }: IStarProps) => {
     </div>
   );
 };
+

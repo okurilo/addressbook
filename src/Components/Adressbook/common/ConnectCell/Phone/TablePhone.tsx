@@ -1,7 +1,7 @@
 import { useTheme, CSSProperties } from 'styled-components';
 import { FC, useState, useCallback } from 'react';
 import { Content, Text } from '@pulse/ui/components/Snackbar';
-import { Success } from '@pulse/ui/components/Snackbar/icons';
+import { Success, Error } from '@pulse/ui/components/Snackbar/icons';
 import { toast } from 'react-toastify';
 import { ReactComponent as PhoneIcon } from './assets/phone.svg';
 import { ReactComponent as CopyIcon } from './assets/copy.svg';
@@ -9,8 +9,8 @@ import { ButtonStyled } from './styled';
 
 interface TablePhoneProps {
   phone: string;
-  userId: string;
-  pid: string;
+  pid?: string;
+  noCalls?: boolean;
 }
 
 export const cleanPhoneForCall = (phone: string) => phone.replaceAll(/[^0-9]/g, '');
@@ -25,7 +25,7 @@ const makePhoneCall = (pid: string, callTo: string, callFrom: string) =>
     }),
   });
 
-export const TablePhone: FC<TablePhoneProps> = ({ phone, pid }) => {
+export const TablePhone: FC<TablePhoneProps> = ({ phone, pid, noCalls }) => {
   const { tokens } = useTheme();
   const [hoverArea, setHoverArea] = useState<'main' | 'copy' | null>(null);
 
@@ -38,6 +38,29 @@ export const TablePhone: FC<TablePhoneProps> = ({ phone, pid }) => {
       { icon: <Success />, closeOnClick: true }
     );
   }, [phone]);
+
+  const handleCall = useCallback(() => {
+    if (noCalls) {
+      toast(
+        <Content compact>
+          <Text>Звонки в службы временно недоступны</Text>
+        </Content>,
+        {
+          icon: <Error />,
+          closeOnClick: true,
+        }
+      );
+      return;
+    }
+    fetch(`/api-web/smart-profile/web/widgets/data?widgets=contacts`)
+      .then((res) => res.json())
+      .then((data) => {
+        const personalPhone = data.data?.[0]?.data?.contactsV2?.phones?.personal?.phone;
+        if (personalPhone) {
+          makePhoneCall(pid, phone, personalPhone);
+        }
+      });
+  }, [noCalls, pid, phone]);
 
   const mainColor = tokens.current.colors.grey.solid['60'];
   const dangerColor = tokens.current.core.accent.primary;
@@ -82,16 +105,7 @@ export const TablePhone: FC<TablePhoneProps> = ({ phone, pid }) => {
       <button
         type="button"
         style={buttonStyle}
-        onClick={() => {
-          fetch(`/api-web/smart-profile/web/widgets/data?widgets=contacts`)
-            .then((res) => res.json())
-            .then((data) => {
-              const personalPhone = data.data?.[0]?.data?.contactsV2?.phones?.personal?.phone;
-              if (personalPhone) {
-                makePhoneCall(pid, phone, personalPhone);
-              }
-            });
-        }}
+        onClick={handleCall}
         onMouseEnter={() => setHoverArea('main')}
         onMouseLeave={() => setHoverArea(null)}
       >
@@ -110,3 +124,4 @@ export const TablePhone: FC<TablePhoneProps> = ({ phone, pid }) => {
     </ButtonStyled>
   );
 };
+

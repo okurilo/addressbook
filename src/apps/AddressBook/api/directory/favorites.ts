@@ -243,7 +243,7 @@ export const fetchAllCustomPeopleGroupEmployees = async (
 ): Promise<Employee[]> => {
   const employeesById = new Map(group.employees.map((employee) => [employee.id, employee]));
   let page = group.nextPage;
-  let isLastPage = group.isLastPage;
+  let { isLastPage } = group;
   let previousSignature = group.employees.map((employee) => employee.id).join('|');
 
   while (!isLastPage) {
@@ -322,3 +322,4 @@ export const removeFavoriteEmployee = async (employeeId: string): Promise<void> 
 
   await http.post<void>(UPDATE_CUSTOM_GROUP_PATH, body);
 };
+

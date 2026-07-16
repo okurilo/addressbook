@@ -6,3 +6,4 @@ export interface ICustomGroup {
   isCustom: boolean;
   structureLink?: string;
 }
+

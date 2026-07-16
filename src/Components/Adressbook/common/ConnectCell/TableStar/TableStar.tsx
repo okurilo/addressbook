@@ -96,3 +96,4 @@ export const TableStar = ({ pid, isFavorite, isFavoriteLoading, groupId }: ITabl
     </div>
   );
 };
+

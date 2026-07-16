@@ -78,9 +78,7 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
   const filteredEmployees = sourceEmployees.filter((employee) => matchesQuery(employee, query));
   const employees = filteredEmployees;
   const hasMore =
-    activeGroup === null
-      ? groups.some((group) => !group.isLastPage)
-      : !activeGroup.isLastPage;
+    activeGroup === null ? groups.some((group) => !group.isLastPage) : !activeGroup.isLastPage;
 
   useEffect(() => {
     let isActive = true;
@@ -162,8 +160,7 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
         currentGroups.map((group) => {
           const page = pagesByGroupId.get(group.id);
           const pageSignature = page?.employees.map((employee) => employee.id).join('|') ?? '';
-          const isRepeatedPage =
-            pageSignature !== '' && pageSignature === group.lastPageSignature;
+          const isRepeatedPage = pageSignature !== '' && pageSignature === group.lastPageSignature;
 
           return page === undefined
             ? group
@@ -289,3 +286,4 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
     </Page>
   );
 };
+

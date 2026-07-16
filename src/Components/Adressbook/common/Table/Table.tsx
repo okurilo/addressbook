@@ -38,7 +38,7 @@ export function Table<T>({
   const template = columns.map((c) => c.width ?? '1fr').join(' ');
 
   const handleRowClick = (row: T, key: string | number) => {
-    if (!isControlled) {
+    if (!isControlled && renderExpanded) {
       setInternalOpenKey((prev) => (prev === key ? null : key));
     }
     onRowClick?.(row, key);

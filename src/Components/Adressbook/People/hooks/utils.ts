@@ -19,7 +19,7 @@ export const createRowData = (people: AdressbookPerson[]): PersonRow[] => {
       name: person.pbasic?.fullName || '-',
       photo: person?.pbasicphoto?.url || '',
       employeeNumber: person.jbasic?.employeeId,
-      position: person.jposition?.position?.[0]?.fullName || '-',
+      position: person.jposition?.position?.[0]?.fullName || '',
       initials: `${person.pbasic?.firstName ? person.pbasic?.firstName[0] : 'N'}${
         person.pbasic?.lastName ? person.pbasic?.lastName[0] : 'A'
       }`,

@@ -138,3 +138,4 @@ export const FavoriteIcon = styled.span<{ $active: boolean }>(({ theme, $active 
     transform: 'scale(1.06)',
   },
 }));
+

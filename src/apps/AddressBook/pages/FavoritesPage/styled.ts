@@ -22,13 +22,11 @@ export const GroupTab = styled.button<{ $active: boolean }>(({ theme, $active })
   minHeight: 32,
   width: 'fit-content',
   padding: `0 ${16}px`,
-  borderRadius: theme.radii.pill,
+  borderRadius: 16,
   border: `1px solid ${
     $active ? theme.tokens.current.core.accent.primary : theme.tokens.current.core.border.gentle
   }`,
-  background: $active
-    ? theme.tokens.current.core.accent.secondary
-    : theme.tokens.current.core.layer['01'],
+  background: 'none',
   color: $active
     ? theme.tokens.current.core.accent.primary
     : theme.tokens.current.core.text.secondary,
@@ -50,3 +48,4 @@ export const CenteredState = styled.div(({ theme }) => ({
   justifyContent: 'center',
   padding: 32,
 }));
+

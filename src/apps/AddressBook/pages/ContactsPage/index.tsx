@@ -220,3 +220,4 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
     </Section>
   );
 };
+

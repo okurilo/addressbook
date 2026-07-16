@@ -130,3 +130,4 @@ export const EmployeePage = ({ employeeId }: EmployeePageProps): JSX.Element => 
     </Page>
   );
 };
+

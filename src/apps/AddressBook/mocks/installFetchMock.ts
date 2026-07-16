@@ -332,3 +332,4 @@ export const installFetchMock = (): void => {
     return createJsonResponse(200, getSuccessPayload(url));
   };
 };
+

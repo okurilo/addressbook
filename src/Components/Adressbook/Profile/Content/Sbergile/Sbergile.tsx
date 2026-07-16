@@ -54,3 +54,4 @@ export const Sbergile: FC<ISbergileProps> = ({ profile }) => {
     </MainContainerStyled>
   );
 };
+

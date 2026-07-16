@@ -102,3 +102,4 @@ export const CenteredState = styled.div(({ theme }) => ({
   borderRadius: 20,
   padding: 32,
 }));
+

@@ -293,7 +293,9 @@ export const StructureDepartmentPage = ({
         <Text variant="h2Semibold">{isGlobalSearch ? 'результаты поиска' : group.name}</Text>
         {isGlobalSearch ? (
           <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
-            {totalElements === null ? 'Найдено сотрудников' : `Найдено ${totalElements} сотрудников`}{' '}
+            {totalElements === null
+              ? 'Найдено сотрудников'
+              : `Найдено ${totalElements} сотрудников`}{' '}
             по запросу <strong>{query}</strong> в кадровой структуре
           </Text>
         ) : null}
@@ -332,3 +334,4 @@ export const StructureDepartmentPage = ({
     </Page>
   );
 };
+
