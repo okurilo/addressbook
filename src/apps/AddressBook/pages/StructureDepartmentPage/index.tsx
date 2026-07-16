@@ -9,7 +9,7 @@ import { fetchEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
 import { EmployeeTable } from '../../components/EmployeeTable';
 import { RetryState } from '../../components/RetryState';
-import { Pagination } from '../../components/Pagination';
+import { ShowMoreButton } from '../../components/ShowMoreButton';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { getDepartmentPath, routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
@@ -43,16 +43,25 @@ export const StructureDepartmentPage = ({
   const navigate = useNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const query = new URLSearchParams(location.search).get('q') ?? '';
-  const pageFromUrl = Number.parseInt(new URLSearchParams(location.search).get('page') ?? '1', 10);
-  const page = Number.isFinite(pageFromUrl) && pageFromUrl > 0 ? pageFromUrl - 1 : 0;
+  const [page, setPage] = useState(0);
   const [group, setGroup] = useState<GroupNode | null>(null);
   const [navItems, setNavItems] = useState<GroupNode[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [viewState, setViewState] = useState<ViewState>('loading');
   const [retryToken, setRetryToken] = useState(0);
-  const [totalPages, setTotalPages] = useState<number | null>(null);
+  const [employeeRetryToken, setEmployeeRetryToken] = useState(0);
   const [isLastPage, setIsLastPage] = useState(true);
   const [totalElements, setTotalElements] = useState<number | null>(null);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [isLoadMoreFailed, setIsLoadMoreFailed] = useState(false);
+
+  useEffect(() => {
+    setPage(0);
+    setGroup(null);
+    setEmployees([]);
+    setIsLastPage(true);
+    setIsLoadMoreFailed(false);
+  }, [departmentId, query]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -67,17 +76,6 @@ export const StructureDepartmentPage = ({
           isGlobalSearch ? undefined : departmentId,
           controller.signal
         );
-        const isHierarchyRoot = nextGroup.parentTree?.id === nextGroup.id;
-        const employeeResponse =
-          !isGlobalSearch && isHierarchyRoot
-            ? null
-            : await fetchEmployees(
-                isGlobalSearch ? query : '',
-                controller.signal,
-                isGlobalSearch ? null : nextGroup.id,
-                page
-              );
-        const nextEmployees = employeeResponse?.items ?? [];
 
         if (!isActive) {
           return;
@@ -85,11 +83,11 @@ export const StructureDepartmentPage = ({
 
         setGroup(nextGroup);
         setNavItems(isGlobalSearch ? getVisibleGroups(nextGroup) : nextGroup.children);
-        setEmployees(nextEmployees);
-        setTotalPages(employeeResponse?.totalPages ?? null);
-        setTotalElements(employeeResponse?.totalElements ?? null);
-        setIsLastPage(employeeResponse?.isLastPage ?? true);
-        setViewState('success');
+        if (!isGlobalSearch && nextGroup.parentTree?.id === nextGroup.id) {
+          setEmployees([]);
+          setIsLastPage(true);
+          setViewState('success');
+        }
       } catch {
         if (isActive && !controller.signal.aborted) {
           setGroup(null);
@@ -106,16 +104,85 @@ export const StructureDepartmentPage = ({
       isActive = false;
       controller.abort();
     };
-  }, [departmentId, page, query, retryToken]);
+  }, [departmentId, query, retryToken]);
+
+  useEffect(() => {
+    if (group === null) {
+      return;
+    }
+
+    const isGlobalSearch = query.trim() !== '';
+    const isHierarchyRoot = !isGlobalSearch && group.parentTree?.id === group.id;
+
+    if (isHierarchyRoot) {
+      return;
+    }
+
+    const controller = new AbortController();
+    let isActive = true;
+
+    const loadEmployees = async (): Promise<void> => {
+      if (page === 0) {
+        setViewState('loading');
+      } else {
+        setIsLoadingMore(true);
+      }
+      setIsLoadMoreFailed(false);
+
+      try {
+        const response = await fetchEmployees(
+          isGlobalSearch ? query : '',
+          controller.signal,
+          isGlobalSearch ? null : group.id,
+          page
+        );
+
+        if (!isActive) {
+          return;
+        }
+
+        setEmployees((currentEmployees) => {
+          if (page === 0) {
+            return response.items;
+          }
+
+          const employeesById = new Map(
+            [...currentEmployees, ...response.items].map((employee) => [employee.id, employee])
+          );
+
+          return Array.from(employeesById.values());
+        });
+        setTotalElements(response.totalElements);
+        setIsLastPage(response.isLastPage);
+        setViewState('success');
+      } catch {
+        if (!isActive || controller.signal.aborted) {
+          return;
+        }
+
+        if (page === 0) {
+          setEmployees([]);
+          setViewState('error');
+        } else {
+          setIsLoadMoreFailed(true);
+        }
+      } finally {
+        if (isActive) {
+          setIsLoadingMore(false);
+        }
+      }
+    };
+
+    void loadEmployees();
+
+    return () => {
+      isActive = false;
+      controller.abort();
+    };
+  }, [employeeRetryToken, group, page, query]);
 
   const openGroup = (targetGroupId: string): void => {
     ignorePromise(navigate(getDepartmentPath(targetGroupId)));
-  };
-
-  const openPage = (nextPage: number): void => {
-    const nextParams = new URLSearchParams(location.search);
-    nextParams.set('page', `${nextPage + 1}`);
-    ignorePromise(navigate(`${location.pathname}?${nextParams.toString()}`));
   };
 
   if (viewState === 'loading') {
@@ -246,12 +313,19 @@ export const StructureDepartmentPage = ({
                 ignorePromise(toggleFavorite(employeeId));
               }}
             />
-            <Pagination
-              currentPage={page}
-              totalPages={totalPages}
-              isLastPage={isLastPage}
-              onChange={openPage}
-            />
+            {!isLastPage || isLoadMoreFailed ? (
+              <ShowMoreButton
+                isLoading={isLoadingMore}
+                onClick={() => {
+                  if (isLoadMoreFailed) {
+                    setEmployeeRetryToken((currentValue) => currentValue + 1);
+                    return;
+                  }
+
+                  setPage((currentPage) => currentPage + 1);
+                }}
+              />
+            ) : null}
           </>
         )}
       </Content>

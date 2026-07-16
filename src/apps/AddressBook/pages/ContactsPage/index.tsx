@@ -4,13 +4,13 @@ import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
 import { Empty } from '@pulse/ui/components/Empty/Page';
-import { useLocation, useNavigate } from '@reach/router';
+import { useLocation } from '@reach/router';
 import { fetchEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
 import { getSearchHistory, selectSearchHistory } from '../../api/history/history';
 import { EmployeeTable } from '../../components/EmployeeTable';
 import { RetryState } from '../../components/RetryState';
-import { Pagination } from '../../components/Pagination';
+import { ShowMoreButton } from '../../components/ShowMoreButton';
 import { useDebouncedValue } from '../../components/useDebouncedValue';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { ignorePromise } from '../../utils/ignorePromise';
@@ -21,25 +21,36 @@ type ViewState = 'idle' | 'loading' | 'success' | 'empty' | 'error';
 export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
   const theme = useTheme();
   const location = useLocation();
-  const navigate = useNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const query = new URLSearchParams(location.search).get('q') ?? '';
-  const pageFromUrl = Number.parseInt(new URLSearchParams(location.search).get('page') ?? '1', 10);
-  const page = Number.isFinite(pageFromUrl) && pageFromUrl > 0 ? pageFromUrl - 1 : 0;
   const debouncedQuery = useDebouncedValue(query, 500);
+  const [page, setPage] = useState(0);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [historyIdsByEmployeeId, setHistoryIdsByEmployeeId] = useState<Record<string, string>>({});
   const [viewState, setViewState] = useState<ViewState>('idle');
   const [retryToken, setRetryToken] = useState(0);
-  const [totalPages, setTotalPages] = useState<number | null>(null);
   const [isLastPage, setIsLastPage] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [isLoadMoreFailed, setIsLoadMoreFailed] = useState(false);
+
+  useEffect(() => {
+    setPage(0);
+    setEmployees([]);
+    setIsLastPage(true);
+    setIsLoadMoreFailed(false);
+  }, [debouncedQuery]);
 
   useEffect(() => {
     let isActive = true;
     const controller = new AbortController();
 
     const loadData = async (): Promise<void> => {
-      setViewState('loading');
+      if (page === 0) {
+        setViewState('loading');
+      } else {
+        setIsLoadingMore(true);
+      }
+      setIsLoadMoreFailed(false);
 
       try {
         if (debouncedQuery.trim() === '') {
@@ -77,7 +88,6 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
           setEmployees(nextEmployees);
           setHistoryIdsByEmployeeId(nextHistoryIdsByEmployeeId);
           setViewState(nextEmployees.length === 0 ? 'empty' : 'success');
-          setTotalPages(null);
           setIsLastPage(true);
           return;
         }
@@ -89,19 +99,36 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
           return;
         }
 
-        setEmployees(nextEmployees);
+        setEmployees((currentEmployees) => {
+          if (page === 0) {
+            return nextEmployees;
+          }
+
+          const employeesById = new Map(
+            [...currentEmployees, ...nextEmployees].map((employee) => [employee.id, employee])
+          );
+
+          return Array.from(employeesById.values());
+        });
         setHistoryIdsByEmployeeId({});
-        setTotalPages(response.totalPages);
         setIsLastPage(response.isLastPage);
-        setViewState(nextEmployees.length === 0 ? 'empty' : 'success');
+        setViewState(page === 0 && nextEmployees.length === 0 ? 'empty' : 'success');
       } catch {
         if (!isActive) {
           return;
         }
 
-        setEmployees([]);
-        setHistoryIdsByEmployeeId({});
-        setViewState('error');
+        if (page === 0) {
+          setEmployees([]);
+          setHistoryIdsByEmployeeId({});
+          setViewState('error');
+        } else {
+          setIsLoadMoreFailed(true);
+        }
+      } finally {
+        if (isActive) {
+          setIsLoadingMore(false);
+        }
       }
     };
 
@@ -112,12 +139,6 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
       controller.abort();
     };
   }, [debouncedQuery, page, retryToken]);
-
-  const openPage = (nextPage: number): void => {
-    const nextParams = new URLSearchParams(location.search);
-    nextParams.set('page', `${nextPage + 1}`);
-    ignorePromise(navigate(`${location.pathname}?${nextParams.toString()}`));
-  };
 
   const title = query.trim() === '' ? 'недавние' : 'результаты поиска';
   const isHistoryMode = query.trim() === '';
@@ -180,12 +201,17 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
                 ignorePromise(toggleFavorite(employeeId));
               }}
             />
-            {!isHistoryMode ? (
-              <Pagination
-                currentPage={page}
-                totalPages={totalPages}
-                isLastPage={isLastPage}
-                onChange={openPage}
+            {!isHistoryMode && (!isLastPage || isLoadMoreFailed) ? (
+              <ShowMoreButton
+                isLoading={isLoadingMore}
+                onClick={() => {
+                  if (isLoadMoreFailed) {
+                    setRetryToken((currentValue) => currentValue + 1);
+                    return;
+                  }
+
+                  setPage((currentPage) => currentPage + 1);
+                }}
               />
             ) : null}
           </>

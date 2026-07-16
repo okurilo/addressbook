@@ -69,7 +69,7 @@ export const DirectorySearch = (): JSX.Element => {
         const result = await fetchSearchSuggestions(
           normalizedQuery,
           controller.signal,
-          isStructureRoute
+          isStructureRoute ? 'organizations' : 'people'
         );
 
         if (!isActive) {
@@ -128,7 +128,6 @@ export const DirectorySearch = (): JSX.Element => {
   const clearSearch = (): void => {
     const nextParams = new URLSearchParams(location.search);
     nextParams.delete('q');
-    nextParams.delete('page');
     const nextSearch = nextParams.toString();
 
     setValue('');
@@ -150,8 +149,6 @@ export const DirectorySearch = (): JSX.Element => {
     } else {
       nextParams.set('q', normalizedValue);
     }
-    nextParams.delete('page');
-
     const isEmployeeRoute = location.pathname.startsWith(`${routePaths.contacts}/employee/`);
     const pathname = isEmployeeRoute ? routePaths.contacts : location.pathname;
     const nextSearch = nextParams.toString();
@@ -209,7 +206,7 @@ export const DirectorySearch = (): JSX.Element => {
             {isSuggestionsLoading ? (
               <SuggestionState>
                 <Text variant="body2Regular">
-                  {isStructureRoute ? 'Ищем в кадровой структуре…' : 'Ищем сотрудников и подразделения…'}
+                  {isStructureRoute ? 'Ищем в кадровой структуре…' : 'Ищем сотрудников…'}
                 </Text>
               </SuggestionState>
             ) : null}
@@ -222,35 +219,35 @@ export const DirectorySearch = (): JSX.Element => {
               ? suggestions
                   .filter((suggestion) => suggestion.kind === 'person')
                   .map((suggestion) => (
-                  <SuggestionButton
-                    key={suggestion.key}
-                    type="button"
-                    role="option"
-                    aria-selected="false"
-                    onMouseDown={(event) => {
-                      event.preventDefault();
-                    }}
-                    onClick={() => {
-                      if (suggestion.employee !== undefined) {
-                        clearSearchAndNavigate(getEmployeePath(suggestion.targetId), {
-                          employee: suggestion.employee,
-                        });
-                      }
-                    }}
-                  >
-                    <Text variant="body2Semibold">{suggestion.value}</Text>
-                    <SuggestionMeta>
-                      <Text
-                        variant="caption1Regular"
-                        color={theme.tokens.current.core.text.secondary}
-                      >
-                        {[suggestion.employee?.shortStructure, suggestion.employee?.position]
-                          .filter((item): item is string => item !== undefined && item !== '')
-                          .join(' · ')}
-                      </Text>
-                    </SuggestionMeta>
-                  </SuggestionButton>
-                ))
+                    <SuggestionButton
+                      key={suggestion.key}
+                      type="button"
+                      role="option"
+                      aria-selected="false"
+                      onMouseDown={(event) => {
+                        event.preventDefault();
+                      }}
+                      onClick={() => {
+                        if (suggestion.employee !== undefined) {
+                          clearSearchAndNavigate(getEmployeePath(suggestion.targetId), {
+                            employee: suggestion.employee,
+                          });
+                        }
+                      }}
+                    >
+                      <Text variant="body2Semibold">{suggestion.value}</Text>
+                      <SuggestionMeta>
+                        <Text
+                          variant="caption1Regular"
+                          color={theme.tokens.current.core.text.secondary}
+                        >
+                          {[suggestion.employee?.shortStructure, suggestion.employee?.position]
+                            .filter((item): item is string => item !== undefined && item !== '')
+                            .join(' · ')}
+                        </Text>
+                      </SuggestionMeta>
+                    </SuggestionButton>
+                  ))
               : null}
             {!isSuggestionsLoading && suggestions.some((item) => item.kind === 'group') ? (
               <SuggestionSectionLabel>
@@ -292,12 +289,7 @@ export const DirectorySearch = (): JSX.Element => {
         type="button"
         $active={isFavoritesRoute}
         onClick={() => {
-          const nextParams = new URLSearchParams(location.search);
-          nextParams.delete('page');
-          const nextSearch = nextParams.toString();
-          ignorePromise(
-            navigate(`${routePaths.favorites}${nextSearch === '' ? '' : `?${nextSearch}`}`)
-          );
+          ignorePromise(navigate(routePaths.favorites + location.search));
         }}
       >
         <FavoriteIcon $active={isFavoritesRoute} aria-hidden="true">

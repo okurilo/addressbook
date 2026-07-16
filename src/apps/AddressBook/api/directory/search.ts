@@ -304,14 +304,14 @@ export const fetchDirectoryEmployees = async (
 export const fetchDirectorySuggestions = async (
   query: string,
   signal?: AbortSignal,
-  organizationsOnly = false
+  category: 'people' | 'organizations' = 'people'
 ): Promise<DirectorySearchResponse> => {
   const response = await getSearchData({
     signal,
     query,
     page: 0,
     size: 20,
-    categories: organizationsOnly ? [ORGSTRUCTURE_CATEGORY] : [PERSON_CATEGORY, ORGSTRUCTURE_CATEGORY],
+    categories: category === 'organizations' ? [ORGSTRUCTURE_CATEGORY] : [PERSON_CATEGORY],
     orgFilter: null,
   });
   const peopleContent = response.PERSONADDRESSBOOK?.data?.content;

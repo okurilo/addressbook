@@ -39,9 +39,9 @@ export const fetchEmployees = async (
 export const fetchSearchSuggestions = async (
   query: string,
   signal?: AbortSignal,
-  organizationsOnly = false
+  category: 'people' | 'organizations' = 'people'
 ): Promise<DirectorySearchResponse> =>
-  fetchDirectorySuggestions(query, signal, organizationsOnly);
+  fetchDirectorySuggestions(query, signal, category);
 
 export const fetchEmployeeById = async (employeeId: string): Promise<Employee> =>
   fetchJson<Employee>(`/api/directory/employees/${encodeURIComponent(employeeId)}`);

@@ -67,10 +67,7 @@ export const DirectoryNavigation = (): JSX.Element => {
             $active={isActive}
             aria-current={isActive ? 'page' : undefined}
             onClick={() => {
-              const nextParams = new URLSearchParams(location.search);
-              nextParams.delete('page');
-              const nextSearch = nextParams.toString();
-              ignorePromise(navigate(`${item.href}${nextSearch === '' ? '' : `?${nextSearch}`}`));
+              ignorePromise(navigate(item.href + location.search));
             }}
           >
             <Text
