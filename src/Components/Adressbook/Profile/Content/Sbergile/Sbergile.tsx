@@ -3,9 +3,9 @@ import { useTheme } from 'styled-components';
 import { Body1Regular, Body2Regular } from '../../../common/typography';
 import { Breadcrumbs } from '../../Breadcrumbs';
 import { ColumnStyled, MainContainerStyled, RowStyled } from './styled';
-import type { ProfileViewData } from '../../hooks/types';
+import type { ProfileManager, ProfileViewData } from '../../hooks/types';
 
-const formatManagerName = (manager: any) =>
+const formatManagerName = (manager: ProfileManager) =>
   `${manager.lastName} ${manager.firstName} ${manager.secondName}`;
 
 interface ISbergileProps {
@@ -16,11 +16,12 @@ export const Sbergile: FC<ISbergileProps> = ({ profile }) => {
   const { tokens } = useTheme();
   const { managers, agile } = profile;
 
-  const lastOrgPathTitle = agile?.orgPath?.[agile.orgPath.length - 1]?.title;
+  const lastOrgPathTitle =
+    agile?.orgPath?.[(agile.orgPath?.length ?? 1) - 1]?.title;
 
   return (
     <MainContainerStyled>
-      {agile?.orgPath?.length > 0 && (
+      {(agile?.orgPath?.length ?? 0) > 0 && (
         <ColumnStyled>
           <Body1Regular>структура:</Body1Regular>
           <Breadcrumbs profile={profile} structureType="agile" style="small" />
@@ -34,7 +35,7 @@ export const Sbergile: FC<ISbergileProps> = ({ profile }) => {
           </Body1Regular>
         </ColumnStyled>
       )}
-      {managers?.length > 0 && (
+      {managers !== undefined && managers.length > 0 && (
         <ColumnStyled>
           <Body1Regular>менеджеры:</Body1Regular>
           {managers?.map((manager) => (
@@ -54,4 +55,3 @@ export const Sbergile: FC<ISbergileProps> = ({ profile }) => {
     </MainContainerStyled>
   );
 };
-

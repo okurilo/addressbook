@@ -13,6 +13,7 @@ type WidgetData = Record<string, unknown> & {
   agile?: ProfileMainInfoV1Data['agile'];
   linear?: ProfileMainInfoV1Data['linear'];
   birthDate?: ProfileMainInfoV1Data['birthDate'];
+  tabNumber?: string;
   managers?: Array<{
     isLinear?: boolean;
     lastName?: string;
@@ -109,4 +110,3 @@ export const useProfile = (pid?: string): ProfileViewData => {
     isLoading,
   };
 };
-

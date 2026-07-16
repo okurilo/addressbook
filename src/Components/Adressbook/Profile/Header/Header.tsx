@@ -35,7 +35,7 @@ interface ICustomGroup {
 
 type HeaderProps = {
   name: string;
-  position: string;
+  position?: string;
   employeeNumber?: string;
   photo: string;
   initials: string;
@@ -130,4 +130,3 @@ export const Header = ({
     </MainContainerStyled>
   );
 };
-

@@ -71,7 +71,7 @@ export const EmployeeTable = ({
             onToggleFavorite={() => {
               onToggleFavorite(personId);
             }}
-            phone={personalPhone}
+            phone={personalPhone ?? null}
           />
         );
       }}
@@ -80,4 +80,3 @@ export const EmployeeTable = ({
     </AdressbookProvider>
   );
 };
-

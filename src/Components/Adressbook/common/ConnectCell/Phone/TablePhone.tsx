@@ -1,5 +1,6 @@
 import { useTheme, CSSProperties } from 'styled-components';
 import { FC, useState, useCallback } from 'react';
+import type { PropsWithChildren } from 'react';
 import { Content, Text } from '@pulse/ui/components/Snackbar';
 import { Success, Error } from '@pulse/ui/components/Snackbar/icons';
 import { toast } from 'react-toastify';
@@ -25,7 +26,7 @@ const makePhoneCall = (pid: string, callTo: string, callFrom: string) =>
     }),
   });
 
-export const TablePhone: FC<TablePhoneProps> = ({ phone, pid, noCalls }) => {
+export const TablePhone: FC<PropsWithChildren<TablePhoneProps>> = ({ phone, pid, noCalls }) => {
   const { tokens } = useTheme();
   const [hoverArea, setHoverArea] = useState<'main' | 'copy' | null>(null);
 
@@ -56,7 +57,7 @@ export const TablePhone: FC<TablePhoneProps> = ({ phone, pid, noCalls }) => {
       .then((res) => res.json())
       .then((data) => {
         const personalPhone = data.data?.[0]?.data?.contactsV2?.phones?.personal?.phone;
-        if (personalPhone) {
+        if (personalPhone && pid) {
           makePhoneCall(pid, phone, personalPhone);
         }
       });
@@ -124,4 +125,3 @@ export const TablePhone: FC<TablePhoneProps> = ({ phone, pid, noCalls }) => {
     </ButtonStyled>
   );
 };
-

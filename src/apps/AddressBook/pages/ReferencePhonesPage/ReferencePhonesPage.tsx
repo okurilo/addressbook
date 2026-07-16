@@ -1,11 +1,12 @@
 import { useTheme } from 'styled-components';
+import type { RouteComponentProps } from '@reach/router';
 import { Table } from '../../../../Components/Adressbook/common/Table';
 import { Body2Regular } from '../../../../Components/Adressbook/common/typography';
 import { CellWrapperStyled, MainContainerStyled } from './styled';
 import { INumber, NUMBERS } from './NUMBERS';
 import { TablePhone } from '../../../../Components/Adressbook/common/ConnectCell/Phone';
 
-export const ReferencePhonesPage = () => {
+export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element => {
   const { tokens } = useTheme();
   return (
     <MainContainerStyled>
@@ -48,4 +49,3 @@ export const ReferencePhonesPage = () => {
     </MainContainerStyled>
   );
 };
-

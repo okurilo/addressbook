@@ -10,7 +10,8 @@ type AdressbookContextValue = {
     personId: string,
     isFavorite?: boolean,
     favoritePersons?: Set<string>,
-    favoriteGroupId?: string
+    favoriteGroupId?: string,
+    personalPhone?: string
   ) => ReactNode;
   favoritePersons: Set<string> | undefined;
   favoriteGroupId: string | undefined;
@@ -24,7 +25,13 @@ type AdressbookProviderProps = PropsWithChildren<{
   people: AdressbookPerson[];
   isLoading?: boolean;
   onPersonOpen?: (personId: string) => void;
-  renderActions?: (personId: string) => ReactNode;
+  renderActions?: (
+    personId: string,
+    isFavorite?: boolean,
+    favoritePersons?: Set<string>,
+    favoriteGroupId?: string,
+    personalPhone?: string
+  ) => ReactNode;
 }>;
 
 const AdressbookContext = createContext<AdressbookContextValue | null>(null);
@@ -77,4 +84,3 @@ export const useAdressbookContext = (): AdressbookContextValue => {
 
   return context;
 };
-
