@@ -691,3 +691,13 @@
 - [x] Синхронизировать route props, `renderActions`, `TablePhone`, `IconButton ref` и Profile-типы.
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.
+
+### Итерация 44. Фильтрация поиска по кадровой структуре
+
+- [x] Сохранить `/groups` без `id` как источник «моей» структуры при входе без поиска.
+- [x] Подключить `/groups/root` для sidebar поиска без выбранного UUID.
+- [x] Сохранять `q` и передавать выбранный UUID в `multiSearch` как `orgFilter`.
+- [x] Показывать родителей и дочерние узлы через `/groups?id=<UUID>` во время фильтрации.
+- [x] Добавить реальный wire-контракт `/groups/root` в host-mock.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.

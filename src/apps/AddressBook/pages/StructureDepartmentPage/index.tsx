@@ -13,7 +13,7 @@ import { ShowMoreButton } from '../../components/ShowMoreButton';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { getDepartmentPath, routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
-import { fetchGroups, getGroupPath } from '../../api/directory/groups';
+import { fetchGroups, fetchRootGroups, getGroupPath } from '../../api/directory/groups';
 import type { GroupNode } from '../../api/directory/groups';
 import {
   Breadcrumbs,
@@ -43,9 +43,12 @@ export const StructureDepartmentPage = ({
   const navigate = useNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const query = new URLSearchParams(location.search).get('q') ?? '';
+  const isGlobalSearch = query.trim() !== '';
+  const structureRequestKey = `${isGlobalSearch ? 'search' : 'browse'}:${departmentId ?? ''}`;
   const [page, setPage] = useState(0);
   const [group, setGroup] = useState<GroupNode | null>(null);
   const [navItems, setNavItems] = useState<GroupNode[]>([]);
+  const [loadedStructureKey, setLoadedStructureKey] = useState<string | null>(null);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [viewState, setViewState] = useState<ViewState>('loading');
   const [retryToken, setRetryToken] = useState(0);
@@ -58,6 +61,8 @@ export const StructureDepartmentPage = ({
   useEffect(() => {
     setPage(0);
     setGroup(null);
+    setNavItems([]);
+    setLoadedStructureKey(null);
     setEmployees([]);
     setIsLastPage(true);
     setIsLoadMoreFailed(false);
@@ -71,18 +76,28 @@ export const StructureDepartmentPage = ({
       setViewState('loading');
 
       try {
-        const isGlobalSearch = query.trim() !== '';
-        const nextGroup = await fetchGroups(
-          isGlobalSearch ? undefined : departmentId,
-          controller.signal
-        );
+        if (isGlobalSearch && departmentId === undefined) {
+          const rootGroups = await fetchRootGroups(controller.signal);
+
+          if (!isActive) {
+            return;
+          }
+
+          setGroup(null);
+          setNavItems(rootGroups);
+          setLoadedStructureKey(structureRequestKey);
+          return;
+        }
+
+        const nextGroup = await fetchGroups(departmentId, controller.signal);
 
         if (!isActive) {
           return;
         }
 
         setGroup(nextGroup);
-        setNavItems(isGlobalSearch ? [] : nextGroup.children);
+        setNavItems(nextGroup.children);
+        setLoadedStructureKey(structureRequestKey);
         if (!isGlobalSearch && nextGroup.parentTree?.id === nextGroup.id) {
           setEmployees([]);
           setIsLastPage(true);
@@ -93,6 +108,7 @@ export const StructureDepartmentPage = ({
           setGroup(null);
           setEmployees([]);
           setNavItems([]);
+          setLoadedStructureKey(null);
           setViewState('error');
         }
       }
@@ -104,15 +120,15 @@ export const StructureDepartmentPage = ({
       isActive = false;
       controller.abort();
     };
-  }, [departmentId, query, retryToken]);
+  }, [departmentId, isGlobalSearch, query, retryToken, structureRequestKey]);
 
   useEffect(() => {
-    if (group === null) {
+    if (loadedStructureKey !== structureRequestKey || (!isGlobalSearch && group === null)) {
       return;
     }
 
-    const isGlobalSearch = query.trim() !== '';
-    const isHierarchyRoot = !isGlobalSearch && group.parentTree?.id === group.id;
+    const isHierarchyRoot =
+      !isGlobalSearch && group !== null && group.parentTree?.id === group.id;
 
     if (isHierarchyRoot) {
       return;
@@ -133,7 +149,7 @@ export const StructureDepartmentPage = ({
         const response = await fetchEmployees(
           isGlobalSearch ? query : '',
           controller.signal,
-          isGlobalSearch ? null : group.id,
+          isGlobalSearch ? departmentId ?? null : group?.id ?? null,
           page
         );
 
@@ -179,10 +195,20 @@ export const StructureDepartmentPage = ({
       isActive = false;
       controller.abort();
     };
-  }, [employeeRetryToken, group, page, query]);
+  }, [
+    departmentId,
+    employeeRetryToken,
+    group,
+    isGlobalSearch,
+    loadedStructureKey,
+    page,
+    query,
+    structureRequestKey,
+  ]);
 
   const openGroup = (targetGroupId: string): void => {
-    ignorePromise(navigate(getDepartmentPath(targetGroupId)));
+    const targetPath = getDepartmentPath(targetGroupId);
+    ignorePromise(navigate(isGlobalSearch ? `${targetPath}${location.search}` : targetPath));
   };
 
   if (viewState === 'loading') {
@@ -193,7 +219,7 @@ export const StructureDepartmentPage = ({
     );
   }
 
-  if (viewState === 'error' || group === null) {
+  if (viewState === 'error' || (!isGlobalSearch && group === null)) {
     return (
       <RetryState
         title="Не удалось загрузить подразделение"
@@ -205,12 +231,12 @@ export const StructureDepartmentPage = ({
     );
   }
 
-  const isGlobalSearch = query.trim() !== '';
-  const isHierarchyRoot = !isGlobalSearch && group.parentTree?.id === group.id;
-  const groupPath = isGlobalSearch ? [] : getGroupPath(group);
+  const isHierarchyRoot =
+    !isGlobalSearch && group !== null && group.parentTree?.id === group.id;
+  const groupPath = group === null ? [] : getGroupPath(group);
   const parentGroup = groupPath.length > 1 ? groupPath[groupPath.length - 2] : null;
 
-  if (isHierarchyRoot) {
+  if (isHierarchyRoot && group !== null) {
     return (
       <HierarchyRoot>
         <HierarchyHeader>
@@ -241,12 +267,12 @@ export const StructureDepartmentPage = ({
   return (
     <Page>
       <Sidebar>
-        {!isGlobalSearch && parentGroup !== null ? (
+        {parentGroup !== null ? (
           <SidebarButton type="button" onClick={() => openGroup(parentGroup.id)}>
             ↑ Наверх
           </SidebarButton>
         ) : null}
-        {!isGlobalSearch ? (
+        {group !== null ? (
           <SidebarButton type="button" $active>
             {group.name}
           </SidebarButton>
@@ -261,7 +287,7 @@ export const StructureDepartmentPage = ({
       </Sidebar>
 
       <Content>
-        {!isGlobalSearch ? (
+        {!isGlobalSearch && group !== null ? (
           <Breadcrumbs>
             <BreadcrumbButton
               type="button"
@@ -290,7 +316,9 @@ export const StructureDepartmentPage = ({
           </Breadcrumbs>
         ) : null}
 
-        <Text variant="h2Semibold">{isGlobalSearch ? 'результаты поиска' : group.name}</Text>
+        <Text variant="h2Semibold">
+          {isGlobalSearch ? 'результаты поиска' : group?.name ?? ''}
+        </Text>
         {isGlobalSearch ? (
           <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
             {totalElements === null
@@ -334,4 +362,3 @@ export const StructureDepartmentPage = ({
     </Page>
   );
 };
-

@@ -18,6 +18,11 @@ export const fetchGroups = async (id?: string, signal?: AbortSignal): Promise<Gr
   });
 };
 
+export const fetchRootGroups = async (signal?: AbortSignal): Promise<GroupNode[]> =>
+  http.get<GroupNode[]>(`${GROUPS_PATH}/root`, {
+    input: { signal },
+  });
+
 export const getGroupPath = (group: GroupNode): GroupNode[] => {
   const findPath = (node: GroupNode, targetId: string): GroupNode[] | null => {
     if (node.id === targetId) {
@@ -44,4 +49,3 @@ export const getGroupPath = (group: GroupNode): GroupNode[] => {
 
 export const getVisibleGroups = (root: GroupNode): GroupNode[] =>
   root.children.length > 0 ? root.children : [root];
-

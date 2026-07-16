@@ -562,6 +562,16 @@ const handleGroups = (url: URL, method: string, isEmpty: boolean): Response => {
     : createDataResponse(cloneGroup(group));
 };
 
+const handleRootGroups = (method: string, isEmpty: boolean): Response => {
+  if (method !== 'GET') {
+    return createJsonResponse(405, { message: 'Method not allowed' });
+  }
+
+  return createDataResponse(
+    isEmpty ? [] : hostMockHierarchyRoot.children.map((group) => cloneGroup(group))
+  );
+};
+
 const handleProfile = (url: URL, method: string, isEmpty: boolean): Response => {
   if (method !== 'GET') {
     return createJsonResponse(405, { message: 'Method not allowed' });
@@ -727,6 +737,10 @@ const routeRequest = async (
 
   if (url.pathname === '/api-web/srv/v7/people/custom-groups/update') {
     return handleUpdateGroup(method, input, init);
+  }
+
+  if (url.pathname === '/api-web/posts/api/v1/addressbook/groups/root') {
+    return handleRootGroups(method, isEmpty);
   }
 
   if (url.pathname === '/api-web/posts/api/v1/addressbook/groups') {
