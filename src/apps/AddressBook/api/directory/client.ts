@@ -4,6 +4,8 @@ import { fetchDirectoryEmployees, fetchDirectorySuggestions } from './search';
 
 export {
   addFavoriteEmployee,
+  fetchAllCustomPeopleGroupEmployees,
+  fetchCustomPeopleGroupPage,
   fetchCustomPeopleGroups,
   fetchFavoriteEmployees,
   removeFavoriteEmployee,

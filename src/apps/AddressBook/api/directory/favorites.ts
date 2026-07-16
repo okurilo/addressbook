@@ -45,6 +45,15 @@ export type CustomPeopleGroup = {
   id: string;
   name: string;
   employees: Employee[];
+  nextPage: number;
+  isLastPage: boolean;
+  lastPageSignature: string;
+};
+
+export type CustomPeopleGroupPage = {
+  employees: Employee[];
+  nextPage: number;
+  isLastPage: boolean;
 };
 
 type CreateCustomGroupBody = {
@@ -152,11 +161,11 @@ export const normalizeTeamMembers = (response: TeamMembersPage): Employee[] => {
 const fetchPeopleTeams = async (signal?: AbortSignal): Promise<PeopleTeam[]> =>
   http.get<PeopleTeam[]>(PEOPLE_TEAMS_PATH, { input: { signal } });
 
-const fetchTeamEmployeesPage = async (
+export const fetchCustomPeopleGroupPage = async (
   teamId: string,
   page: number,
   signal?: AbortSignal
-): Promise<{ employees: Employee[]; isLastPage: boolean }> => {
+): Promise<CustomPeopleGroupPage> => {
   const searchParams = new URLSearchParams({
     page: `${page}`,
     size: `${FAVORITES_PAGE_SIZE}`,
@@ -169,6 +178,7 @@ const fetchTeamEmployeesPage = async (
 
   return {
     employees: normalizeTeamMembers(response),
+    nextPage: page + 1,
     isLastPage:
       response.last ??
       (response.totalPages !== undefined
@@ -183,7 +193,7 @@ const fetchTeamEmployees = async (teamId: string, signal?: AbortSignal): Promise
   let previousSignature = '';
 
   while (true) {
-    const response = await fetchTeamEmployeesPage(teamId, page, signal);
+    const response = await fetchCustomPeopleGroupPage(teamId, page, signal);
     const signature = response.employees.map((employee) => employee.id).join('|');
 
     if (page > 0 && signature !== '' && signature === previousSignature) {
@@ -212,12 +222,52 @@ export const fetchCustomPeopleGroups = async (
   const customTeams = teams.filter((team) => team.isCustom);
 
   return Promise.all(
-    customTeams.map(async (team) => ({
-      id: team.id,
-      name: team.name,
-      employees: await fetchTeamEmployees(team.id, signal),
-    }))
+    customTeams.map(async (team) => {
+      const firstPage = await fetchCustomPeopleGroupPage(team.id, 0, signal);
+
+      return {
+        id: team.id,
+        name: team.name,
+        employees: firstPage.employees,
+        nextPage: firstPage.nextPage,
+        isLastPage: firstPage.isLastPage,
+        lastPageSignature: firstPage.employees.map((employee) => employee.id).join('|'),
+      };
+    })
   );
+};
+
+export const fetchAllCustomPeopleGroupEmployees = async (
+  group: CustomPeopleGroup,
+  signal?: AbortSignal
+): Promise<Employee[]> => {
+  const employeesById = new Map(group.employees.map((employee) => [employee.id, employee]));
+  let page = group.nextPage;
+  let isLastPage = group.isLastPage;
+  let previousSignature = group.employees.map((employee) => employee.id).join('|');
+
+  while (!isLastPage) {
+    const response = await fetchCustomPeopleGroupPage(group.id, page, signal);
+    const signature = response.employees.map((employee) => employee.id).join('|');
+
+    if (signature !== '' && signature === previousSignature) {
+      break;
+    }
+
+    response.employees.forEach((employee) => {
+      employeesById.set(employee.id, employee);
+    });
+
+    if (response.employees.length === 0) {
+      break;
+    }
+
+    previousSignature = signature;
+    page = response.nextPage;
+    isLastPage = response.isLastPage;
+  }
+
+  return Array.from(employeesById.values());
 };
 
 export const fetchFavoriteEmployees = async (): Promise<Employee[]> => {

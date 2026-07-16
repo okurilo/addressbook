@@ -13,7 +13,7 @@ import { ShowMoreButton } from '../../components/ShowMoreButton';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { getDepartmentPath, routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
-import { fetchGroups, getGroupPath, getVisibleGroups } from '../../api/directory/groups';
+import { fetchGroups, getGroupPath } from '../../api/directory/groups';
 import type { GroupNode } from '../../api/directory/groups';
 import {
   Breadcrumbs,
@@ -82,7 +82,7 @@ export const StructureDepartmentPage = ({
         }
 
         setGroup(nextGroup);
-        setNavItems(isGlobalSearch ? getVisibleGroups(nextGroup) : nextGroup.children);
+        setNavItems(isGlobalSearch ? [] : nextGroup.children);
         if (!isGlobalSearch && nextGroup.parentTree?.id === nextGroup.id) {
           setEmployees([]);
           setIsLastPage(true);

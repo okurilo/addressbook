@@ -4,7 +4,11 @@ import type { RouteComponentProps } from '@reach/router';
 import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
 import { Empty } from '@pulse/ui/components/Empty/Page';
-import { fetchCustomPeopleGroups } from '../../api/directory/client';
+import {
+  fetchAllCustomPeopleGroupEmployees,
+  fetchCustomPeopleGroupPage,
+  fetchCustomPeopleGroups,
+} from '../../api/directory/client';
 import type { CustomPeopleGroup } from '../../api/directory/favorites';
 import type { Employee } from '../../api/directory/types';
 import { EmployeeTable } from '../../components/EmployeeTable';
@@ -34,7 +38,12 @@ const matchesQuery = (employee: Employee, query: string): boolean => {
   ].some((value) => value.toLocaleLowerCase('ru').includes(normalizedQuery));
 };
 
-const PAGE_SIZE = 20;
+const mergeEmployees = (currentEmployees: Employee[], nextEmployees: Employee[]): Employee[] =>
+  Array.from(
+    new Map(
+      [...currentEmployees, ...nextEmployees].map((employee) => [employee.id, employee])
+    ).values()
+  );
 
 export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
   const location = useLocation();
@@ -43,10 +52,11 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('q') ?? '';
   const groupIdFromUrl = searchParams.get('groupId') ?? 'all';
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [groups, setGroups] = useState<CustomPeopleGroup[]>([]);
   const [viewState, setViewState] = useState<ViewState>('loading');
   const [retryToken, setRetryToken] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [isLoadMoreFailed, setIsLoadMoreFailed] = useState(false);
 
   const activeGroup = groups.find((group) => group.id === groupIdFromUrl) ?? null;
   const activeGroupId = activeGroup?.id ?? 'all';
@@ -66,8 +76,11 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
         )
       : activeGroup.employees;
   const filteredEmployees = sourceEmployees.filter((employee) => matchesQuery(employee, query));
-  const employees = filteredEmployees.slice(0, visibleCount);
-  const hasMore = employees.length < filteredEmployees.length;
+  const employees = filteredEmployees;
+  const hasMore =
+    activeGroup === null
+      ? groups.some((group) => !group.isLastPage)
+      : !activeGroup.isLastPage;
 
   useEffect(() => {
     let isActive = true;
@@ -103,10 +116,6 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
     };
   }, [favoriteIds, retryToken]);
 
-  useEffect(() => {
-    setVisibleCount(PAGE_SIZE);
-  }, [groupIdFromUrl, query]);
-
   const openGroup = (groupId: string): void => {
     const nextParams = new URLSearchParams(location.search);
 
@@ -122,6 +131,75 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
         replace: true,
       })
     );
+  };
+
+  const loadMore = async (): Promise<void> => {
+    const targetIds = new Set(
+      (activeGroup === null ? groups : [activeGroup])
+        .filter((group) => !group.isLastPage)
+        .map((group) => group.id)
+    );
+
+    if (targetIds.size === 0) {
+      return;
+    }
+
+    setIsLoadingMore(true);
+    setIsLoadMoreFailed(false);
+
+    try {
+      const pages = await Promise.all(
+        groups
+          .filter((group) => targetIds.has(group.id))
+          .map(async (group) => ({
+            groupId: group.id,
+            page: await fetchCustomPeopleGroupPage(group.id, group.nextPage),
+          }))
+      );
+      const pagesByGroupId = new Map(pages.map((item) => [item.groupId, item.page]));
+
+      setGroups((currentGroups) =>
+        currentGroups.map((group) => {
+          const page = pagesByGroupId.get(group.id);
+          const pageSignature = page?.employees.map((employee) => employee.id).join('|') ?? '';
+          const isRepeatedPage =
+            pageSignature !== '' && pageSignature === group.lastPageSignature;
+
+          return page === undefined
+            ? group
+            : {
+                ...group,
+                employees: mergeEmployees(group.employees, page.employees),
+                nextPage: page.nextPage,
+                isLastPage: page.isLastPage || page.employees.length === 0 || isRepeatedPage,
+                lastPageSignature: pageSignature,
+              };
+        })
+      );
+    } catch {
+      setIsLoadMoreFailed(true);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  };
+
+  const loadAllActionEmployees = async (): Promise<Employee[]> => {
+    const targetGroups = activeGroup === null ? groups : [activeGroup];
+    const completedGroups = await Promise.all(
+      targetGroups.map(async (group) => ({
+        groupId: group.id,
+        employees: await fetchAllCustomPeopleGroupEmployees(group),
+      }))
+    );
+    const employeesById = new Map<string, Employee>();
+
+    completedGroups.forEach((group) => {
+      group.employees.forEach((employee) => {
+        employeesById.set(employee.id, employee);
+      });
+    });
+
+    return Array.from(employeesById.values());
   };
 
   return (
@@ -152,7 +230,12 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
           ))}
         </GroupTabs>
         {viewState === 'success' && sourceEmployees.length > 0 ? (
-          <GroupActions employees={sourceEmployees} />
+          <GroupActions
+            key={activeGroupId}
+            employees={sourceEmployees}
+            hasUnloadedEmployees={hasMore}
+            loadAllEmployees={loadAllActionEmployees}
+          />
         ) : null}
       </Header>
       <Surface>
@@ -192,15 +275,15 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
                 ignorePromise(toggleFavorite(employeeId));
               }}
             />
-            {hasMore ? (
-              <ShowMoreButton
-                isLoading={false}
-                onClick={() => {
-                  setVisibleCount((currentCount) => currentCount + PAGE_SIZE);
-                }}
-              />
-            ) : null}
           </>
+        ) : null}
+        {viewState === 'success' && (hasMore || isLoadMoreFailed) ? (
+          <ShowMoreButton
+            isLoading={isLoadingMore}
+            onClick={() => {
+              void loadMore();
+            }}
+          />
         ) : null}
       </Surface>
     </Page>

@@ -1,9 +1,12 @@
+import { useEffect, useState } from 'react';
 import { Text } from '@pulse/ui/components/Text';
 import type { Employee } from '../../api/directory/types';
 import { ActionButton, Actions, Hint } from './styled';
 
 type GroupActionsProps = {
   employees: Employee[];
+  hasUnloadedEmployees: boolean;
+  loadAllEmployees: () => Promise<Employee[]>;
 };
 
 const getRecipients = (employees: Employee[]): string[] =>
@@ -50,39 +53,95 @@ const downloadIcs = (recipients: string[]): void => {
   URL.revokeObjectURL(url);
 };
 
-export const GroupActions = ({ employees }: GroupActionsProps): JSX.Element => {
-  const recipients = getRecipients(employees);
-  const skippedCount = employees.filter((employee) => employee.email.trim() === '').length;
-  const isDisabled = recipients.length === 0;
+export const GroupActions = ({
+  employees,
+  hasUnloadedEmployees,
+  loadAllEmployees,
+}: GroupActionsProps): JSX.Element => {
+  const [resolvedEmployees, setResolvedEmployees] = useState<Employee[] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasLoadingError, setHasLoadingError] = useState(false);
+  const actionEmployees = resolvedEmployees ?? employees;
+  const hasResolvedAllEmployees = resolvedEmployees !== null || !hasUnloadedEmployees;
+  const recipients = getRecipients(actionEmployees);
+  const skippedCount = actionEmployees.filter((employee) => employee.email.trim() === '').length;
+  const isDisabled = recipients.length === 0 && hasResolvedAllEmployees;
+  const employeesSignature = employees.map((employee) => employee.id).join('|');
+
+  useEffect(() => {
+    setResolvedEmployees(null);
+    setHasLoadingError(false);
+  }, [employeesSignature, hasUnloadedEmployees]);
+
+  const resolveEmployees = async (): Promise<Employee[]> => {
+    if (resolvedEmployees !== null || !hasUnloadedEmployees) {
+      return actionEmployees;
+    }
+
+    setIsLoading(true);
+    setHasLoadingError(false);
+
+    try {
+      const nextEmployees = await loadAllEmployees();
+      setResolvedEmployees(nextEmployees);
+      return nextEmployees;
+    } catch {
+      setHasLoadingError(true);
+      return [];
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Actions>
       <ActionButton
         type="button"
-        disabled={isDisabled}
+        disabled={isDisabled || isLoading}
         onClick={() => {
-          window.location.href = `mailto:?bcc=${encodeURIComponent(recipients.join(','))}`;
+          void resolveEmployees().then((nextEmployees) => {
+            const nextRecipients = getRecipients(nextEmployees);
+
+            if (nextRecipients.length > 0) {
+              window.location.href = `mailto:?bcc=${encodeURIComponent(nextRecipients.join(','))}`;
+            }
+          });
         }}
       >
-        Написать всем
+        {isLoading ? 'Загружаем участников…' : 'Написать всем'}
       </ActionButton>
       <ActionButton
         type="button"
-        disabled={isDisabled}
-        onClick={() => downloadIcs(recipients)}
+        disabled={isDisabled || isLoading}
+        onClick={() => {
+          void resolveEmployees().then((nextEmployees) => {
+            const nextRecipients = getRecipients(nextEmployees);
+
+            if (nextRecipients.length > 0) {
+              downloadIcs(nextRecipients);
+            }
+          });
+        }}
       >
         Поставить встречу · ICS
       </ActionButton>
-      {skippedCount > 0 ? (
+      {hasResolvedAllEmployees && skippedCount > 0 ? (
         <Hint>
           <Text variant="caption1Regular">
             Без email: {skippedCount}. Эти сотрудники не попадут в рассылку и ICS.
           </Text>
         </Hint>
       ) : null}
-      {isDisabled ? (
+      {hasResolvedAllEmployees && isDisabled ? (
         <Hint>
           <Text variant="caption1Regular">В активной группе нет доступных email.</Text>
+        </Hint>
+      ) : null}
+      {hasLoadingError ? (
+        <Hint>
+          <Text variant="caption1Regular">
+            Не удалось загрузить всех участников. Попробуйте ещё раз.
+          </Text>
         </Hint>
       ) : null}
     </Actions>

@@ -435,19 +435,24 @@ const handleTeams = (
     return createJsonResponse(404, { message: 'Team not found' });
   }
 
-  const content = isEmpty
+  const allMembers = isEmpty
     ? []
     : team.personIds
         .map((personId) => hostMockPeople.find((person) => person.id === personId))
         .filter((person): person is HostMockPerson => person !== undefined)
         .map(toTeamMember);
+  const page = Math.max(0, Number(url.searchParams.get('page') ?? '0'));
+  const size = Math.max(1, Number(url.searchParams.get('size') ?? '20'));
+  const totalPages = allMembers.length === 0 ? 0 : Math.ceil(allMembers.length / size);
+  const content = allMembers.slice(page * size, (page + 1) * size);
 
   return createDataResponse({
     content,
-    number: 0,
-    size: Number(url.searchParams.get('size') ?? '20'),
-    totalElements: content.length,
-    totalPages: content.length === 0 ? 0 : 1,
+    last: totalPages === 0 || page + 1 >= totalPages,
+    number: page,
+    size,
+    totalElements: allMembers.length,
+    totalPages,
   });
 };
 
