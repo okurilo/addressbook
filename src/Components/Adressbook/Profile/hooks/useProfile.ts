@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { ProfileMainInfoV1Data, ProfileViewData } from './types';
-import { profileHttp } from '../../../../http-requests/http';
+import { http as profileHttp } from '../../../../http-requests/http';
 
 type WidgetData = Record<string, unknown> & {
   contactsV2?: {
@@ -75,9 +75,8 @@ export const useProfile = (pid?: string): ProfileViewData => {
           })(),
           timezone: mainInfo?.schedule?.timezone,
           linearManager: {
-            name: `${linearManager?.lastName || ''} ${linearManager?.firstName || ''} ${
-              linearManager?.secondName || ''
-            }`,
+            name: `${linearManager?.lastName || ''} ${linearManager?.firstName || ''} ${linearManager?.secondName || ''
+              }`,
             url: `/platform/profile/${linearManager?.userId}/`,
           },
           managers,
