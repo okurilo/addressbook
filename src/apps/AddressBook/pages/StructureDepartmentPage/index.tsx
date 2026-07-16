@@ -9,6 +9,7 @@ import { fetchEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
 import { EmployeeTable } from '../../components/EmployeeTable';
 import { RetryState } from '../../components/RetryState';
+import { Pagination } from '../../components/Pagination';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { getDepartmentPath, routePaths } from '../../routes/routePaths';
 import { ignorePromise } from '../../utils/ignorePromise';
@@ -42,11 +43,16 @@ export const StructureDepartmentPage = ({
   const navigate = useNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const query = new URLSearchParams(location.search).get('q') ?? '';
+  const pageFromUrl = Number.parseInt(new URLSearchParams(location.search).get('page') ?? '1', 10);
+  const page = Number.isFinite(pageFromUrl) && pageFromUrl > 0 ? pageFromUrl - 1 : 0;
   const [group, setGroup] = useState<GroupNode | null>(null);
   const [navItems, setNavItems] = useState<GroupNode[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [viewState, setViewState] = useState<ViewState>('loading');
   const [retryToken, setRetryToken] = useState(0);
+  const [totalPages, setTotalPages] = useState<number | null>(null);
+  const [isLastPage, setIsLastPage] = useState(true);
+  const [totalElements, setTotalElements] = useState<number | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -62,16 +68,16 @@ export const StructureDepartmentPage = ({
           controller.signal
         );
         const isHierarchyRoot = nextGroup.parentTree?.id === nextGroup.id;
-        const nextEmployees =
+        const employeeResponse =
           !isGlobalSearch && isHierarchyRoot
-            ? []
-            : (
-                await fetchEmployees(
-                  isGlobalSearch ? query : '',
-                  controller.signal,
-                  isGlobalSearch ? null : nextGroup.id
-                )
-              ).items;
+            ? null
+            : await fetchEmployees(
+                isGlobalSearch ? query : '',
+                controller.signal,
+                isGlobalSearch ? null : nextGroup.id,
+                page
+              );
+        const nextEmployees = employeeResponse?.items ?? [];
 
         if (!isActive) {
           return;
@@ -80,6 +86,9 @@ export const StructureDepartmentPage = ({
         setGroup(nextGroup);
         setNavItems(isGlobalSearch ? getVisibleGroups(nextGroup) : nextGroup.children);
         setEmployees(nextEmployees);
+        setTotalPages(employeeResponse?.totalPages ?? null);
+        setTotalElements(employeeResponse?.totalElements ?? null);
+        setIsLastPage(employeeResponse?.isLastPage ?? true);
         setViewState('success');
       } catch {
         if (isActive && !controller.signal.aborted) {
@@ -97,10 +106,16 @@ export const StructureDepartmentPage = ({
       isActive = false;
       controller.abort();
     };
-  }, [departmentId, query, retryToken]);
+  }, [departmentId, page, query, retryToken]);
 
   const openGroup = (targetGroupId: string): void => {
     ignorePromise(navigate(getDepartmentPath(targetGroupId)));
+  };
+
+  const openPage = (nextPage: number): void => {
+    const nextParams = new URLSearchParams(location.search);
+    nextParams.set('page', `${nextPage + 1}`);
+    ignorePromise(navigate(`${location.pathname}?${nextParams.toString()}`));
   };
 
   if (viewState === 'loading') {
@@ -211,7 +226,8 @@ export const StructureDepartmentPage = ({
         <Text variant="h2Semibold">{isGlobalSearch ? 'результаты поиска' : group.name}</Text>
         {isGlobalSearch ? (
           <Text variant="body2Regular" color={theme.tokens.current.core.text.secondary}>
-            по запросу: {query}
+            {totalElements === null ? 'Найдено сотрудников' : `Найдено ${totalElements} сотрудников`}{' '}
+            по запросу <strong>{query}</strong> в кадровой структуре
           </Text>
         ) : null}
 
@@ -222,13 +238,21 @@ export const StructureDepartmentPage = ({
             description="Попробуйте изменить поисковый запрос или выбрать другое подразделение."
           />
         ) : (
-          <EmployeeTable
-            employees={employees}
-            favoriteIds={favoriteIds}
-            onToggleFavorite={(employeeId) => {
-              ignorePromise(toggleFavorite(employeeId));
-            }}
-          />
+          <>
+            <EmployeeTable
+              employees={employees}
+              favoriteIds={favoriteIds}
+              onToggleFavorite={(employeeId) => {
+                ignorePromise(toggleFavorite(employeeId));
+              }}
+            />
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              isLastPage={isLastPage}
+              onChange={openPage}
+            />
+          </>
         )}
       </Content>
     </Page>

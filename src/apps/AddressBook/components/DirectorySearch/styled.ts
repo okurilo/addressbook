@@ -92,6 +92,11 @@ export const SuggestionState = styled.div(({ theme }) => ({
   color: theme.tokens.current.core.text.secondary,
 }));
 
+export const SuggestionSectionLabel = styled.div(({ theme }) => ({
+  padding: '8px 16px 4px',
+  color: theme.tokens.current.core.text.secondary,
+}));
+
 export const FavoriteButton = styled.button<{ $active: boolean }>(({ theme, $active }) => ({
   minHeight: 56,
   padding: `0 ${24}px`,

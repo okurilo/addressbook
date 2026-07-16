@@ -34,6 +34,11 @@ export type TeamMember = {
 
 export type TeamMembersPage = {
   content?: TeamMember[];
+  last?: boolean;
+  number?: number;
+  size?: number;
+  totalElements?: number;
+  totalPages?: number;
 };
 
 export type CustomPeopleGroup = {
@@ -147,9 +152,13 @@ export const normalizeTeamMembers = (response: TeamMembersPage): Employee[] => {
 const fetchPeopleTeams = async (signal?: AbortSignal): Promise<PeopleTeam[]> =>
   http.get<PeopleTeam[]>(PEOPLE_TEAMS_PATH, { input: { signal } });
 
-const fetchTeamEmployees = async (teamId: string, signal?: AbortSignal): Promise<Employee[]> => {
+const fetchTeamEmployeesPage = async (
+  teamId: string,
+  page: number,
+  signal?: AbortSignal
+): Promise<{ employees: Employee[]; isLastPage: boolean }> => {
   const searchParams = new URLSearchParams({
-    page: '0',
+    page: `${page}`,
     size: `${FAVORITES_PAGE_SIZE}`,
     isCustom: 'true',
   });
@@ -158,7 +167,42 @@ const fetchTeamEmployees = async (teamId: string, signal?: AbortSignal): Promise
     { input: { signal } }
   );
 
-  return normalizeTeamMembers(response);
+  return {
+    employees: normalizeTeamMembers(response),
+    isLastPage:
+      response.last ??
+      (response.totalPages !== undefined
+        ? page + 1 >= response.totalPages
+        : (response.content?.length ?? 0) < FAVORITES_PAGE_SIZE),
+  };
+};
+
+const fetchTeamEmployees = async (teamId: string, signal?: AbortSignal): Promise<Employee[]> => {
+  const employeesById = new Map<string, Employee>();
+  let page = 0;
+  let previousSignature = '';
+
+  while (true) {
+    const response = await fetchTeamEmployeesPage(teamId, page, signal);
+    const signature = response.employees.map((employee) => employee.id).join('|');
+
+    if (page > 0 && signature !== '' && signature === previousSignature) {
+      break;
+    }
+
+    response.employees.forEach((employee) => {
+      employeesById.set(employee.id, employee);
+    });
+
+    if (response.isLastPage || response.employees.length === 0) {
+      break;
+    }
+
+    previousSignature = signature;
+    page += 1;
+  }
+
+  return Array.from(employeesById.values());
 };
 
 export const fetchCustomPeopleGroups = async (

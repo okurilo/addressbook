@@ -122,6 +122,11 @@ type CurrentTokens = {
         '70': string;
       };
     };
+    yellow: {
+      solid: {
+        '60': string;
+      };
+    };
   };
   shadows: {
     small: string;
@@ -313,6 +318,11 @@ export const hostTheme: HostTheme = {
             '50': '#89918b',
             '60': '#657068',
             '70': '#4f5952',
+          },
+        },
+        yellow: {
+          solid: {
+            '60': '#e3a51b',
           },
         },
       },

@@ -4,12 +4,13 @@ import { Loader } from '@pulse/ui/components/Loader';
 import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
 import { Empty } from '@pulse/ui/components/Empty/Page';
-import { useLocation } from '@reach/router';
+import { useLocation, useNavigate } from '@reach/router';
 import { fetchEmployees } from '../../api/directory/client';
 import type { Employee } from '../../api/directory/types';
 import { getSearchHistory, selectSearchHistory } from '../../api/history/history';
 import { EmployeeTable } from '../../components/EmployeeTable';
 import { RetryState } from '../../components/RetryState';
+import { Pagination } from '../../components/Pagination';
 import { useDebouncedValue } from '../../components/useDebouncedValue';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { ignorePromise } from '../../utils/ignorePromise';
@@ -20,13 +21,18 @@ type ViewState = 'idle' | 'loading' | 'success' | 'empty' | 'error';
 export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
   const theme = useTheme();
   const location = useLocation();
+  const navigate = useNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const query = new URLSearchParams(location.search).get('q') ?? '';
+  const pageFromUrl = Number.parseInt(new URLSearchParams(location.search).get('page') ?? '1', 10);
+  const page = Number.isFinite(pageFromUrl) && pageFromUrl > 0 ? pageFromUrl - 1 : 0;
   const debouncedQuery = useDebouncedValue(query, 500);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [historyIdsByEmployeeId, setHistoryIdsByEmployeeId] = useState<Record<string, string>>({});
   const [viewState, setViewState] = useState<ViewState>('idle');
   const [retryToken, setRetryToken] = useState(0);
+  const [totalPages, setTotalPages] = useState<number | null>(null);
+  const [isLastPage, setIsLastPage] = useState(true);
 
   useEffect(() => {
     let isActive = true;
@@ -71,10 +77,13 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
           setEmployees(nextEmployees);
           setHistoryIdsByEmployeeId(nextHistoryIdsByEmployeeId);
           setViewState(nextEmployees.length === 0 ? 'empty' : 'success');
+          setTotalPages(null);
+          setIsLastPage(true);
           return;
         }
 
-        const nextEmployees = (await fetchEmployees(debouncedQuery, controller.signal)).items;
+        const response = await fetchEmployees(debouncedQuery, controller.signal, null, page);
+        const nextEmployees = response.items;
 
         if (!isActive) {
           return;
@@ -82,6 +91,8 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
 
         setEmployees(nextEmployees);
         setHistoryIdsByEmployeeId({});
+        setTotalPages(response.totalPages);
+        setIsLastPage(response.isLastPage);
         setViewState(nextEmployees.length === 0 ? 'empty' : 'success');
       } catch {
         if (!isActive) {
@@ -100,7 +111,13 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
       isActive = false;
       controller.abort();
     };
-  }, [debouncedQuery, retryToken]);
+  }, [debouncedQuery, page, retryToken]);
+
+  const openPage = (nextPage: number): void => {
+    const nextParams = new URLSearchParams(location.search);
+    nextParams.set('page', `${nextPage + 1}`);
+    ignorePromise(navigate(`${location.pathname}?${nextParams.toString()}`));
+  };
 
   const title = query.trim() === '' ? 'недавние' : 'результаты поиска';
   const isHistoryMode = query.trim() === '';
@@ -144,24 +161,34 @@ export const ContactsPage = (_props: RouteComponentProps): JSX.Element => {
           />
         ) : null}
         {viewState === 'success' ? (
-          <EmployeeTable
-            employees={employees}
-            favoriteIds={favoriteIds}
-            onEmployeeOpen={
-              isHistoryMode
-                ? (employeeId) => {
-                    const historyId = historyIdsByEmployeeId[employeeId];
+          <>
+            <EmployeeTable
+              employees={employees}
+              favoriteIds={favoriteIds}
+              onEmployeeOpen={
+                isHistoryMode
+                  ? (employeeId) => {
+                      const historyId = historyIdsByEmployeeId[employeeId];
 
-                    if (historyId !== undefined) {
-                      ignorePromise(selectSearchHistory(historyId));
+                      if (historyId !== undefined) {
+                        ignorePromise(selectSearchHistory(historyId));
+                      }
                     }
-                  }
-                : undefined
-            }
-            onToggleFavorite={(employeeId) => {
-              ignorePromise(toggleFavorite(employeeId));
-            }}
-          />
+                  : undefined
+              }
+              onToggleFavorite={(employeeId) => {
+                ignorePromise(toggleFavorite(employeeId));
+              }}
+            />
+            {!isHistoryMode ? (
+              <Pagination
+                currentPage={page}
+                totalPages={totalPages}
+                isLastPage={isLastPage}
+                onChange={openPage}
+              />
+            ) : null}
+          </>
         ) : null}
       </Surface>
     </Section>

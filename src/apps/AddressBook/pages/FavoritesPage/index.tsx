@@ -8,6 +8,8 @@ import { fetchCustomPeopleGroups } from '../../api/directory/client';
 import type { CustomPeopleGroup } from '../../api/directory/favorites';
 import type { Employee } from '../../api/directory/types';
 import { EmployeeTable } from '../../components/EmployeeTable';
+import { GroupActions } from '../../components/GroupActions';
+import { Pagination } from '../../components/Pagination';
 import { RetryState } from '../../components/RetryState';
 import { useFavoriteEmployees } from '../../components/useFavoriteEmployees';
 import { routePaths } from '../../routes/routePaths';
@@ -32,6 +34,8 @@ const matchesQuery = (employee: Employee, query: string): boolean => {
   ].some((value) => value.toLocaleLowerCase('ru').includes(normalizedQuery));
 };
 
+const PAGE_SIZE = 20;
+
 export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -39,6 +43,8 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('q') ?? '';
   const groupIdFromUrl = searchParams.get('groupId') ?? 'all';
+  const pageFromUrl = Number.parseInt(searchParams.get('page') ?? '1', 10);
+  const page = Number.isFinite(pageFromUrl) && pageFromUrl > 0 ? pageFromUrl - 1 : 0;
   const [groups, setGroups] = useState<CustomPeopleGroup[]>([]);
   const [viewState, setViewState] = useState<ViewState>('loading');
   const [retryToken, setRetryToken] = useState(0);
@@ -60,7 +66,9 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
             .values()
         )
       : activeGroup.employees;
-  const employees = sourceEmployees.filter((employee) => matchesQuery(employee, query));
+  const filteredEmployees = sourceEmployees.filter((employee) => matchesQuery(employee, query));
+  const totalPages = Math.ceil(filteredEmployees.length / PAGE_SIZE);
+  const employees = filteredEmployees.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
   useEffect(() => {
     let isActive = true;
@@ -96,6 +104,20 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
     };
   }, [favoriteIds, retryToken]);
 
+  useEffect(() => {
+    if (viewState !== 'success' || totalPages === 0 || page < totalPages) {
+      return;
+    }
+
+    const nextParams = new URLSearchParams(location.search);
+    nextParams.set('page', `${totalPages}`);
+    ignorePromise(
+      navigate(`${routePaths.favorites}?${nextParams.toString()}`, {
+        replace: true,
+      })
+    );
+  }, [location.search, navigate, page, totalPages, viewState]);
+
   const openGroup = (groupId: string): void => {
     const nextParams = new URLSearchParams(location.search);
 
@@ -104,6 +126,7 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
     } else {
       nextParams.set('groupId', groupId);
     }
+    nextParams.delete('page');
 
     const nextSearch = nextParams.toString();
     ignorePromise(
@@ -111,6 +134,12 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
         replace: true,
       })
     );
+  };
+
+  const openPage = (nextPage: number): void => {
+    const nextParams = new URLSearchParams(location.search);
+    nextParams.set('page', `${nextPage + 1}`);
+    ignorePromise(navigate(`${routePaths.favorites}?${nextParams.toString()}`));
   };
 
   return (
@@ -140,6 +169,9 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
             </GroupTab>
           ))}
         </GroupTabs>
+        {viewState === 'success' && sourceEmployees.length > 0 ? (
+          <GroupActions employees={sourceEmployees} />
+        ) : null}
       </Header>
       <Surface>
         {viewState === 'loading' ? (
@@ -170,13 +202,21 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
           />
         ) : null}
         {viewState === 'success' && employees.length > 0 ? (
-          <EmployeeTable
-            employees={employees}
-            favoriteIds={favoriteIds}
-            onToggleFavorite={(employeeId) => {
-              ignorePromise(toggleFavorite(employeeId));
-            }}
-          />
+          <>
+            <EmployeeTable
+              employees={employees}
+              favoriteIds={favoriteIds}
+              onToggleFavorite={(employeeId) => {
+                ignorePromise(toggleFavorite(employeeId));
+              }}
+            />
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              isLastPage={page + 1 >= totalPages}
+              onChange={openPage}
+            />
+          </>
         ) : null}
       </Surface>
     </Page>

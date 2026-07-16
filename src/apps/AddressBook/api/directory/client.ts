@@ -31,13 +31,17 @@ const fetchJson = async <T>(input: string, init?: RequestInit): Promise<T> => {
 export const fetchEmployees = async (
   query: string,
   signal?: AbortSignal,
-  orgFilter: string | null = null
-): Promise<EmployeeSearchResponse> => fetchDirectoryEmployees(query, signal, orgFilter);
+  orgFilter: string | null = null,
+  page = 0,
+  size = 20
+): Promise<EmployeeSearchResponse> => fetchDirectoryEmployees(query, signal, orgFilter, page, size);
 
 export const fetchSearchSuggestions = async (
   query: string,
-  signal?: AbortSignal
-): Promise<DirectorySearchResponse> => fetchDirectorySuggestions(query, signal);
+  signal?: AbortSignal,
+  organizationsOnly = false
+): Promise<DirectorySearchResponse> =>
+  fetchDirectorySuggestions(query, signal, organizationsOnly);
 
 export const fetchEmployeeById = async (employeeId: string): Promise<Employee> =>
   fetchJson<Employee>(`/api/directory/employees/${encodeURIComponent(employeeId)}`);

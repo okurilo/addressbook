@@ -23,6 +23,8 @@ type MultiSearchCategoryResponse = {
   data?: {
     content?: unknown[];
     last?: boolean;
+    number?: number;
+    size?: number;
     totalElements?: number;
     totalPages?: number;
     success?: boolean;
@@ -268,13 +270,15 @@ export const getSearchData = async ({
 export const fetchDirectoryEmployees = async (
   query: string,
   signal?: AbortSignal,
-  orgFilter: string | null = null
+  orgFilter: string | null = null,
+  page = 0,
+  size = 20
 ): Promise<EmployeeSearchResponse> => {
   const response = await getSearchData({
     signal,
     query,
-    page: 0,
-    size: 20,
+    page,
+    size,
     categories: [PERSON_CATEGORY],
     orgFilter,
   });
@@ -287,19 +291,27 @@ export const fetchDirectoryEmployees = async (
   return {
     items: content.map(mapPerson).filter((employee): employee is Employee => employee !== null),
     query,
+    page: response.PERSONADDRESSBOOK?.data?.number ?? page,
+    pageSize: response.PERSONADDRESSBOOK?.data?.size ?? size,
+    totalElements: response.PERSONADDRESSBOOK?.data?.totalElements ?? null,
+    totalPages: response.PERSONADDRESSBOOK?.data?.totalPages ?? null,
+    isLastPage:
+      response.PERSONADDRESSBOOK?.data?.last ??
+      content.length < (response.PERSONADDRESSBOOK?.data?.size ?? size),
   };
 };
 
 export const fetchDirectorySuggestions = async (
   query: string,
-  signal?: AbortSignal
+  signal?: AbortSignal,
+  organizationsOnly = false
 ): Promise<DirectorySearchResponse> => {
   const response = await getSearchData({
     signal,
     query,
     page: 0,
     size: 20,
-    categories: [PERSON_CATEGORY, ORGSTRUCTURE_CATEGORY],
+    categories: organizationsOnly ? [ORGSTRUCTURE_CATEGORY] : [PERSON_CATEGORY, ORGSTRUCTURE_CATEGORY],
     orgFilter: null,
   });
   const peopleContent = response.PERSONADDRESSBOOK?.data?.content;
@@ -319,5 +331,10 @@ export const fetchDirectorySuggestions = async (
           .filter((organization): organization is OrganizationSearchResult => organization !== null)
       : [],
     query,
+    page: 0,
+    pageSize: 20,
+    totalElements: null,
+    totalPages: null,
+    isLastPage: true,
   };
 };

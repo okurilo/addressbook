@@ -38,6 +38,11 @@ export type Employee = {
 export type EmployeeSearchResponse = {
   items: Employee[];
   query: string;
+  page: number;
+  pageSize: number;
+  totalElements: number | null;
+  totalPages: number | null;
+  isLastPage: boolean;
 };
 
 export type OrganizationSearchResult = {
