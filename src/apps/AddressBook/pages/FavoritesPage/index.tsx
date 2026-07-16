@@ -22,22 +22,6 @@ import { Page, Header, GroupTabs, GroupTab, Surface, CenteredState } from './sty
 
 type ViewState = 'loading' | 'success' | 'empty' | 'error';
 
-const matchesQuery = (employee: Employee, query: string): boolean => {
-  const normalizedQuery = query.trim().toLocaleLowerCase('ru');
-
-  if (normalizedQuery === '') {
-    return true;
-  }
-
-  return [
-    employee.fullName,
-    employee.position,
-    employee.departmentName,
-    employee.shortStructure,
-    employee.subtitle,
-  ].some((value) => value.toLocaleLowerCase('ru').includes(normalizedQuery));
-};
-
 const mergeEmployees = (currentEmployees: Employee[], nextEmployees: Employee[]): Employee[] =>
   Array.from(
     new Map(
@@ -50,7 +34,6 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
   const navigate = useNavigate();
   const { favoriteIds, toggleFavorite } = useFavoriteEmployees();
   const searchParams = new URLSearchParams(location.search);
-  const query = searchParams.get('q') ?? '';
   const groupIdFromUrl = searchParams.get('groupId') ?? 'all';
   const [groups, setGroups] = useState<CustomPeopleGroup[]>([]);
   const [viewState, setViewState] = useState<ViewState>('loading');
@@ -75,8 +58,7 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
             .values()
         )
       : activeGroup.employees;
-  const filteredEmployees = sourceEmployees.filter((employee) => matchesQuery(employee, query));
-  const employees = filteredEmployees;
+  const employees = sourceEmployees;
   const hasMore =
     activeGroup === null ? groups.some((group) => !group.isLastPage) : !activeGroup.isLastPage;
 
@@ -112,7 +94,7 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
       isActive = false;
       controller.abort();
     };
-  }, [favoriteIds, retryToken]);
+  }, [retryToken]);
 
   const openGroup = (groupId: string): void => {
     const nextParams = new URLSearchParams(location.search);
@@ -252,14 +234,12 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
         ) : null}
         {viewState === 'success' && employees.length === 0 ? (
           <Empty
-            type={query.trim() === '' ? 'noData' : 'noResults'}
-            title={query.trim() === '' ? 'Тут пока пусто' : 'Ничего не найдено'}
+            type="noData"
+            title="Тут пока пусто"
             description={
-              query.trim() === ''
-                ? activeGroup === null
-                  ? 'В пользовательских группах пока нет сотрудников.'
-                  : `В группе «${activeGroup.name}» пока нет сотрудников.`
-                : 'В выбранных группах нет сотрудников, подходящих под глобальный фильтр.'
+              activeGroup === null
+                ? 'В пользовательских группах пока нет сотрудников.'
+                : `В группе «${activeGroup.name}» пока нет сотрудников.`
             }
           />
         ) : null}
@@ -286,4 +266,3 @@ export const FavoritesPage = (_props: RouteComponentProps): JSX.Element => {
     </Page>
   );
 };
-

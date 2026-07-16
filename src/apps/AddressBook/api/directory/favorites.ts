@@ -175,15 +175,18 @@ export const fetchCustomPeopleGroupPage = async (
     `/srv/v7/people/teams/${encodeURIComponent(teamId)}?${searchParams.toString()}`,
     { input: { signal } }
   );
+  const employees = normalizeTeamMembers(response);
+  const contentSize = response.content?.length ?? 0;
 
   return {
-    employees: normalizeTeamMembers(response),
+    employees,
     nextPage: page + 1,
     isLastPage:
-      response.last ??
-      (response.totalPages !== undefined
-        ? page + 1 >= response.totalPages
-        : (response.content?.length ?? 0) < FAVORITES_PAGE_SIZE),
+      contentSize === 0 ||
+      (response.last ??
+        (response.totalPages !== undefined
+          ? page + 1 >= response.totalPages
+          : contentSize < FAVORITES_PAGE_SIZE)),
   };
 };
 
@@ -322,4 +325,3 @@ export const removeFavoriteEmployee = async (employeeId: string): Promise<void> 
 
   await http.post<void>(UPDATE_CUSTOM_GROUP_PATH, body);
 };
-
