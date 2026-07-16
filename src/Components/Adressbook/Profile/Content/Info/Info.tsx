@@ -1,5 +1,5 @@
 import { useTheme } from 'styled-components';
-import { MainContainerStyled } from '../../../People/styled';
+import { MainContainerStyled } from './styled';
 import { Body1Regular, Body2Regular } from '../../../common/typography';
 import { RowStyled } from './styled';
 import type { ProfileViewData } from '../../hooks/types';

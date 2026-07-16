@@ -65,6 +65,7 @@ export const EmployeeRow = ({
       </Cell>
       <Cell>
         <EmployeeActions
+          personId={employee.id}
           phone={employee.phone}
           email={employee.email}
           isFavorite={isFavorite}

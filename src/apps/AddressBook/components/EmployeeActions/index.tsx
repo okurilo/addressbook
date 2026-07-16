@@ -1,7 +1,9 @@
-import { Text } from '@pulse/ui/components/Text';
 import { useTheme } from 'styled-components';
-import { StarIcon } from '../icons';
-import { Actions, ActionLink, ActionButton } from './styled';
+import { Actions, ActionButton } from './styled';
+import { TableStar } from '../../../../Components/Adressbook/common/ConnectCell/TableStar/TableStar';
+
+import { TableMail } from '../../../../Components/Adressbook/common/ConnectCell/Mail';
+import { TablePhone } from '../../../../Components/Adressbook/common/ConnectCell/Phone';
 
 type ExtraAction = {
   label: string;
@@ -9,46 +11,45 @@ type ExtraAction = {
 };
 
 type EmployeeActionsProps = {
+  personId: string;
   phone: string | null;
   email: string;
   isFavorite: boolean;
+  isFavoriteLoading?: boolean;
+  groupId?: string;
   onToggleFavorite: () => void;
   emailLabel?: string;
   extraActions?: ExtraAction[];
 };
 
 export const EmployeeActions = ({
+  personId,
   phone,
   email,
   isFavorite,
-  onToggleFavorite,
-  emailLabel = 'email',
+  isFavoriteLoading,
+  groupId,
   extraActions = [],
 }: EmployeeActionsProps): JSX.Element => {
-  const theme = useTheme();
-
   return (
     <Actions
       onClick={(event) => {
         event.stopPropagation();
       }}
     >
-      {phone === null ? (
-        <Text variant="body2Regular" color={theme.tokens.current.core.text.tertiary}>
-          не указан
-        </Text>
-      ) : (
-        <ActionLink href={`tel:${phone}`}>{phone}</ActionLink>
+      {phone && <TablePhone phone={phone} pid={personId} />}
+      {email && (
+        <a href={`mailto:${email}`}>
+          <TableMail />
+        </a>
       )}
-      <ActionLink href={`mailto:${email}`}>{emailLabel}</ActionLink>
-      <ActionButton
-        type="button"
-        $active={isFavorite}
-        aria-label={isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}
-        onClick={onToggleFavorite}
-      >
-        <StarIcon />
-      </ActionButton>
+
+      <TableStar
+        pid={personId}
+        isFavorite={isFavorite}
+        isFavoriteLoading={isFavoriteLoading}
+        groupId={groupId}
+      />
       {extraActions.map((action) => (
         <ActionButton
           key={action.label}

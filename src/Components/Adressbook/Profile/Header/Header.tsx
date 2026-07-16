@@ -21,6 +21,7 @@ import { ReactComponent as ShareIcon } from '../assets/share.svg';
 import { ReactComponent as StarIcon } from '../assets/star.svg';
 import { IconButton } from '../../common/IconButton';
 import { QRCodeCore } from './QRCodeCore';
+import { Star } from './Star';
 
 interface ICustomGroup {
   id: string;
@@ -84,47 +85,9 @@ export const Header = ({
 }: HeaderProps) => {
   const { tokens } = useTheme();
   const [isOpenQRModal, setIsOpenQRModal] = useState(false);
-  const [customGroups, setCustomGroups] = useState<ICustomGroup[]>([]);
-  const [showPopover, setShowPopover] = useState(false);
-  const starBtnRef = useRef<HTMLDivElement>(null);
+ 
 
   const profileUrl = pid ? `${window.location.origin}/platform/profile/${pid}` : '';
-
-  const fetchCustomGroups = useCallback(async () => {
-    try {
-      const res = await fetch('/api-web/srv/v7/people/teams', {
-        headers: { Accept: 'application/json' },
-      });
-      const payload = (await res.json()) as ICustomGroup[] | { data?: ICustomGroup[] };
-      const data = Array.isArray(payload) ? payload : payload.data ?? [];
-      const filtered = data.filter((group) => group.isCustom && group.type === 'группа');
-      setCustomGroups(filtered);
-    } catch (err) {
-      console.error('star error', err);
-    }
-  }, []);
-
-  const handleStarClick = useCallback(() => {
-    setShowPopover((prev) => {
-      if (!prev) fetchCustomGroups();
-      return !prev;
-    });
-  }, [fetchCustomGroups]);
-
-  const closePopover = useCallback(() => {
-    setShowPopover(false);
-  }, []);
-
-  useEffect(() => {
-    if (!showPopover) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (starBtnRef.current && !starBtnRef.current.contains(e.target as Node)) {
-        closePopover();
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [showPopover, closePopover]);
 
   return (
     <MainContainerStyled>
@@ -137,7 +100,6 @@ export const Header = ({
           <Body1Regular color={tokens.current.core.text.secondary}>{position}</Body1Regular>
         </NameSectionStyled>
         <EmployeeNumberContainerStyled>
-          {/* <Body2Regular color={tokens.current.core.text.secondary}>Сберджайл mock</Body2Regular> */}
           <EmployeeNumberStyled>
             <Body2Regular color={tokens.current.core.text.secondary}>
               Табельный номер:{` `}
@@ -174,22 +136,7 @@ export const Header = ({
         >
           <ShareIcon />
         </IconButton>
-        <div ref={starBtnRef} style={{ position: 'relative' }}>
-          <IconButton color={tokens.current.colors.grey.solid['60']} onClick={handleStarClick}>
-            <StarIcon />
-          </IconButton>
-          {/* <PopoverContainer $visible={showPopover}>
-            {customGroups.length > 0 ? (
-              customGroups.map((group) => (
-                <PopoverItem key={group.id} onClick={closePopover}>
-                  <Body2Regular>{group.name}</Body2Regular>
-                </PopoverItem>
-              ))
-            ) : (
-              <NoGroups>Нет групп</NoGroups>
-            )}
-          </PopoverContainer> */}
-        </div>
+        <Star pid={pid} />
       </ButtonsSectionStyled>
       {isOpenQRModal && (
         <LegacyModal type="default" onClose={() => setIsOpenQRModal(false)}>

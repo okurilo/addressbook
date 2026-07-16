@@ -51,7 +51,7 @@ export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, pro
         )}
       </SectionStyled>
       {isLoading ? (
-        <SkeletonRect height={64} width={400} />
+        <SkeletonRect height={64} width="70%" />
       ) : (
         <>
           <SectionStyled>

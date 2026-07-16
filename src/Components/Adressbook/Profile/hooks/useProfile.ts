@@ -23,7 +23,7 @@ type WidgetData = Record<string, unknown> & {
 };
 
 const API_PATH =
-  'smart-profile/web/widgets/data?widgets=mainInfo_v1&widgets=about&widgets=manager';
+  'smart-profile/web/widgets/data?widgets=mainInfo_v1&widgets=about&widgets=manager&widgets=roles';
 
 type ProfileWidget = {
   code: string;
@@ -80,6 +80,7 @@ export const useProfile = (pid?: string): ProfileViewData => {
             }`,
             url: `/platform/profile/${linearManager?.userId}/`,
           },
+          managers,
           agile: mainInfo?.agile,
           linear: mainInfo?.linear,
           birthDate: mainInfo?.birthDate,

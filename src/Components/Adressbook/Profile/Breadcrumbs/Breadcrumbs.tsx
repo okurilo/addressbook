@@ -1,15 +1,16 @@
 import { useTheme } from 'styled-components';
 import { SkeletonRect } from '@pulse/ui/components/Skeleton';
 import { MainContainerStyled } from './styled';
-import { Body1Regular } from '../../common/typography';
+import { Body1Regular, Body2Regular } from '../../common/typography';
 import type { ProfileViewData } from '../hooks/types';
 
 type BreadcrumbsProps = {
   profile: ProfileViewData;
   structureType: 'linear' | 'agile';
+  style?: 'small';
 };
 
-export const Breadcrumbs = ({ profile, structureType }: BreadcrumbsProps) => {
+export const Breadcrumbs = ({ profile, structureType, style }: BreadcrumbsProps) => {
   const theme = useTheme();
   const { agile, linear, isLoading } = profile;
 
@@ -18,15 +19,21 @@ export const Breadcrumbs = ({ profile, structureType }: BreadcrumbsProps) => {
   const position = isLinear ? (linear?.position as string) : (agile?.position as string);
 
   return (
-    <MainContainerStyled>
+    <MainContainerStyled isSmall={style === 'small'}>
       {isLoading ? (
-        <SkeletonRect height={20} width="400px" />
+        <SkeletonRect height={20} width="70%" />
       ) : (
-        position && (
-          <Body1Regular color={theme.tokens.current.colors.grey.solid['70']}>
-            {items.map((item) => item.title).join(' / ')}
-          </Body1Regular>
-        )
+        position &&
+        (() =>
+          style === 'small' ? (
+            <Body2Regular color={theme.tokens.current.colors.grey.solid['70']}>
+              {items.map((item) => item.title).join(' > ')}
+            </Body2Regular>
+          ) : (
+            <Body1Regular color={theme.tokens.current.colors.grey.solid['70']}>
+              {items.map((item) => item.title).join(' / ')}
+            </Body1Regular>
+          ))()
       )}
     </MainContainerStyled>
   );

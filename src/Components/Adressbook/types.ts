@@ -51,6 +51,7 @@ export type PersonRow = {
   block: string;
   unit: string;
   pid: string;
+  isFavorite?: boolean;
   _profile: PersonProfile;
 };
 

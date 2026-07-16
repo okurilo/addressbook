@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-export const MainContainerStyled = styled('div')({
-  marginTop: 16,
-});
-
+export const MainContainerStyled = styled('div')(({ isSmall }) => ({
+  marginTop: isSmall ? 0 : 16,
+}));

@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import type { PropsWithChildren, ReactNode } from 'react';
 import type { AdressbookPerson } from './types';
 
@@ -6,8 +6,17 @@ type AdressbookContextValue = {
   enabled: boolean;
   people: AdressbookPerson[];
   isLoading: boolean;
+  renderActions?: (
+    personId: string,
+    isFavorite?: boolean,
+    favoritePersons?: Set<string>,
+    favoriteGroupId?: string
+  ) => ReactNode;
+  favoritePersons: Set<string> | undefined;
+  favoriteGroupId: string | undefined;
+  setFavoritePersons: (s: Set<string> | undefined) => void;
+  setFavoriteGroupId: (id: string | undefined) => void;
   onPersonOpen?: (personId: string) => void;
-  renderActions?: (personId: string) => ReactNode;
 };
 
 type AdressbookProviderProps = PropsWithChildren<{
@@ -28,9 +37,32 @@ export const AdressbookProvider = ({
   onPersonOpen,
   renderActions,
 }: AdressbookProviderProps): JSX.Element => {
+  const [favoritePersons, setFavoritePersons] = useState<Set<string> | undefined>(undefined);
+  const [favoriteGroupId, setFavoriteGroupId] = useState<string | undefined>(undefined);
+
   const value = useMemo<AdressbookContextValue>(
-    () => ({ enabled, people, isLoading, onPersonOpen, renderActions }),
-    [enabled, people, isLoading, onPersonOpen, renderActions]
+    () => ({
+      enabled,
+      people,
+      isLoading,
+      onPersonOpen,
+      renderActions,
+      favoritePersons,
+      favoriteGroupId,
+      setFavoritePersons,
+      setFavoriteGroupId,
+    }),
+    [
+      enabled,
+      people,
+      isLoading,
+      onPersonOpen,
+      renderActions,
+      favoritePersons,
+      favoriteGroupId,
+      setFavoritePersons,
+      setFavoriteGroupId,
+    ]
   );
 
   return <AdressbookContext.Provider value={value}>{children}</AdressbookContext.Provider>;

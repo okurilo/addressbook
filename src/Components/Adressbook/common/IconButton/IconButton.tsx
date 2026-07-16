@@ -2,7 +2,7 @@ import { FC, PropsWithChildren } from 'react';
 import { ButtonStyled } from './styled';
 
 interface IIconButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
   color?: string;
 }
 

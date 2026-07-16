@@ -627,3 +627,14 @@
 - [x] Оставить данные, необходимые таблице до открытия Profile и базовой шапке Profile.
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.
+
+### Итерация 39. Буквальный перенос changes.md из целевого проекта
+
+- [x] Отменить ошибочную адаптацию diff под локальную оболочку.
+- [x] Буквально применить все hunks `src/Components/Adressbook/**`.
+- [x] Буквально применить все hunks `src/apps/AddressBook/**`.
+- [x] Добавить `.gigacode` из исходного diff.
+- [ ] Применить hunk `src/Components/Layout/Layout.tsx` после получения отсутствующего baseline-файла.
+- [ ] Применить hunk `src/Components/Layout/__tests__/Layout.test.tsx` после получения отсутствующего baseline-файла.
+- [ ] Применить hunk `src/__tests__/App.test.tsx` после получения отсутствующего baseline-файла.
+- [x] Запустить `npm run typecheck` и зафиксировать ожидаемые несовместимости без исправления.

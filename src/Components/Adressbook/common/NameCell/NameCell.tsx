@@ -23,7 +23,6 @@ export const NameCell = ({ data, pid }: NameCellProps) => {
       <ProfileImage size="m" absence={absence} photo={photo} initials={initials} pid={pid} />
       <Body2Regular>{name}</Body2Regular>
       <div />
-      {/* <Body2Regular color={tokens?.current.core.text.secondary}>Сберджайл mock </Body2Regular> */}
     </MainContainerStyled>
   );
 };

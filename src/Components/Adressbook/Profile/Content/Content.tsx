@@ -3,6 +3,7 @@ import { Contacts } from './Contacts';
 import { Info } from './Info';
 import type { PersonProfile } from '../../types';
 import type { ProfileViewData } from '../hooks/types';
+import { Sbergile } from './Sbergile';
 
 type ContentProps = {
   activeTab: string;
@@ -27,6 +28,13 @@ export const Content = ({ activeTab, person, pid, profile }: ContentProps) => {
     return (
       <MainContainerStyled>
         <Info profile={profile} />
+      </MainContainerStyled>
+    );
+
+  if (activeTab === 'sbergile')
+    return (
+      <MainContainerStyled>
+        <Sbergile profile={profile} />
       </MainContainerStyled>
     );
   return null;

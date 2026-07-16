@@ -16,6 +16,8 @@ export const EmployeeTable = ({
   onEmployeeOpen,
   onToggleFavorite,
 }: EmployeeTableProps): JSX.Element => {
+  const favIds = new Set(favoriteIds);
+
   const people: AdressbookPerson[] = employees.map((employee) => {
     const nameParts = employee.fullName.trim().split(/\s+/u);
     const firstName = employee.firstName ?? nameParts[1] ?? nameParts[0];
@@ -51,17 +53,25 @@ export const EmployeeTable = ({
     <AdressbookProvider
       people={people}
       onPersonOpen={onEmployeeOpen}
-      renderActions={(personId) => {
+      renderActions={(personId, isFavorite, favoritePersons, favoriteGroupId, personalPhone) => {
         const employee = employeesById.get(personId);
+
+        // favoritePersons is undefined while People fetches — show skeleton
+        const isFavoriteLoading = favoritePersons === undefined;
+
+        const allFavs = favoritePersons ? new Set([...favoritePersons, ...favIds]) : favIds;
 
         return employee === undefined ? null : (
           <EmployeeActions
+            personId={personId}
             email={employee.email}
-            isFavorite={favoriteIds.includes(personId)}
+            isFavorite={isFavorite ?? allFavs.has(personId)}
+            isFavoriteLoading={isFavoriteLoading}
+            groupId={favoriteGroupId}
             onToggleFavorite={() => {
               onToggleFavorite(personId);
             }}
-            phone={employee.phone}
+            phone={personalPhone}
           />
         );
       }}

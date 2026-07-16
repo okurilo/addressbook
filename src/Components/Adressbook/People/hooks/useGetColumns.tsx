@@ -25,8 +25,15 @@ export const useGetColumns = (): Column<PersonRow>[] => {
     },
     {
       key: 'connect',
+      align: 'right',
       header: 'связаться',
-      render: (u) => <ConnectCell personId={u.pid} />,
+      render: (u) => (
+        <ConnectCell
+          personId={u.pid}
+          isFavorite={u.isFavorite}
+          personalPhone={u._profile.personalPhone}
+        />
+      ),
     },
   ];
 };
