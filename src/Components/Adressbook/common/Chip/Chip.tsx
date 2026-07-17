@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import { useTheme } from 'styled-components';
 import { ButtonStyled } from './styled';
 import { Body2Regular } from '../typography';
@@ -17,4 +17,3 @@ export const Chip: FC<PropsWithChildren<IIconButtonProps>> = ({ onClick, text, c
     </ButtonStyled>
   );
 };
-

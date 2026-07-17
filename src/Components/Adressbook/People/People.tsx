@@ -1,4 +1,5 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { FC } from 'react';
 import { Table } from '../common/Table';
 import { MainContainerStyled } from './styled';
 import { useGetPeople } from './hooks/useGetPeople';
@@ -11,7 +12,7 @@ const FAVOURITE_GROUP_NAME = 'Избранное';
 export const People: FC = () => {
   const { people, isLoading } = useGetPeople();
 
-  const { onPersonOpen, setFavoritePersons, setFavoriteGroupId } = useAdressbookContext();
+  const { setFavoritePersons, setFavoriteGroupId } = useAdressbookContext();
 
   const columns = useGetColumns();
   const [expandedRowKey, setExpandedRowKey] = useState<string | number | null>(null);
@@ -83,4 +84,3 @@ export const People: FC = () => {
     );
   return null;
 };
-

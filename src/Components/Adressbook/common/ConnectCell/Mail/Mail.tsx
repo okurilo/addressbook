@@ -1,5 +1,5 @@
 import { useTheme } from 'styled-components';
-import { FC } from 'react';
+import type { FC } from 'react';
 import { IconButton } from '../../IconButton';
 import { ReactComponent as MailIcon } from './assets/mail.svg';
 
@@ -12,4 +12,3 @@ export const TableMail: FC = () => {
     </IconButton>
   );
 };
-

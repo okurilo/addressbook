@@ -1,22 +1,22 @@
 import styled from 'styled-components';
 
-export const Page = styled.section(({ theme }) => ({
+export const Page = styled.section({
   display: 'flex',
   flexDirection: 'column',
   gap: 24,
-}));
+});
 
-export const Header = styled.div(({ theme }) => ({
+export const Header = styled.div({
   display: 'flex',
   flexDirection: 'column',
   gap: 16,
-}));
+});
 
-export const GroupTabs = styled.div(({ theme }) => ({
+export const GroupTabs = styled.div({
   display: 'flex',
   flexWrap: 'wrap',
   gap: 8,
-}));
+});
 
 export const GroupTab = styled.button<{ $active: boolean }>(({ theme, $active }) => ({
   minHeight: 32,
@@ -41,11 +41,10 @@ export const Surface = styled.div(({ theme }) => ({
   borderRadius: 20,
 }));
 
-export const CenteredState = styled.div(({ theme }) => ({
+export const CenteredState = styled.div({
   minHeight: 220,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   padding: 32,
-}));
-
+});

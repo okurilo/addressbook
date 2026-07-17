@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-export const Actions = styled.div(({ theme }) => ({
+export const Actions = styled.div({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
   justifyContent: 'flex-end',
   flexWrap: 'wrap',
-}));
+});
 
 export const ActionLink = styled.a(({ theme }) => ({
   minHeight: 32,
@@ -39,4 +39,3 @@ export const ActionButton = styled.button<{ $active?: boolean }>(({ theme, $acti
     : theme.tokens.current.core.text.secondary,
   cursor: 'pointer',
 }));
-

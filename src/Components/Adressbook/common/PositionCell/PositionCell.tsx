@@ -1,5 +1,5 @@
 import { useTheme } from 'styled-components';
-import { FC } from 'react';
+import type { FC } from 'react';
 import { Body2Regular } from '../typography';
 import { MainContainerStyled } from './styled';
 
@@ -17,4 +17,3 @@ export const PositionCell: FC<IPositionCellProps> = ({ position, block }) => {
     </MainContainerStyled>
   );
 };
-

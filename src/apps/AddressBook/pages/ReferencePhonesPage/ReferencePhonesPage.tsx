@@ -3,7 +3,7 @@ import type { RouteComponentProps } from '@reach/router';
 import { Table } from '../../../../Components/Adressbook/common/Table';
 import { Body2Regular } from '../../../../Components/Adressbook/common/typography';
 import { CellWrapperStyled, MainContainerStyled } from './styled';
-import { INumber, NUMBERS } from './NUMBERS';
+import { NUMBERS } from './NUMBERS';
 import { TablePhone } from '../../../../Components/Adressbook/common/ConnectCell/Phone';
 
 export const ReferencePhonesPage = (_props: RouteComponentProps): JSX.Element => {

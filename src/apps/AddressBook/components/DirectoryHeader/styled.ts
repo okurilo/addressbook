@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div(({ theme }) => ({
+export const Wrapper = styled.div({
   display: 'flex',
   alignItems: 'center',
   gap: 16,
-}));
+});
 
 export const Header = styled.h1(({ theme }) => ({
   ...theme.typography.h1Bold,
@@ -18,4 +18,3 @@ export const Header = styled.h1(({ theme }) => ({
   //   marginBottom: 80,
   // },
 }));
-

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { useTheme } from 'styled-components';
 import { SkeletonRect } from '@pulse/ui/components/Skeleton';
 import { Chip } from '../../../common/Chip';
@@ -129,4 +129,3 @@ export const Contacts: FC<IContactsProps> = ({ internalPhone, personalPhone, pro
     </MainContainerStyled>
   );
 };
-

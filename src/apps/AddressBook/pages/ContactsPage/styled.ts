@@ -1,30 +1,30 @@
 import styled from 'styled-components';
 
-export const Section = styled.section(({ theme }) => ({
+export const Section = styled.section({
   display: 'flex',
   flexDirection: 'column',
   gap: 24,
-}));
+});
 
-export const SectionHeader = styled.div(({ theme }) => ({
+export const SectionHeader = styled.div({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   gap: 16,
-}));
+});
 
 export const Surface = styled.div(({ theme }) => ({
   background: theme.tokens.current.core.layer['01'],
   borderRadius: 20,
 }));
 
-export const CenteredState = styled.div(({ theme }) => ({
+export const CenteredState = styled.div({
   minHeight: 220,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   padding: 32,
-}));
+});
 
 export const HistoryList = styled.div({
   display: 'flex',
@@ -55,4 +55,3 @@ export const HistoryItemButton = styled.button(({ theme }) => ({
     outline: 'none',
   },
 }));
-

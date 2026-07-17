@@ -22,6 +22,24 @@
 
 ## Итерации
 
+### Итерация 10. Jest/RTL-тесты и типизация AddressBook
+
+- [x] Подключить Jest и React Testing Library без альтернативных test-runner библиотек.
+- [x] Добавить SonarQube-совместимый LCOV-отчёт командой `npm run test:coverage`.
+- [x] Покрыть тестами `multiSearch`, историю, оргструктуру, custom-группы и избранное.
+- [x] Покрыть тестами legacy fetch-mock, маршруты, provider, hooks и generic Table.
+- [x] Добавить RTL-тесты базовых компонентов `src/apps/AddressBook/**` и `src/Components/Adressbook/**`.
+- [x] Исправить type-only imports, явный возвращаемый тип vCard и неиспользуемые импорты в затронутых каталогах.
+- [x] Получить 85 проходящих тестов и покрытие 55.98% statements / 54.78% lines по двум каталогам.
+- [x] Убрать noUnused-ошибки из обоих поставляемых каталогов.
+- [x] Перенести тестовую тему внутрь границы поставки AddressBook.
+- [x] Добавить общий `AllTheProviders`/custom render и перевести RTL-тесты на единый test-utils.
+- [x] Типизировать и изолировать Jest-моки, восстанавливать подменённые globals и timers.
+- [x] Вернуть исходную логику раскрытия строки: тестовая задача не меняет product behavior.
+- [x] Покрыть `src/Components/Adressbook`: `People`, `Profile`, `useProfile`, `Star`, `TablePhone`, `TableStar`, `Mail` и корневой wrapper.
+- [x] Прогнать `npm run typecheck`.
+- [x] Прогнать `npm run build`.
+
 ### Итерация 9. Поиск, групповые действия и пагинация
 
 - [x] Ограничить dropdown кадровой структуры категорией `ORGSTRUCTURE`.

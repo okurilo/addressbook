@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { useTheme } from 'styled-components';
 import { Body1Regular, Body2Regular } from '../../../common/typography';
 import { Breadcrumbs } from '../../Breadcrumbs';

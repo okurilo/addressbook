@@ -1,4 +1,3 @@
-import { useTheme } from 'styled-components';
 import { Actions, ActionButton } from './styled';
 import { TableStar } from '../../../../Components/Adressbook/common/ConnectCell/TableStar/TableStar';
 
@@ -64,4 +63,3 @@ export const EmployeeActions = ({
     </Actions>
   );
 };
-

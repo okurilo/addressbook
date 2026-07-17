@@ -1,5 +1,7 @@
-import { useTheme, CSSProperties } from 'styled-components';
-import { FC, useState, useCallback } from 'react';
+import { useTheme } from 'styled-components';
+import type { CSSProperties } from 'styled-components';
+import { useCallback, useState } from 'react';
+import type { FC } from 'react';
 import type { PropsWithChildren } from 'react';
 import { Content, Text } from '@pulse/ui/components/Snackbar';
 import { Success, Error } from '@pulse/ui/components/Snackbar/icons';

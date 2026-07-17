@@ -6,7 +6,7 @@ import { Success } from '@pulse/ui/components/Snackbar/icons';
 import { SkeletonRect } from '@pulse/ui/components/Skeleton';
 import { IconButton } from '../../../common/IconButton';
 import { ReactComponent as StarIcon } from '../../assets/star.svg';
-import { ICustomGroup } from './types';
+import type { ICustomGroup } from './types';
 
 const FAVOURITE_GROUP_NAME = 'Избранное';
 
@@ -20,7 +20,7 @@ interface IFavouriteGroup extends ICustomGroup {
 
 export const Star = ({ pid }: IStarProps) => {
   const { tokens } = useTheme();
-  const [favouriteGroup, setFavouriteGroup] = useState<IFavouriteGroup | null>(null);
+  const [, setFavouriteGroup] = useState<IFavouriteGroup | null>(null);
   const [isAdded, setIsAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -160,4 +160,3 @@ export const Star = ({ pid }: IStarProps) => {
     </div>
   );
 };
-

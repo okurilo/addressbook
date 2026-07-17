@@ -1,9 +1,9 @@
-import styled, { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { Content, Text } from '@pulse/ui/components/Snackbar';
 import { Success } from '@pulse/ui/components/Snackbar/icons';
 import { toast } from 'react-toastify';
 import { Modal } from '@pulse/ui/components/ModalNew';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import type { ComponentType, PropsWithChildren } from 'react';
 import { SkeletonRect } from '@pulse/ui/components/Skeleton';
 import {
@@ -19,19 +19,9 @@ import { ProfileImage } from '../../common/ProfileImage';
 import { Body1Regular, Body2Regular, Header4Semibold } from '../../common/typography';
 import { ReactComponent as QRIcon } from '../assets/qr.svg';
 import { ReactComponent as ShareIcon } from '../assets/share.svg';
-import { ReactComponent as StarIcon } from '../assets/star.svg';
 import { IconButton } from '../../common/IconButton';
 import { QRCodeCore } from './QRCodeCore';
 import { Star } from './Star';
-
-interface ICustomGroup {
-  id: string;
-  type: string;
-  typeOrder: number;
-  name: string;
-  isCustom: boolean;
-  structureLink?: string;
-}
 
 type HeaderProps = {
   name: string;

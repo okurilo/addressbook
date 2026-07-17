@@ -10,9 +10,8 @@ export const Panel = styled.aside(({ theme }) => ({
   gap: 16,
 }));
 
-export const ButtonList = styled.div(({ theme }) => ({
+export const ButtonList = styled.div({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
-}));
-
+});

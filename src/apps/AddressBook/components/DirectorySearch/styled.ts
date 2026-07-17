@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 import { Input } from '@pulse/ui/components/Input';
 
-export const SearchRow = styled.div(({ theme }) => ({
+export const SearchRow = styled.div({
   display: 'grid',
   gridTemplateColumns: 'minmax(0, 1fr) auto',
   gap: 16,
   alignItems: 'center',
-}));
+});
 
-export const SearchField = styled.div(({ theme }) => ({
+export const SearchField = styled.div({
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
   minHeight: 56,
-}));
+});
 
 export const SearchInput = styled(Input)(({ theme }) => ({
   minHeight: 56,
@@ -138,4 +138,3 @@ export const FavoriteIcon = styled.span<{ $active: boolean }>(({ theme, $active 
     transform: 'scale(1.06)',
   },
 }));
-

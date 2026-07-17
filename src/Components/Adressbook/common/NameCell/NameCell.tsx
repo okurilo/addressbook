@@ -1,4 +1,3 @@
-import { useTheme } from 'styled-components';
 import { MainContainerStyled } from './styled';
 import { Body2Regular } from '../typography';
 import { ProfileImage } from '../ProfileImage';
@@ -26,4 +25,3 @@ export const NameCell = ({ data, pid }: NameCellProps) => {
     </MainContainerStyled>
   );
 };
-

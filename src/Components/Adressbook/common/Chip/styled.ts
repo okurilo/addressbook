@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ButtonStyled = styled('button')(({ theme, color }) => ({
+export const ButtonStyled = styled.button(({ theme }) => ({
   background: theme.tokens.current.colors.grey.solid['10'],
   borderRadius: 4,
   cursor: 'pointer',
@@ -15,4 +15,3 @@ export const ButtonStyled = styled('button')(({ theme, color }) => ({
   color: theme.tokens.current.colors.grey.solid['50'],
   gap: 4,
 }));
-

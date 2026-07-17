@@ -1,29 +1,29 @@
 import styled from 'styled-components';
 
-export const Page = styled.section(({ theme }) => ({
+export const Page = styled.section({
   display: 'grid',
   gridTemplateColumns: '280px minmax(0, 1fr)',
   gap: 32,
   alignItems: 'start',
-}));
+});
 
-export const HierarchyRoot = styled.section(({ theme }) => ({
+export const HierarchyRoot = styled.section({
   display: 'flex',
   flexDirection: 'column',
   gap: 32,
-}));
+});
 
-export const HierarchyHeader = styled.div(({ theme }) => ({
+export const HierarchyHeader = styled.div({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
-}));
+});
 
-export const HierarchyGrid = styled.div(({ theme }) => ({
+export const HierarchyGrid = styled.div({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
   gap: 24,
-}));
+});
 
 export const HierarchyCard = styled.button(({ theme }) => ({
   minHeight: 136,
@@ -68,12 +68,12 @@ export const Content = styled.section(({ theme }) => ({
   gap: 24,
 }));
 
-export const Breadcrumbs = styled.div(({ theme }) => ({
+export const Breadcrumbs = styled.div({
   display: 'flex',
   flexWrap: 'wrap',
   gap: 8,
   alignItems: 'center',
-}));
+});
 
 export const BreadcrumbButton = styled.button(({ theme }) => ({
   border: 'none',
@@ -83,11 +83,11 @@ export const BreadcrumbButton = styled.button(({ theme }) => ({
   cursor: 'pointer',
 }));
 
-export const SummaryLine = styled.div(({ theme }) => ({
+export const SummaryLine = styled.div({
   display: 'flex',
   alignItems: 'baseline',
   gap: 4,
-}));
+});
 
 export const Divider = styled.div(({ theme }) => ({
   borderTop: `1px solid ${theme.tokens.current.core.border.gentle}`,
@@ -102,4 +102,3 @@ export const CenteredState = styled.div(({ theme }) => ({
   borderRadius: 20,
   padding: 32,
 }));
-

@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
-export const Page = styled.section(({ theme }) => ({
+export const Page = styled.section({
   display: 'flex',
   flexDirection: 'column',
   gap: 32,
-}));
+});
 
-export const Header = styled.div(({ theme }) => ({
+export const Header = styled.div({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
-}));
+});
 
 export const SummaryLine = styled.div(({ theme }) => ({
   display: 'flex',
@@ -19,11 +19,11 @@ export const SummaryLine = styled.div(({ theme }) => ({
   color: theme.tokens.current.core.text.secondary,
 }));
 
-export const Grid = styled.div(({ theme }) => ({
+export const Grid = styled.div({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
   gap: 24,
-}));
+});
 
 export const CardButton = styled.button(({ theme }) => ({
   minHeight: 136,
@@ -48,4 +48,3 @@ export const CenteredState = styled.div(({ theme }) => ({
   borderRadius: 20,
   padding: 32,
 }));
-

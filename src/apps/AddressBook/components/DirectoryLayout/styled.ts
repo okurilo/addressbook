@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LayoutRoot = styled.div(({ theme }) => ({
+export const LayoutRoot = styled.div({
   maxWidth: 1600,
   height: 'calc(100vh - 64px)',
   margin: '0 auto',
@@ -8,7 +8,7 @@ export const LayoutRoot = styled.div(({ theme }) => ({
   flexDirection: 'column',
   gap: 32,
   overflow: 'hidden',
-}));
+});
 
 export const Content = styled.section({
   minHeight: 0,
@@ -16,4 +16,3 @@ export const Content = styled.section({
   overflowY: 'auto',
   paddingBottom: 24,
 });
-

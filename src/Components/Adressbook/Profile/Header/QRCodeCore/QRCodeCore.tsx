@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 
 import { QRCodeCoreContainer } from './styled';
-import { IQRCodeCoreProps } from './types';
+import type { IQRCodeCoreProps } from './types';
 
 export const QRCodeCore: FC<IQRCodeCoreProps> = ({
   value,
@@ -35,4 +35,3 @@ export const QRCodeCore: FC<IQRCodeCoreProps> = ({
     </QRCodeCoreContainer>
   );
 };
-

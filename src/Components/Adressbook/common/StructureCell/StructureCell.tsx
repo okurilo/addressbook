@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { Body2Regular } from '../typography';
 import { MainContainerStyled } from './styled';
 
@@ -12,4 +12,3 @@ export const StructureCell: FC<IStructureCellProps> = ({ structure }) => {
     </MainContainerStyled>
   );
 };
-

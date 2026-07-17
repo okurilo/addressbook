@@ -1,6 +1,7 @@
-import { FC, Suspense } from 'react';
+import { Suspense } from 'react';
+import type { FC } from 'react';
 import { Content as LayoutContent } from '@pulse/ui/components/Layout';
-import { RouteComponentProps } from '@reach/router';
+import type { RouteComponentProps } from '@reach/router';
 import { App } from './App';
 
 export const AddressBook: FC<RouteComponentProps> = () => (
@@ -10,4 +11,3 @@ export const AddressBook: FC<RouteComponentProps> = () => (
     </LayoutContent>
   </Suspense>
 );
-
