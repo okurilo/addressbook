@@ -17,6 +17,14 @@ module.exports = {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov'],
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80,
+    },
+  },
   moduleNameMapper: {
     '^@pulse/ui/components/(.*)$': '<rootDir>/src/stubs/pulse/ui/$1',
     '^@pulse/ui/theme$': '<rootDir>/src/host/pulseTheme.ts',

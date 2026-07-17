@@ -30,13 +30,15 @@
 - [x] Покрыть тестами legacy fetch-mock, маршруты, provider, hooks и generic Table.
 - [x] Добавить RTL-тесты базовых компонентов `src/apps/AddressBook/**` и `src/Components/Adressbook/**`.
 - [x] Исправить type-only imports, явный возвращаемый тип vCard и неиспользуемые импорты в затронутых каталогах.
-- [x] Получить 85 проходящих тестов и покрытие 55.98% statements / 54.78% lines по двум каталогам.
+- [x] Получить 117 проходящих тестов и покрытие выше 80% по всем метрикам: 85.94% statements, 80.36% branches, 82.40% functions, 85.76% lines.
 - [x] Убрать noUnused-ошибки из обоих поставляемых каталогов.
 - [x] Перенести тестовую тему внутрь границы поставки AddressBook.
 - [x] Добавить общий `AllTheProviders`/custom render и перевести RTL-тесты на единый test-utils.
 - [x] Типизировать и изолировать Jest-моки, восстанавливать подменённые globals и timers.
 - [x] Вернуть исходную логику раскрытия строки: тестовая задача не меняет product behavior.
 - [x] Покрыть `src/Components/Adressbook`: `People`, `Profile`, `useProfile`, `Star`, `TablePhone`, `TableStar`, `Mail` и корневой wrapper.
+- [x] Покрыть крупные сценарии `ContactsPage`, `FavoritesPage`, `StructureDepartmentPage`, `DirectorySearch`, `EmployeeTable`, `GroupActions` и `DirectoryNavigation`.
+- [x] Зафиксировать локальный Jest coverage gate 80% для statements, branches, functions и lines.
 - [x] Прогнать `npm run typecheck`.
 - [x] Прогнать `npm run build`.
 
