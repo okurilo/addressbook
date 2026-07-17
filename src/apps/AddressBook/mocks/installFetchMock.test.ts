@@ -1,4 +1,4 @@
-import { act } from '../../../Components/Adressbook/test-utils';
+import { act } from '../../../test-utils/test-utils';
 import { employeesFixture } from './fixtures/employees';
 import { installFetchMock } from './installFetchMock';
 

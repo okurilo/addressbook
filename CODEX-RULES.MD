@@ -139,14 +139,14 @@
 
 - Для unit/component-тестов использовать только Jest и React Testing Library; не добавлять другой test runner или библиотеку взаимодействий без отдельного запроса.
 - Добавление тестов не разрешает менять продуктовую логику. Если тест выявил расхождение поведения с требованиями, нужно зафиксировать его отдельно и запросить продуктовую правку, а не подгонять реализацию под тест.
-- React-компоненты рендерить через общий custom `render` и `AllTheProviders` из `src/Components/Adressbook/test-utils`; состав провайдеров и их переопределяемые значения хранить централизованно.
-- Тесты hooks, которые проверяют сам provider, могут использовать `renderHook` с явным wrapper; остальные provider-зависимые тесты используют общий wrapper или его фабрику.
+- Базовые `render`, `renderHook` и остальные React Testing Library helpers импортировать из `src/test-utils/test-utils`; глобальный стек providers не расширять feature-провайдерами Addressbook.
+- Provider-зависимые тесты Addressbook явно оборачивать локальным `AddressbookTestProvider` из `src/Components/Adressbook/test-utils`; тесты самого provider могут использовать `renderHook` с явным wrapper.
 - Внешние модули мокать через `jest.mock`; моки типизировать через `jest.MockedFunction`, `jest.Mocked` или явно типизированный `jest.Mock`. `any`, `@ts-ignore` и нетипизированные заглушки запрещены.
 - В `beforeEach` сбрасывать реализации и очереди ответов изменяемых моков через `mockReset`, затем задавать исходный сценарий теста. Одного `clearMocks` недостаточно для изоляции реализаций.
 - Подменённые globals, timers, `fetch`, `Response`, storage listeners и другие внешние состояния обязательно восстанавливать в `afterEach`/`afterAll`.
 - Продуктовые API тестировать моками общего `http`/`profileHttp`; глобальный `fetch` разрешено подменять только в тестах исторического `/api/*` mock-транспорта и legacy-клиентов, которые действительно используют fetch.
 - Проверять наблюдаемое поведение и вызовы публичных границ. Не менять production-код ради достижения строки coverage и не дублировать внутреннюю реализацию в ожиданиях.
-- Тестовые fixtures, builders, providers и theme хранить внутри границы поставки AddressBook; production-код не должен импортировать `test-utils`.
+- Feature-specific fixtures, builders и providers хранить внутри границы поставки AddressBook; общую тестовую theme и базовый render — в `src/test-utils`. Production-код не должен импортировать `test-utils`.
 
 ## Scope-ограничения PoC
 

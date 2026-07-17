@@ -1,4 +1,4 @@
-import { act, renderHook, waitFor } from '../../../Components/Adressbook/test-utils';
+import { act, renderHook, waitFor } from '../../../test-utils/test-utils';
 import type { PropsWithChildren } from 'react';
 import {
   FavoriteEmployeesProvider,

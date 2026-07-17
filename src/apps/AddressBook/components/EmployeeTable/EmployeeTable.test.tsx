@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '../../../../Components/Adressbook/test-utils';
+import { fireEvent, render, screen } from '../../../../test-utils/test-utils';
 import { createEmployee } from '../../test-utils/employee';
 import { EmployeeTable } from './index';
 

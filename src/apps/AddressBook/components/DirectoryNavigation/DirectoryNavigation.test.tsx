@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '../../../../Components/Adressbook/test-utils';
+import { fireEvent, render, screen } from '../../../../test-utils/test-utils';
 import { useLocation, useNavigate } from '@reach/router';
 import { routePaths } from '../../routes/routePaths';
 import { DirectoryNavigation } from './index';

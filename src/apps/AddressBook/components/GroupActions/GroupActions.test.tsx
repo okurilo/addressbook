@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '../../../../Components/Adressbook/test-utils';
+import { fireEvent, render, screen, waitFor } from '../../../../test-utils/test-utils';
 import { createEmployee } from '../../test-utils/employee';
 import { GroupActions } from './index';
 

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '../../test-utils';
+import { fireEvent, render, screen } from '../../../../test-utils/test-utils';
 import { Table } from './Table';
 import type { Column } from './Table.types';
 

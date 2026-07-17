@@ -1,6 +1,7 @@
-import { fireEvent, render, screen, waitFor } from '../test-utils';
+import { fireEvent, render, screen, waitFor } from '../../../test-utils/test-utils';
 import type { Column } from '../common/Table';
 import type { PersonRow } from '../types';
+import { AddressbookTestProvider } from '../test-utils';
 import { useGetColumns } from './hooks/useGetColumns';
 import { useGetPeople } from './hooks/useGetPeople';
 import { People } from './People';
@@ -70,12 +71,20 @@ describe('People', () => {
 
   test('скрывает таблицу во время загрузки', () => {
     getPeopleMock.mockReturnValue({ people: [], isLoading: true });
-    render(<People />, { providerOptions: { addressbook: { people: [] } } });
+    render(
+      <AddressbookTestProvider>
+        <People />
+      </AddressbookTestProvider>
+    );
     expect(screen.queryByRole('table')).toBeNull();
   });
 
   test('раскрывает Profile по клику и закрывает через callback', async () => {
-    render(<People />, { providerOptions: { addressbook: { people: [] } } });
+    render(
+      <AddressbookTestProvider>
+        <People />
+      </AddressbookTestProvider>
+    );
 
     fireEvent.click(screen.getByText('Иван Петров'));
     expect(screen.getByText('Профиль сотрудника')).toBeTruthy();
@@ -97,11 +106,12 @@ describe('People', () => {
       );
 
     render(
-      <>
-        <People />
-        <FavoritesState />
-      </>,
-      { providerOptions: { addressbook: { people: [] } } }
+      <AddressbookTestProvider>
+        <>
+          <People />
+          <FavoritesState />
+        </>
+      </AddressbookTestProvider>
     );
 
     await waitFor(() => expect(screen.getByText('favorites-1:2')).toBeTruthy());
@@ -113,11 +123,12 @@ describe('People', () => {
   test('сохраняет пустое состояние, если группа избранного отсутствует', async () => {
     fetchMock.mockImplementationOnce(() => response({ data: [] }));
     render(
-      <>
-        <People />
-        <FavoritesState />
-      </>,
-      { providerOptions: { addressbook: { people: [] } } }
+      <AddressbookTestProvider>
+        <>
+          <People />
+          <FavoritesState />
+        </>
+      </AddressbookTestProvider>
     );
 
     await waitFor(() => expect(screen.getByText('no-group:0')).toBeTruthy());
@@ -129,11 +140,12 @@ describe('People', () => {
 
     try {
       render(
-        <>
-          <People />
-          <FavoritesState />
-        </>,
-        { providerOptions: { addressbook: { people: [] } } }
+        <AddressbookTestProvider>
+          <>
+            <People />
+            <FavoritesState />
+          </>
+        </AddressbookTestProvider>
       );
       await waitFor(() => expect(screen.getByText('no-group:0')).toBeTruthy());
       expect(consoleError).toHaveBeenCalledWith('fetchFavorites error', expect.any(Error));

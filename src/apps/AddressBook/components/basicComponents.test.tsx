@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '../../../Components/Adressbook/test-utils';
+import { fireEvent, render, screen } from '../../../test-utils/test-utils';
 import { EmployeeAvatar } from './EmployeeAvatar';
 import { PagePlaceholder } from './PagePlaceholder';
 import { RetryState } from './RetryState';

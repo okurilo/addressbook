@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '../../../test-utils';
+import { fireEvent, render, screen, waitFor } from '../../../../../test-utils/test-utils';
 import { toast } from 'react-toastify';
 import { Star } from './Star';
 

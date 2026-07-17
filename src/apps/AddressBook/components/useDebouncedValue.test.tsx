@@ -1,4 +1,4 @@
-import { act, renderHook } from '../../../Components/Adressbook/test-utils';
+import { act, renderHook } from '../../../test-utils/test-utils';
 import { useDebouncedValue } from './useDebouncedValue';
 
 describe('useDebouncedValue', () => {

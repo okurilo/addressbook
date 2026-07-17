@@ -1,5 +1,7 @@
-import { createTestWrapper, renderHook } from '../../test-utils';
+import type { PropsWithChildren } from 'react';
+import { renderHook } from '../../../../test-utils/test-utils';
 import type { AdressbookPerson } from '../../types';
+import { AddressbookTestProvider } from '../../test-utils';
 import { useGetPeople } from './useGetPeople';
 
 describe('useGetPeople', () => {
@@ -7,7 +9,11 @@ describe('useGetPeople', () => {
     const people: AdressbookPerson[] = [
       { personUuid: 'person-1', pbasic: { fullName: 'Иван Петров' } },
     ];
-    const wrapper = createTestWrapper({ addressbook: { people, isLoading: true } });
+    const wrapper = ({ children }: PropsWithChildren): JSX.Element => (
+      <AddressbookTestProvider people={people} isLoading>
+        {children}
+      </AddressbookTestProvider>
+    );
     const { result } = renderHook(() => useGetPeople(), { wrapper });
 
     expect(result.current.isLoading).toBe(true);

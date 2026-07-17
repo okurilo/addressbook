@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import { renderHook } from './test-utils';
+import { renderHook } from '../../test-utils/test-utils';
 import { AdressbookProvider, useAdressbookContext } from './provider';
 import type { AdressbookPerson } from './types';
 

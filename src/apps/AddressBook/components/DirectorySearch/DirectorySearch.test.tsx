@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '../../../../Components/Adressbook/test-utils';
+import { fireEvent, render, screen, waitFor } from '../../../../test-utils/test-utils';
 import { useLocation, useNavigate } from '@reach/router';
 import { fetchSearchSuggestions } from '../../api/directory/client';
 import { createEmployee } from '../../test-utils/employee';

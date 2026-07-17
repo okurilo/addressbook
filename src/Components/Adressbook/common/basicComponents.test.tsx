@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '../test-utils';
+import { fireEvent, render, screen } from '../../../test-utils/test-utils';
+import { AddressbookTestProvider } from '../test-utils';
 import { Chip } from './Chip';
 import { ConnectCell } from './ConnectCell';
 import { IconButton } from './IconButton';
@@ -44,8 +45,9 @@ describe('базовые компоненты таблицы Adressbook', () => 
   test('ConnectCell вызывает внешний renderActions с контекстом', () => {
     const renderActions = jest.fn(() => <span>Действия</span>);
     render(
-      <ConnectCell personId="person-1" isFavorite personalPhone="+7999" />,
-      { providerOptions: { addressbook: { people: [], renderActions } } }
+      <AddressbookTestProvider renderActions={renderActions}>
+        <ConnectCell personId="person-1" isFavorite personalPhone="+7999" />
+      </AddressbookTestProvider>
     );
 
     expect(screen.getByText('Действия')).toBeTruthy();

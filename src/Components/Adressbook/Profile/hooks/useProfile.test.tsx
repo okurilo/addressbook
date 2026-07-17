@@ -1,4 +1,4 @@
-import { act, renderHook, waitFor } from '../../test-utils';
+import { act, renderHook, waitFor } from '../../../../test-utils/test-utils';
 import { http } from '../../../../http-requests/http';
 import { useProfile } from './useProfile';
 

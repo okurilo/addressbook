@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '../test-utils';
+import { fireEvent, render, screen } from '../../../test-utils/test-utils';
 import type { ProfileViewData } from './hooks/types';
 import { useProfile } from './hooks/useProfile';
 import { Profile } from './Profile';
